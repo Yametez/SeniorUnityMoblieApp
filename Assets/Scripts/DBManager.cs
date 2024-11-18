@@ -7,7 +7,7 @@ public class DBManager : MonoBehaviour
     private static string server = "localhost";
     private static string database = "game_db";
     private static string uid = "root";
-    private static string password = "your_password";
+    private static string password = "2545";
     private static MySqlConnection connection;
 
     public static bool IsConnected()
