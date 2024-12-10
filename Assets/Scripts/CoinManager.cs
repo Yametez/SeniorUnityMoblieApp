@@ -26,6 +26,7 @@ namespace CoinGame
 
         void Start()
         {
+            Debug.Log("Start called");
             StartNewGame();
         }
 
@@ -40,6 +41,7 @@ namespace CoinGame
 
         public void StartNewGame()
         {
+            Debug.Log("StartNewGame called");
             // เคลียร์เหรียญเก่า
             foreach (var coin in activeCoinPile)
             {
@@ -54,6 +56,7 @@ namespace CoinGame
             // สุ่มจำนวนเหรียญแต่ละประเภท
             foreach (var coinType in coinTypes)
             {
+                Debug.Log($"Spawning {coinType.count} coins of value {coinType.value}");
                 coinType.count = Random.Range(3, 10);
                 SpawnCoins(coinType);
             }
@@ -63,6 +66,7 @@ namespace CoinGame
 
         void SpawnCoins(CoinType coinType)
         {
+            Debug.Log($"SpawnCoins called for value {coinType.value}");
             for (int i = 0; i < coinType.count; i++)
             {
                 Vector3 randomPos = coinPileArea.position + Random.insideUnitSphere * 2f;
