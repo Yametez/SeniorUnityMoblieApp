@@ -19,10 +19,17 @@ namespace CoinGame
         public Transform coinPileArea; // พื้นที่กองเหรียญ
         public Text timerText;
         public Text scoreText;
+        public Text coin10ScoreText; // เพิ่มตัวแปรสำหรับแสดงคะแนนแต่ละประเภท
+        public Text coin5ScoreText;
+        public Text coin1ScoreText;
         
         private float gameTimer;
         private bool isGameActive;
         private List<GameObject> activeCoinPile = new List<GameObject>();
+        private int coin10Count = 0;
+        private int coin5Count = 0;
+        private int coin1Count = 0;
+        private int totalScore = 0;
 
         void Start()
         {
@@ -73,6 +80,8 @@ namespace CoinGame
                 randomPos.z = 0; // 2D game
                 
                 GameObject newCoin = Instantiate(coinType.prefab, randomPos, Quaternion.identity);
+                newCoin.transform.localScale = new Vector3(50f, 50f, 1f);
+                
                 activeCoinPile.Add(newCoin);
                 
                 // Add drag functionality
@@ -118,6 +127,67 @@ namespace CoinGame
                 activeCoinPile.Remove(coin);
                 CheckGameCompletion();
             }
+        }
+
+        public void AddCoinToScore(int coinValue)
+        {
+            Debug.Log($"Adding coin value: {coinValue}");
+            switch (coinValue)
+            {
+                case 10:
+                    coin10Count++;
+                    totalScore += 10;
+                    if (coin10ScoreText) coin10ScoreText.text = coin10Count.ToString();
+                    break;
+                case 5:
+                    coin5Count++;
+                    totalScore += 5;
+                    if (coin5ScoreText) coin5ScoreText.text = coin5Count.ToString();
+                    break;
+                case 1:
+                    coin1Count++;
+                    totalScore += 1;
+                    if (coin1ScoreText) coin1ScoreText.text = coin1Count.ToString();
+                    break;
+            }
+            UpdateScoreDisplay();
+        }
+
+        public void SubtractScore(int coinValue)
+        {
+            switch (coinValue)
+            {
+                case 10:
+                    if (coin10Count > 0)
+                    {
+                        coin10Count--;
+                        totalScore -= 10;
+                    }
+                    if (coin10ScoreText) coin10ScoreText.text = coin10Count.ToString();
+                    break;
+                case 5:
+                    if (coin5Count > 0)
+                    {
+                        coin5Count--;
+                        totalScore -= 5;
+                    }
+                    if (coin5ScoreText) coin5ScoreText.text = coin5Count.ToString();
+                    break;
+                case 1:
+                    if (coin1Count > 0)
+                    {
+                        coin1Count--;
+                        totalScore -= 1;
+                    }
+                    if (coin1ScoreText) coin1ScoreText.text = coin1Count.ToString();
+                    break;
+            }
+            UpdateScoreDisplay();
+        }
+
+        void UpdateScoreDisplay()
+        {
+            if (scoreText) scoreText.text = $"Score: {totalScore}";
         }
     }
 } 
