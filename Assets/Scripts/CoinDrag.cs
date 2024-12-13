@@ -63,7 +63,7 @@ public class CoinDrag : MonoBehaviour
             if (coinValue == coinType.value)
             {
                 float distance = Vector2.Distance(transform.position, coinType.sortingArea.position);
-                if (distance < 1.5f)
+                if (distance < 31f)
                 {
                     manager.AddCoinToScore(coinValue);
                     Destroy(gameObject);
@@ -73,7 +73,7 @@ public class CoinDrag : MonoBehaviour
             else
             {
                 float wrongDistance = Vector2.Distance(transform.position, coinType.sortingArea.position);
-                if (wrongDistance < 1.5f)
+                if (wrongDistance < 29f)
                 {
                     manager.SubtractScore(coinType.value);
                     return;
