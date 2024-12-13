@@ -80,7 +80,7 @@ namespace CoinGame
                 randomPos.z = 0; // 2D game
                 
                 GameObject newCoin = Instantiate(coinType.prefab, randomPos, Quaternion.identity);
-                newCoin.transform.localScale = new Vector3(50f, 50f, 1f);
+                newCoin.transform.localScale = new Vector3(25f, 25f, 1f);
                 
                 activeCoinPile.Add(newCoin);
                 
@@ -95,7 +95,7 @@ namespace CoinGame
         {
             int minutes = (int)(gameTimer / 60);
             int seconds = (int)(gameTimer % 60);
-            timerText.text = $"Time: {minutes:00}:{seconds:00}";
+            timerText.text = $"เวลา: {minutes:00}:{seconds:00}";
         }
 
         public void CheckGameCompletion()
@@ -187,7 +187,7 @@ namespace CoinGame
 
         void UpdateScoreDisplay()
         {
-            if (scoreText) scoreText.text = $"Score: {totalScore}";
+            if (scoreText) scoreText.text = $"ยอดรวม: {totalScore} บาท";
         }
     }
 } 
