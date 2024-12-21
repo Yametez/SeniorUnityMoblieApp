@@ -84,9 +84,12 @@ namespace CoinGame
                 
                 activeCoinPile.Add(newCoin);
                 
-                // Add drag functionality
-                CoinDrag dragComponent = newCoin.AddComponent<CoinDrag>();
-                dragComponent.coinValue = coinType.value;
+                CoinDrag dragComponent = newCoin.GetComponent<CoinDrag>();
+                if (dragComponent == null)
+                {
+                    dragComponent = newCoin.AddComponent<CoinDrag>();
+                    dragComponent.coinValue = coinType.value;
+                }
                 dragComponent.manager = this;
             }
         }
