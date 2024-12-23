@@ -30,10 +30,26 @@ namespace CoinGame
         private int coin5Count = 0;
         private int coin1Count = 0;
         private int totalScore = 0;
+        private int totalCoinsInGame = 0;
+
+        public ResultPanel resultPanel; // เพิ่มตัวแปรนี้ที่ด้านบนของคลาส
 
         void Start()
         {
             Debug.Log("Start called");
+            // ซ่อน ResultPanel ก่อนเริ่มเกม
+            if (resultPanel != null)
+            {
+                resultPanel.gameObject.SetActive(false);
+            }
+
+            // ลบเหรียญ prefab ที่วางไว้ใน Scene ออกก่อน
+            GameObject[] existingCoins = GameObject.FindGameObjectsWithTag("Coin");
+            foreach (var coin in existingCoins)
+            {
+                Destroy(coin);
+            }
+
             StartNewGame();
         }
 
@@ -43,41 +59,81 @@ namespace CoinGame
             {
                 gameTimer += Time.deltaTime;
                 UpdateTimerDisplay();
+                
+                // Debug logs
+                Debug.Log($"Active coins: {activeCoinPile.Count}");
+                int totalSorted = coin10Count + coin5Count + coin1Count;
+                Debug.Log($"Sorted coins - 10B: {coin10Count}, 5B: {coin5Count}, 1B: {coin1Count}");
+                Debug.Log($"Total sorted: {totalSorted}, Total in game: {totalCoinsInGame}");
+                
+                // เช็คเงื่อนไขจบเกม
+                if (totalSorted == totalCoinsInGame && totalCoinsInGame > 0)
+                {
+                    Debug.Log("Game Complete! Showing results...");
+                    isGameActive = false;
+                    ShowResults();
+                }
             }
         }
 
         public void StartNewGame()
         {
             Debug.Log("StartNewGame called");
+            
             // เคลียร์เหรียญเก่า
             foreach (var coin in activeCoinPile)
             {
-                Destroy(coin);
+                if (coin != null)
+                {
+                    Destroy(coin);
+                }
             }
             activeCoinPile.Clear();
 
             // รีเซ็ตค่าต่างๆ
             gameTimer = 0;
             isGameActive = true;
+            coin10Count = 0;
+            coin5Count = 0;
+            coin1Count = 0;
+            totalScore = 0;
+            totalCoinsInGame = 0;
             
-            // สุ่มจำนวนเหรียญแต่ละประเภท
+            // ซ่อน ResultPanel และรีเซ็ตการอ้างอิง
+            if (resultPanel == null)
+            {
+                Debug.LogError("ResultPanel is null! Trying to find it...");
+                resultPanel = FindObjectOfType<ResultPanel>();
+            }
+            
+            if (resultPanel != null)
+            {
+                resultPanel.gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.LogError("Could not find ResultPanel!");
+                return;
+            }
+
+            // สร้างเหรียญใหม่
             foreach (var coinType in coinTypes)
             {
-                Debug.Log($"Spawning {coinType.count} coins of value {coinType.value}");
                 coinType.count = Random.Range(3, 10);
+                totalCoinsInGame += coinType.count;
                 SpawnCoins(coinType);
             }
 
+            Debug.Log($"New game started with {totalCoinsInGame} coins");
             UpdateUI();
         }
 
         void SpawnCoins(CoinType coinType)
         {
-            Debug.Log($"SpawnCoins called for value {coinType.value}");
             for (int i = 0; i < coinType.count; i++)
             {
                 Vector3 randomPos = coinPileArea.position + Random.insideUnitSphere * 2f;
-                randomPos.z = 0; // 2D game
+                randomPos.z = 0;
                 
                 GameObject newCoin = Instantiate(coinType.prefab, randomPos, Quaternion.identity);
                 newCoin.transform.localScale = new Vector3(25f, 25f, 1f);
@@ -119,8 +175,37 @@ namespace CoinGame
 
         void ShowResults()
         {
-            // Show final score and time
-            scoreText.text = $"Completed!\nTime: {timerText.text}";
+            Debug.Log("ShowResults called");
+            if (resultPanel == null)
+            {
+                Debug.LogError("ResultPanel reference is missing!");
+                return;
+            }
+
+            // ตรวจสอบว่า ResultPanel มี Canvas Parent หรือไม่
+            Canvas parentCanvas = resultPanel.GetComponentInParent<Canvas>();
+            if (parentCanvas == null)
+            {
+                Debug.LogError("ResultPanel must be child of a Canvas!");
+                return;
+            }
+
+            // ทำให้แน่ใจว่า ResultPanel จะแสดงทับทุกอย่าง
+            parentCanvas.sortingOrder = 999;
+            resultPanel.transform.SetAsLastSibling();
+
+            // เปิดใช้งานและแสดงผล
+            resultPanel.gameObject.SetActive(true);
+            resultPanel.ShowResults(gameTimer, coin10Count, coin5Count, coin1Count, totalScore);
+            
+            Debug.Log($"Results shown - Time: {gameTimer:F2}, Score: {totalScore}");
+        }
+
+        // เพิ่มฟังก์ชันนี้เพื่อทดสอบ
+        public void TestShowResults()
+        {
+            Debug.Log("Testing ShowResults");
+            ShowResults();
         }
 
         public void RemoveCoin(GameObject coin)
@@ -128,13 +213,32 @@ namespace CoinGame
             if (activeCoinPile.Contains(coin))
             {
                 activeCoinPile.Remove(coin);
-                CheckGameCompletion();
+                Debug.Log($"Coin removed. Remaining coins: {activeCoinPile.Count}");
+                
+                // เช็คเงื่อนไขจบเกมทันทีที่ลบเหรียญ
+                if (activeCoinPile.Count == 0)
+                {
+                    Debug.Log("No coins left in pile! Showing results...");
+                    isGameActive = false;
+                    ShowResults();
+                }
             }
         }
 
-        public void AddCoinToScore(int coinValue)
+        public void AddCoinToScore(GameObject coin, int coinValue)
         {
             Debug.Log($"Adding coin value: {coinValue}");
+            
+            // เช็คว่าเกมยังทำงานอยู่
+            if (!isGameActive) return;
+            
+            // เช็คว่าเหรียญนี้มาจาก activeCoinPile เท่านั้น
+            if (!activeCoinPile.Contains(coin))
+            {
+                Debug.Log("Coin not from active pile, ignoring...");
+                return;
+            }
+            
             switch (coinValue)
             {
                 case 10:
@@ -153,6 +257,8 @@ namespace CoinGame
                     if (coin1ScoreText) coin1ScoreText.text = coin1Count.ToString();
                     break;
             }
+            
+            Debug.Log($"After add - Coin10: {coin10Count}, Coin5: {coin5Count}, Coin1: {coin1Count}, Total: {totalCoinsInGame}");
             UpdateScoreDisplay();
         }
 
