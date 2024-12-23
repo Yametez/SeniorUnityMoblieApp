@@ -8,6 +8,7 @@ public class CoinDrag : MonoBehaviour
     public CoinManager manager;
     private bool isDragging = false;
     private Vector3 offset;
+    private bool isScored = false;
 
     void Start()
     {
@@ -63,9 +64,9 @@ public class CoinDrag : MonoBehaviour
             if (coinValue == coinType.value)
             {
                 float distance = Vector2.Distance(transform.position, coinType.sortingArea.position);
-                if (distance < 31f)
+                if (distance < 37f)
                 {
-                    manager.AddCoinToScore(coinValue);
+                    manager.AddCoinToScore(gameObject, coinValue);
                     Destroy(gameObject);
                     return;
                 }
@@ -87,5 +88,33 @@ public class CoinDrag : MonoBehaviour
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = -Camera.main.transform.position.z;
         return Camera.main.ScreenToWorldPoint(mousePoint);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (manager != null && !isScored)
+        {
+            if ((coinValue == 10 && other.gameObject.name.Contains("Space10Bath")) ||
+                (coinValue == 5 && other.gameObject.name.Contains("Space5Bath")) ||
+                (coinValue == 1 && other.gameObject.name.Contains("Space1Bath")))
+            {
+                isScored = true;
+                manager.AddCoinToScore(gameObject, coinValue);
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (manager != null && isScored)
+        {
+            if ((coinValue == 10 && other.gameObject.name.Contains("Space10Bath")) ||
+                (coinValue == 5 && other.gameObject.name.Contains("Space5Bath")) ||
+                (coinValue == 1 && other.gameObject.name.Contains("Space1Bath")))
+            {
+                isScored = false;
+                manager.SubtractScore(coinValue);
+            }
+        }
     }
 } 
