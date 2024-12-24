@@ -176,29 +176,25 @@ namespace CoinGame
         void ShowResults()
         {
             Debug.Log("ShowResults called");
-            if (resultPanel == null)
-            {
-                Debug.LogError("ResultPanel reference is missing!");
-                return;
-            }
-
-            // ตรวจสอบว่า ResultPanel มี Canvas Parent หรือไม่
-            Canvas parentCanvas = resultPanel.GetComponentInParent<Canvas>();
-            if (parentCanvas == null)
-            {
-                Debug.LogError("ResultPanel must be child of a Canvas!");
-                return;
-            }
-
-            // ทำให้แน่ใจว่า ResultPanel จะแสดงทับทุกอย่าง
-            parentCanvas.sortingOrder = 999;
-            resultPanel.transform.SetAsLastSibling();
-
-            // เปิดใช้งานและแสดงผล
-            resultPanel.gameObject.SetActive(true);
-            resultPanel.ShowResults(gameTimer, coin10Count, coin5Count, coin1Count, totalScore);
             
-            Debug.Log($"Results shown - Time: {gameTimer:F2}, Score: {totalScore}");
+            // คำนวณคะแนนรวมใหม่จากจำนวนเหรียญแต่ละประเภท
+            totalScore = (coin10Count * 10) + (coin5Count * 5) + (coin1Count * 1);
+            UpdateScoreDisplay(); 
+            
+            if (resultPanel != null)
+            {
+                // อัพเดท UI ก่อนแสดงผล
+                UpdateScoreDisplay();
+                
+                // แสดงผลด้วยค่าที่คำนวณใหม่
+                resultPanel.gameObject.SetActive(true);
+                resultPanel.ShowResults(gameTimer, coin10Count, coin5Count, coin1Count, totalScore);
+                Debug.Log($"Results shown - Time: {gameTimer:F2}, Score: {totalScore}");
+            }
+            else
+            {
+                Debug.LogError("ResultPanel is null!");
+            }
         }
 
         // เพิ่มฟังก์ชันนี้เพื่อทดสอบ
@@ -296,7 +292,12 @@ namespace CoinGame
 
         void UpdateScoreDisplay()
         {
-            if (scoreText) scoreText.text = $"ยอดรวม: {totalScore} บาท";
+            if (scoreText) 
+            {
+                totalScore = (coin10Count * 10) + (coin5Count * 5) + (coin1Count * 1);
+                scoreText.text = $"ยอดรวม: {totalScore} บาท";
+                Debug.Log($"Score updated: {totalScore}");
+            }
         }
     }
 } 
