@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using CoinGame;
+using UnityEngine.UI;
 
 public class CoinDrag : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class CoinDrag : MonoBehaviour
     private bool isDragging = false;
     private Vector3 offset;
     private bool isScored = false;
+
+    public Text warningText;
 
     void Start()
     {
@@ -19,6 +22,11 @@ public class CoinDrag : MonoBehaviour
             {
                 Debug.LogError("CoinManager not found in scene!");
             }
+        }
+
+        if (warningText != null)
+        {
+            warningText.gameObject.SetActive(false);
         }
     }
 
@@ -64,7 +72,7 @@ public class CoinDrag : MonoBehaviour
             if (coinValue == coinType.value)
             {
                 float distance = Vector2.Distance(transform.position, coinType.sortingArea.position);
-                if (distance < 37f)
+                if (distance < 40f)
                 {
                     manager.AddCoinToScore(gameObject, coinValue);
                     Destroy(gameObject);
@@ -76,10 +84,32 @@ public class CoinDrag : MonoBehaviour
                 float wrongDistance = Vector2.Distance(transform.position, coinType.sortingArea.position);
                 if (wrongDistance < 29f)
                 {
-                    manager.SubtractScore(coinType.value);
+                    Debug.Log("เหรียญถูกวางผิดที่!");
+                    ShowWarningMessage($"เหรียญ {coinValue} ถูกวางผิดที่!");
                     return;
                 }
             }
+        }
+    }
+
+    void ShowWarningMessage(string message)
+    {
+        if (warningText != null)
+        {
+            warningText.text = message;
+            warningText.gameObject.SetActive(true);
+
+            CancelInvoke("HideWarningMessage");
+            Invoke("HideWarningMessage", 2f);
+        }
+    }
+
+    void HideWarningMessage()
+    {
+        if (warningText != null)
+        {
+            warningText.gameObject.SetActive(false);
+            Debug.Log("ข้อความเตือนถูกซ่อน");
         }
     }
 
