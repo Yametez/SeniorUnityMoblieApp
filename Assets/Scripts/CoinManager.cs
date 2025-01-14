@@ -133,7 +133,7 @@ namespace CoinGame
             for (int i = 0; i < coinType.count; i++)
             {
                 Vector3 randomPos = coinPileArea.position + Random.insideUnitSphere * 2f;
-                randomPos.z = 0;
+                randomPos.z = -1;
                 
                 GameObject newCoin = Instantiate(coinType.prefab, randomPos, Quaternion.identity);
                 newCoin.transform.localScale = new Vector3(25f, 25f, 1f);

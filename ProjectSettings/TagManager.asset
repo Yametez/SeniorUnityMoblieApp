@@ -39,17 +39,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Coins
-    uniqueID: 2838566447
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Foreground
-    uniqueID: 2014725383
-    locked: 0
   - name: Background
     uniqueID: 80883869
+    locked: 0
+  - name: Coins
+    uniqueID: 2838566447
+    locked: 0
+  - name: Foreground
+    uniqueID: 2014725383
     locked: 0
   - name: outside
     uniqueID: 108230239
