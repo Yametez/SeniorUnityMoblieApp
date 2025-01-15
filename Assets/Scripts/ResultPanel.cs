@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using CoinGame;
 
 public class ResultPanel : MonoBehaviour
@@ -29,6 +30,11 @@ public class ResultPanel : MonoBehaviour
         coin5ResultText.text = $"เหรียญ 5 บาท: {coin5Count} เหรียญ";
         coin1ResultText.text = $"เหรียญ 1 บาท: {coin1Count} เหรียญ";
         totalScoreText.text = $"คะแนนรวม: {totalScore} บาท";
+    }
+
+    public void OnBackHomeButtonClick()
+    {
+        SceneManager.LoadScene(2);
     }
 
     public void OnRestartButtonClick()
