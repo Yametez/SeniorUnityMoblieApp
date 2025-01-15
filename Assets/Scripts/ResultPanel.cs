@@ -25,7 +25,9 @@ public class ResultPanel : MonoBehaviour
 
         gameObject.SetActive(true);
         
-        timeResultText.text = $"เวลาที่ใช้: {time:F2} วินาที";
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60f);
+        timeResultText.text = $"เวลาที่ใช้: {minutes}:{seconds:D2} นาที";
         coin10ResultText.text = $"เหรียญ 10 บาท: {coin10Count} เหรียญ";
         coin5ResultText.text = $"เหรียญ 5 บาท: {coin5Count} เหรียญ";
         coin1ResultText.text = $"เหรียญ 1 บาท: {coin1Count} เหรียญ";
