@@ -7,4 +7,9 @@ public class ButtonFirstHomePage : MonoBehaviour
     {
         SceneManager.LoadScene("Coingame");
     }
+
+    public void GoToLogin()
+    {
+        SceneManager.LoadScene("Login");
+    }
 }
