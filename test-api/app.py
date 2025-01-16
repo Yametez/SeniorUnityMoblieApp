@@ -1,10 +1,10 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from routes.Users import users_bp
-from routes.Admin import admin_bp
-from routes.Exam import exam_bp
+from routes.users import users_bp
+from routes.admin import admin_bp
+from routes.exam import exam_bp
 from routes.Training import training_bp
-from routes.Report import report_bp
+from routes.report import report_bp
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})  # กำหนด CORS ให้ชัดเจนขึ้น
