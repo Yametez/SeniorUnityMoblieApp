@@ -2,19 +2,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class RegisterManager : MonoBehaviour
+public class LoadSceneRegistertoLogin : MonoBehaviour
 {
     public Button registerButton;
 
     void Start()
     {
-        // ใส่ Listener เมื่อกดปุ่ม
-        registerButton.onClick.AddListener(ChangeScene);
+        if (registerButton != null)
+        {
+            registerButton.onClick.AddListener(ChangeScene);
+        }
+        else
+        {
+            Debug.LogError("Register button is not assigned!");
+        }
     }
 
     void ChangeScene()
     {
-        // เปลี่ยนซีนเมื่อกดปุ่ม
-        SceneManager.LoadScene("Login"); // แทน "MainMenu" ด้วยชื่อซีนที่ต้องการเปลี่ยนไป
+        SceneManager.LoadScene("Login");
     }
 }
