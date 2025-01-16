@@ -8,7 +8,7 @@ admin_bp = Blueprint('admin', __name__)
 def get_all_admins():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM admin')
+    cursor.execute('SELECT * FROM Admin')
     admins = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -19,7 +19,7 @@ def get_all_admins():
 def get_admin(admin_id):
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM admin WHERE adminid = %s', (admin_id,))
+    cursor.execute('SELECT * FROM Admin WHERE Admin_ID = %s', (admin_id,))
     admin = cursor.fetchone()
     cursor.close()
     connection.close()
@@ -30,17 +30,35 @@ def get_admin(admin_id):
 # Create new admin
 @admin_bp.route('/', methods=['POST'])
 def create_admin():
-    data = request.json
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute(
-        'INSERT INTO admin (name, surname, adminname, password) VALUES (%s, %s, %s, %s)',
-        (data['name'], data['surname'], data['adminname'], data['password'])
-    )
-    connection.commit()
-    cursor.close()
-    connection.close()
-    return jsonify({'message': 'Admin created successfully', 'adminid': cursor.lastrowid}), 201
+    try:
+        data = request.json
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        # ตรวจสอบว่ามีข้อมูลครบไหม
+        required_fields = ['Name', 'Surname', 'Email', 'Password']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'error': f'Missing required field: {field}'}), 400
+
+        # หา ID ล่าสุดและบวกเพิ่ม 1
+        cursor.execute('SELECT MAX(Admin_ID) FROM Admin')
+        max_id = cursor.fetchone()[0]
+        new_id = 1001 if max_id is None else max_id + 1  # เริ่มที่ 1001 ถ้าไม่มีข้อมูล
+
+        # เพิ่มข้อมูลโดยระบุ ID
+        cursor.execute(
+            'INSERT INTO Admin (Admin_ID, Name, Surname, Email, Password) VALUES (%s, %s, %s, %s, %s)',
+            (new_id, data['Name'], data['Surname'], data['Email'], data['Password'])
+        )
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return jsonify({'message': 'Admin created successfully', 'Admin_ID': new_id}), 201
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Update admin
 @admin_bp.route('/<int:admin_id>', methods=['PUT'])
@@ -49,8 +67,8 @@ def update_admin(admin_id):
     connection = get_db_connection()
     cursor = connection.cursor()
     cursor.execute(
-        'UPDATE admin SET name = %s, surname = %s, adminname = %s, password = %s WHERE adminid = %s',
-        (data['name'], data['surname'], data['adminname'], data['password'], admin_id)
+        'UPDATE Admin SET Name = %s, Surname = %s, Email = %s, Password = %s WHERE Admin_ID = %s',
+        (data['Name'], data['Surname'], data['Email'], data['Password'], admin_id)
     )
     connection.commit()
     cursor.close()
@@ -62,7 +80,7 @@ def update_admin(admin_id):
 def delete_admin(admin_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute('DELETE FROM admin WHERE adminid = %s', (admin_id,))
+    cursor.execute('DELETE FROM Admin WHERE Admin_ID = %s', (admin_id,))
     connection.commit()
     cursor.close()
     connection.close()

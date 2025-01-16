@@ -8,7 +8,7 @@ exam_bp = Blueprint('exam', __name__)
 def get_all_exams():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM exam')
+    cursor.execute('SELECT * FROM Exam')
     exams = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -19,7 +19,7 @@ def get_all_exams():
 def get_exam(exam_id):
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM exam WHERE examid = %s', (exam_id,))
+    cursor.execute('SELECT * FROM Exam WHERE Exam_ID = %s', (exam_id,))
     exam = cursor.fetchone()
     cursor.close()
     connection.close()
@@ -33,14 +33,20 @@ def create_exam():
     data = request.json
     connection = get_db_connection()
     cursor = connection.cursor()
+
+    # หา ID ล่าสุดและบวกเพิ่ม 1
+    cursor.execute('SELECT MAX(Exam_ID) FROM Exam')
+    max_id = cursor.fetchone()[0]
+    new_id = 301 if max_id is None else max_id + 1  # เริ่มที่ 301 ถ้าไม่มีข้อมูล
+
     cursor.execute(
-        'INSERT INTO exam (examname, questionexam, resultexam) VALUES (%s, %s, %s)',
-        (data['examname'], data['questionexam'], data['resultexam'])
+        'INSERT INTO Exam (Exam_ID, Exame_name, Start_Time, End_Time, Time_limit, Result_Exam) VALUES (%s, %s, %s, %s, %s, %s)',
+        (new_id, data['Exame_name'], data['Start_Time'], data['End_Time'], data['Time_limit'], data['Result_Exam'])
     )
     connection.commit()
     cursor.close()
     connection.close()
-    return jsonify({'message': 'Exam created successfully', 'examid': cursor.lastrowid}), 201
+    return jsonify({'message': 'Exam created successfully', 'Exam_ID': new_id}), 201
 
 # Update exam
 @exam_bp.route('/<int:exam_id>', methods=['PUT'])
@@ -49,8 +55,8 @@ def update_exam(exam_id):
     connection = get_db_connection()
     cursor = connection.cursor()
     cursor.execute(
-        'UPDATE exam SET examname = %s, questionexam = %s, resultexam = %s WHERE examid = %s',
-        (data['examname'], data['questionexam'], data['resultexam'], exam_id)
+        'UPDATE Exam SET Exame_name = %s, Start_Time = %s, End_Time = %s, Time_limit = %s, Result_Exam = %s WHERE Exam_ID = %s',
+        (data['Exame_name'], data['Start_Time'], data['End_Time'], data['Time_limit'], data['Result_Exam'], exam_id)
     )
     connection.commit()
     cursor.close()
@@ -62,7 +68,7 @@ def update_exam(exam_id):
 def delete_exam(exam_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute('DELETE FROM exam WHERE examid = %s', (exam_id,))
+    cursor.execute('DELETE FROM Exam WHERE Exam_ID = %s', (exam_id,))
     connection.commit()
     cursor.close()
     connection.close()
