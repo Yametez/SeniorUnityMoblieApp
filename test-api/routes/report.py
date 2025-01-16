@@ -24,3 +24,19 @@ def get_report(report_id):
     if report:
         return jsonify(report)
     return jsonify({'message': 'Report not found'}), 404 
+
+@report_bp.route('/', methods=['POST'])
+def create_report():
+    data = request.json
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        'INSERT INTO Report (User_ID, Activity_Type, Activity_ID, GameSession_ID, Start_Time, End_Time, Result) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+        (data['User_ID'], data['Activity_Type'], data['Activity_ID'], data['GameSession_ID'], 
+         data['Start_Time'], data['End_Time'], data['Result'])
+    )
+    connection.commit()
+    new_id = cursor.lastrowid
+    cursor.close()
+    connection.close()
+    return jsonify({'message': 'Report created successfully', 'Report_ID': new_id}), 201 
