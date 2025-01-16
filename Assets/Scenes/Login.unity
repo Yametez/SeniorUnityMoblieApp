@@ -212,9 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loginButton: {fileID: 0}
-  goToRegisterButton: {fileID: 0}
-  usernameInput: {fileID: 0}
-  passwordInput: {fileID: 0}
+  registerButton: {fileID: 0}
 --- !u!1 &205420341
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +304,7 @@ GameObject:
   - component: {fileID: 214345413}
   - component: {fileID: 214345412}
   - component: {fileID: 214345411}
+  - component: {fileID: 214345414}
   m_Layer: 5
   m_Name: Button register
   m_TagString: Untagged
@@ -415,6 +414,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214345409}
   m_CullTransparentMesh: 1
+--- !u!114 &214345414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214345409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d3da46453d34545a710161f98630be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &491796341
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,13 +665,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 552281398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b8a7be0286b2bf4fa7bd30352db85c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0130ea31dd50dd84bb1fe6795db114c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginButton: {fileID: 552281400}
-  goToRegisterButton: {fileID: 214345411}
-  usernameInput: {fileID: 0}
-  passwordInput: {fileID: 0}
 --- !u!1 &641745841
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,7 +726,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3af3701798f178542a5a65d567868863, type: 3}
     m_FontSize: 53
     m_FontStyle: 0
     m_BestFit: 0
@@ -729,7 +736,7 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19"
 --- !u!222 &641745844
@@ -877,7 +884,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3af3701798f178542a5a65d567868863, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
@@ -956,7 +963,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3af3701798f178542a5a65d567868863, type: 3}
     m_FontSize: 53
     m_FontStyle: 0
     m_BestFit: 0
@@ -966,7 +973,7 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u0E0A\u0E37\u0E48\u0E2D\u0E2A\u0E21\u0E32\u0E0A\u0E34\u0E01"
 --- !u!222 &1242429090
@@ -1407,7 +1414,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3af3701798f178542a5a65d567868863, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
