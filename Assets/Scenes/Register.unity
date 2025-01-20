@@ -1258,7 +1258,7 @@ GameObject:
   - component: {fileID: 588151906}
   - component: {fileID: 588151907}
   m_Layer: 5
-  m_Name: man
+  m_Name: MaleToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3013,7 +3013,7 @@ GameObject:
   - component: {fileID: 1405031687}
   - component: {fileID: 1405031688}
   m_Layer: 5
-  m_Name: woman
+  m_Name: FemaleToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3787,7 +3787,7 @@ GameObject:
   - component: {fileID: 1963993113}
   - component: {fileID: 1963993114}
   m_Layer: 5
-  m_Name: options
+  m_Name: GenderGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
