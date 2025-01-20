@@ -41,7 +41,7 @@ public class DBManager : MonoBehaviour
     }
 
     // ฟังก์ชันสำหรับ Login
-    public static bool ValidateLogin(string username, string password)
+    public static bool ValidateLogin(string email, string password)
     {
         if (connection == null)
         {
@@ -50,10 +50,10 @@ public class DBManager : MonoBehaviour
 
         try
         {
-            string query = "SELECT * FROM users WHERE username=@username AND password=@password";
+            string query = "SELECT * FROM users WHERE Email=@email AND Password=@password";
             MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue("@password", password); // ควรใช้การเข้ารหัสแบบ hash ในการใช้งานจริง
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@password", password);
 
             using (MySqlDataReader reader = cmd.ExecuteReader())
             {
