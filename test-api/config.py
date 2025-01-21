@@ -1,10 +1,15 @@
 import mysql.connector
+from dotenv import load_dotenv
+import os
+
+# โหลดค่าจากไฟล์ .env
+load_dotenv()
 
 def get_db_connection():
     connection = mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='2545',  # เปลี่ยนเป็น password ของคุณ
-        database='game_db'  # เปลี่ยนเป็นชื่อฐานข้อมูลที่คุณสร้างไว้
+        host=os.getenv('DB_HOST'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
+        database=os.getenv('DB_DATABASE')
     )
     return connection 

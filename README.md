@@ -16,6 +16,7 @@ python app.py
 * Node.js
 * Python 3.x
 * MySQL Server
+* pip install python-dotenv gunicorn
 
 # Initial Database Setup
 1. ติดตั้ง MySQL Server
