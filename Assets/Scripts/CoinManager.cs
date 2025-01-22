@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace CoinGame
 {
@@ -66,12 +67,10 @@ namespace CoinGame
                 Debug.Log($"Sorted coins - 10B: {coin10Count}, 5B: {coin5Count}, 1B: {coin1Count}");
                 Debug.Log($"Total sorted: {totalSorted}, Total in game: {totalCoinsInGame}");
                 
-                // เช็คเงื่อนไขจบเกม
+                // เพิ่มการหน่วงเวลาเล็กน้อยก่อนเช็คเงื่อนไขจบเกม
                 if (totalSorted == totalCoinsInGame && totalCoinsInGame > 0)
                 {
-                    Debug.Log("Game Complete! Showing results...");
-                    isGameActive = false;
-                    ShowResults();
+                    StartCoroutine(DelayedShowResults());
                 }
             }
         }
@@ -307,6 +306,9 @@ namespace CoinGame
 
         public void SubtractScore(int coinValue)
         {
+            // เพิ่มการเช็คว่าเกมยังทำงานอยู่
+            if (!isGameActive) return;
+
             switch (coinValue)
             {
                 case 10:
@@ -345,6 +347,27 @@ namespace CoinGame
                 scoreText.text = $"ยอดรวม: {totalScore} บาท";
                 Debug.Log($"Score updated: {totalScore}");
             }
+        }
+
+        // เพิ่มฟังก์ชันใหม่เพื่อหน่วงเวลาก่อนแสดงผล
+        private IEnumerator DelayedShowResults()
+        {
+            // รอให้การอัพเดทคะแนนเสร็จสมบูรณ์
+            yield return new WaitForSeconds(0.1f);
+            
+            // ปิดเกมก่อนคำนวณคะแนนสุดท้าย
+            isGameActive = false;
+            
+            // คำนวณคะแนนรวมครั้งสุดท้าย
+            totalScore = (coin10Count * 10) + (coin5Count * 5) + (coin1Count * 1);
+            
+            ShowResults();
+        }
+
+        // เพิ่มเมธอดสำหรับเช็คสถานะเกม
+        public bool IsGameActive()
+        {
+            return isGameActive;
         }
     }
 } 

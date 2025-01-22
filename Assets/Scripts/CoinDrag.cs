@@ -76,7 +76,7 @@ public class CoinDrag : MonoBehaviour
             if (coinValue == coinType.value)
             {
                 float distance = Vector2.Distance(transform.position, coinType.sortingArea.position);
-                if (distance < 40f)
+                if (distance < 50f)
                 {
                     manager.AddCoinToScore(gameObject, coinValue);
                     Destroy(gameObject);
@@ -145,7 +145,7 @@ public class CoinDrag : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (manager != null && isScored)
+        if (manager != null && isScored && manager.IsGameActive())
         {
             if ((coinValue == 10 && other.gameObject.name.Contains("Space10Bath")) ||
                 (coinValue == 5 && other.gameObject.name.Contains("Space5Bath")) ||
