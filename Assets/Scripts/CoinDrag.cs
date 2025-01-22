@@ -13,6 +13,8 @@ public class CoinDrag : MonoBehaviour
 
     public Text warningText;
 
+    private Vector3 startPosition;
+
     void Start()
     {
         if (manager == null)
@@ -28,6 +30,8 @@ public class CoinDrag : MonoBehaviour
         {
             warningText.gameObject.SetActive(false);
         }
+
+        startPosition = transform.position;
     }
 
     void OnMouseDown()
@@ -84,8 +88,8 @@ public class CoinDrag : MonoBehaviour
                 float wrongDistance = Vector2.Distance(transform.position, coinType.sortingArea.position);
                 if (wrongDistance < 29f)
                 {
-                    Debug.Log("เหรียญถูกวางผิดที่!");
-                    ShowWarningMessage($"เหรียญ {coinValue} ถูกวางผิดที่!");
+                    AlertManager.ShowAlert($"เหรียญ {coinValue} บาท วางผิดที่!");
+                    transform.position = GetStartPosition();
                     return;
                 }
             }
@@ -118,6 +122,11 @@ public class CoinDrag : MonoBehaviour
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = -Camera.main.transform.position.z;
         return Camera.main.ScreenToWorldPoint(mousePoint);
+    }
+
+    Vector3 GetStartPosition()
+    {
+        return startPosition;
     }
 
     void OnTriggerEnter2D(Collider2D other)
