@@ -130,13 +130,58 @@ namespace CoinGame
 
         void SpawnCoins(CoinType coinType)
         {
+            List<Vector3> usedPositions = new List<Vector3>();
+            float minDistance = 50f; // เพิ่มระยะห่างให้มากขึ้นเพื่อให้เห็นการกระจายชัดเจน
+            
+            // ลดขนาดพื้นที่ให้พอดีกับกรอบสีม่วง
+            float areaWidth = 150f;   // ลดลงจาก 200f
+            float areaHeight = 150f;  // ลดลงจาก 200f
+            
             for (int i = 0; i < coinType.count; i++)
             {
-                Vector3 randomPos = coinPileArea.position + Random.insideUnitSphere * 2f;
-                randomPos.z = -1;
+                Vector3 randomPos;
+                bool validPosition = false;
+                int maxAttempts = 30; // ป้องกันการวนลูปไม่รู้จบ
+                int attempts = 0;
+
+                // วนลูปจนกว่าจะได้ตำแหน่งที่ไม่ซ้ำกับเหรียญอื่น
+                do {
+                    // จำกัดพื้นที่การสุ่มให้แคบลง
+                    float randomX = Random.Range(-areaWidth/3, areaWidth/3);
+                    float randomY = Random.Range(-areaHeight/3, areaHeight/3);
+                    
+                    // ใช้ตำแหน่งสัมพัทธ์กับ coinPileArea
+                    randomPos = new Vector3(
+                        coinPileArea.position.x + randomX,
+                        coinPileArea.position.y + randomY,
+                        -0.1f
+                    );
+                    
+                    // ตรวจสอบว่าตำแหน่งนี้ห่างจากเหรียญอื่นเพียงพอ
+                    validPosition = true;
+                    foreach (Vector3 usedPos in usedPositions)
+                    {
+                        if (Vector2.Distance(new Vector2(randomPos.x, randomPos.y), 
+                                          new Vector2(usedPos.x, usedPos.y)) < minDistance)
+                        {
+                            validPosition = false;
+                            break;
+                        }
+                    }
+                    
+                    attempts++;
+                    if (attempts >= maxAttempts) break;
+                    
+                } while (!validPosition);
+
+                // เก็บตำแหน่งที่ใช้แล้ว
+                usedPositions.Add(randomPos);
                 
                 GameObject newCoin = Instantiate(coinType.prefab, randomPos, Quaternion.identity);
                 newCoin.transform.localScale = new Vector3(25f, 25f, 1f);
+                
+                // ตั้งให้ coin เป็นลูกของ coinPileArea เพื่อให้ตำแหน่งสัมพัทธ์ถูกต้อง
+                newCoin.transform.SetParent(coinPileArea);
                 
                 activeCoinPile.Add(newCoin);
                 
@@ -147,6 +192,8 @@ namespace CoinGame
                     dragComponent.coinValue = coinType.value;
                 }
                 dragComponent.manager = this;
+                
+                Debug.Log($"Spawned coin at position: {randomPos}"); // เพิ่ม Debug log
             }
         }
 
