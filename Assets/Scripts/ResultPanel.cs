@@ -23,8 +23,6 @@ public class ResultPanel : MonoBehaviour
             return;
         }
 
-        int calculatedScore = (coin10Count * 10) + (coin5Count * 5) + (coin1Count * 1);
-        
         gameObject.SetActive(true);
         
         int minutes = Mathf.FloorToInt(time / 60f);
@@ -33,10 +31,10 @@ public class ResultPanel : MonoBehaviour
         coin10ResultText.text = $"เหรียญ 10 บาท: {coin10Count} เหรียญ";
         coin5ResultText.text = $"เหรียญ 5 บาท: {coin5Count} เหรียญ";
         coin1ResultText.text = $"เหรียญ 1 บาท: {coin1Count} เหรียญ";
-        totalScoreText.text = $"คะแนนรวม: {calculatedScore} บาท";
+        totalScoreText.text = $"คะแนนรวม: {totalScore} บาท";
 
         Debug.Log($"Result Panel - Coins: 10B={coin10Count}, 5B={coin5Count}, 1B={coin1Count}");
-        Debug.Log($"Result Panel - Calculated Score: {calculatedScore}, Received Score: {totalScore}");
+        Debug.Log($"Result Panel - Calculated Score: {totalScore}");
     }
 
     public void OnBackHomeButtonClick()
