@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 200524772}
   - component: {fileID: 200524774}
   - component: {fileID: 200524773}
-  - component: {fileID: 200524775}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -199,18 +198,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200524771}
   m_CullTransparentMesh: 1
---- !u!114 &200524775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200524771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b8a7be0286b2bf4fa7bd30352db85c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &205420341
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +360,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 214345412}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 214345414}
+        m_TargetAssemblyTypeName: GotoRegister, Assembly-CSharp
+        m_MethodName: GoToRegisterScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &214345412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,16 +420,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 214345409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1d3da46453d34545a710161f98630be, type: 3}
+  m_Script: {fileID: 11500000, guid: 013e1162aefee0042bd2eb1176edea09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emailInput: {fileID: 0}
-  passwordInput: {fileID: 0}
-  nameInput: {fileID: 0}
-  surnameInput: {fileID: 0}
-  ageInput: {fileID: 0}
-  genderToggle: {fileID: 0}
-  acceptTermsToggle: {fileID: 0}
 --- !u!1 &491796341
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &935190192
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1430,7 +1422,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 5
-  m_CharacterLimit: 0
+  m_CharacterLimit: 255
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1734,7 +1726,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 6
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
