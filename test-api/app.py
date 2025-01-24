@@ -5,6 +5,7 @@ from routes.admin import admin_bp
 from routes.exam import exam_bp
 from routes.Training import training_bp
 from routes.report import report_bp
+import os
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})  # กำหนด CORS ให้ชัดเจนขึ้น
@@ -25,9 +26,15 @@ def not_found(error):
 def method_not_allowed(error):
     return jsonify({'error': 'Method not allowed'}), 405
 
+@app.route('/')
+def index():
+    return jsonify({'message': 'Welcome to API'})
+
 @app.route('/test', methods=['GET'])
 def test():
     return jsonify({'message': 'API is working!'})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3000)  # เพิ่ม debug mode
+    # เปลี่ยนจาก port=3000 เป็น port=10000
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
