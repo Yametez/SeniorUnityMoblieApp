@@ -8,7 +8,7 @@ admin_bp = Blueprint('admin', __name__)
 def get_all_admins():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM Users WHERE role = "admin"')
+    cursor.execute('SELECT * FROM users WHERE role = "admin"')
     admins = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -19,7 +19,7 @@ def get_all_admins():
 def get_admin(admin_id):
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM Admin WHERE Admin_ID = %s', (admin_id,))
+    cursor.execute('SELECT * FROM users WHERE User_ID = %s', (admin_id,))
     admin = cursor.fetchone()
     cursor.close()
     connection.close()
@@ -46,12 +46,12 @@ def create_admin():
             return jsonify({'error': 'Gender must be either "Male" or "Female"'}), 400
 
         # หา ID ล่าสุดสำหรับ admin
-        cursor.execute('SELECT MAX(User_ID) FROM Users WHERE role = "admin"')
+        cursor.execute('SELECT MAX(User_ID) FROM users WHERE role = "admin"')
         max_id = cursor.fetchone()[0]
         new_id = 1001 if max_id is None else max_id + 1
 
         cursor.execute('''
-            INSERT INTO Users 
+            INSERT INTO users 
             (User_ID, Name, Surname, Email, Password, Age, Gender, role, auth_type) 
             VALUES (%s, %s, %s, %s, %s, %s, %s, 'admin', 'email')
         ''', (new_id, data['Name'], data['Surname'], data['Email'], 
@@ -110,7 +110,7 @@ def update_admin(admin_id):
 
         # สร้างคำสั่ง SQL
         sql = f'''
-            UPDATE Users 
+            UPDATE users 
             SET {', '.join(update_fields)}
             WHERE User_ID = %s AND role = 'admin'
         '''
@@ -134,7 +134,7 @@ def update_admin(admin_id):
 def delete_admin(admin_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute('DELETE FROM Admin WHERE Admin_ID = %s', (admin_id,))
+    cursor.execute('DELETE FROM users WHERE User_ID = %s AND role = "admin"', (admin_id,))
     connection.commit()
     cursor.close()
     connection.close()
