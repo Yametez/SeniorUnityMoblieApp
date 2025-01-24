@@ -19,7 +19,7 @@ def get_all_users():
 def get_user(user_id):
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM users WHERE userid = %s', (user_id,))
+    cursor.execute('SELECT * FROM users WHERE User_ID = %s', (user_id,))
     user = cursor.fetchone()
     cursor.close()
     connection.close()
@@ -50,16 +50,16 @@ def create_user():
 
         # หา ID ล่าสุดตาม role
         if role == 'admin':
-            cursor.execute('SELECT MAX(User_ID) FROM Users WHERE role = "admin"')
+            cursor.execute('SELECT MAX(User_ID) FROM users WHERE role = "admin"')
             max_id = cursor.fetchone()[0]
             new_id = 1001 if max_id is None else max_id + 1
         else:
-            cursor.execute('SELECT MAX(User_ID) FROM Users WHERE role = "user"')
+            cursor.execute('SELECT MAX(User_ID) FROM users WHERE role = "user"')
             max_id = cursor.fetchone()[0]
             new_id = 101 if max_id is None else max_id + 1
 
         cursor.execute('''
-            INSERT INTO Users 
+            INSERT INTO users 
             (User_ID, Name, Surname, Email, Password, Age, Gender, role, auth_type) 
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         ''', (new_id, data['Name'], data['Surname'], data['Email'], 
@@ -127,12 +127,12 @@ def google_signin():
                 connection.commit()
         else:
             # สร้าง user ใหม่
-            cursor.execute('SELECT MAX(User_ID) FROM Users WHERE role = "user"')
+            cursor.execute('SELECT MAX(User_ID) FROM users WHERE role = "user"')
             max_id = cursor.fetchone()[0]
             new_id = 101 if max_id is None else max_id + 1
             
             cursor.execute('''
-                INSERT INTO Users 
+                INSERT INTO users 
                 (User_ID, Email, google_id, role, auth_type) 
                 VALUES (%s, %s, %s, 'user', 'google')
             ''', (new_id, email, google_id))
