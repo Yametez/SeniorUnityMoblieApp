@@ -40,25 +40,39 @@ def create_user():
             if field not in data:
                 return jsonify({'error': f'Missing required field: {field}'}), 400
 
-        # ตรวจสอบว่า Gender เป็นค่าที่ถูกต้อง
+        # ตรวจสอบ Gender
         if data['Gender'] not in ['Male', 'Female']:
             return jsonify({'error': 'Gender must be either "Male" or "Female"'}), 400
 
-        # หา ID ล่าสุดและบวกเพิ่ม 1
-        cursor.execute('SELECT MAX(User_ID) FROM users')
-        max_id = cursor.fetchone()[0]
-        new_id = 101 if max_id is None else max_id + 1  # เริ่มที่ 101 ถ้าไม่มีข้อมูล
+        # กำหนด auth_type (default เป็น 'email')
+        auth_type = data.get('auth_type', 'email')
+        role = data.get('role', 'user')
 
-        # เพิ่มข้อมูลโดยระบุ ID
-        cursor.execute(
-            'INSERT INTO users (User_ID, Name, Surname, Email, Password, Age, Gender) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-            (new_id, data['Name'], data['Surname'], data['Email'], data['Password'], data['Age'], data['Gender'])
-        )
+        # หา ID ล่าสุดตาม role
+        if role == 'admin':
+            cursor.execute('SELECT MAX(User_ID) FROM Users WHERE role = "admin"')
+            max_id = cursor.fetchone()[0]
+            new_id = 1001 if max_id is None else max_id + 1
+        else:
+            cursor.execute('SELECT MAX(User_ID) FROM Users WHERE role = "user"')
+            max_id = cursor.fetchone()[0]
+            new_id = 101 if max_id is None else max_id + 1
+
+        cursor.execute('''
+            INSERT INTO Users 
+            (User_ID, Name, Surname, Email, Password, Age, Gender, role, auth_type) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        ''', (new_id, data['Name'], data['Surname'], data['Email'], 
+              data['Password'], data['Age'], data['Gender'], role, auth_type))
+        
         connection.commit()
         cursor.close()
         connection.close()
 
-        return jsonify({'message': 'User created successfully', 'User_ID': new_id}), 201
+        return jsonify({
+            'message': f'{role.capitalize()} created successfully',
+            'User_ID': new_id
+        }), 201
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -86,3 +100,56 @@ def delete_user(user_id):
     cursor.close()
     connection.close()
     return jsonify({'message': 'User deleted successfully'})
+
+# เพิ่ม endpoint สำหรับ Google Sign-In
+@users_bp.route('/google-signin', methods=['POST'])
+def google_signin():
+    try:
+        data = request.json
+        email = data['email']
+        google_id = data['google_id']
+        
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        
+        # ตรวจสอบว่ามี email นี้อยู่แล้วหรือไม่
+        cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
+        user = cursor.fetchone()
+        
+        if user:
+            # อัพเดท google_id ถ้าจำเป็น
+            if not user['google_id']:
+                cursor.execute('''
+                    UPDATE Users 
+                    SET google_id = %s, auth_type = 'google' 
+                    WHERE User_ID = %s
+                ''', (google_id, user['User_ID']))
+                connection.commit()
+        else:
+            # สร้าง user ใหม่
+            cursor.execute('SELECT MAX(User_ID) FROM Users WHERE role = "user"')
+            max_id = cursor.fetchone()[0]
+            new_id = 101 if max_id is None else max_id + 1
+            
+            cursor.execute('''
+                INSERT INTO Users 
+                (User_ID, Email, google_id, role, auth_type) 
+                VALUES (%s, %s, %s, 'user', 'google')
+            ''', (new_id, email, google_id))
+            connection.commit()
+            user = {
+                'User_ID': new_id,
+                'Email': email,
+                'role': 'user'
+            }
+        
+        cursor.close()
+        connection.close()
+        
+        return jsonify({
+            'success': True,
+            'user': user
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

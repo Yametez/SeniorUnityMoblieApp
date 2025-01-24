@@ -8,7 +8,7 @@ admin_bp = Blueprint('admin', __name__)
 def get_all_admins():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM Admin')
+    cursor.execute('SELECT * FROM Users WHERE role = "admin"')
     admins = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -36,26 +36,35 @@ def create_admin():
         cursor = connection.cursor()
 
         # ตรวจสอบว่ามีข้อมูลครบไหม
-        required_fields = ['Name', 'Surname', 'Email', 'Password']
+        required_fields = ['Name', 'Surname', 'Email', 'Password', 'Age', 'Gender']
         for field in required_fields:
             if field not in data:
                 return jsonify({'error': f'Missing required field: {field}'}), 400
 
-        # หา ID ล่าสุดและบวกเพิ่ม 1
-        cursor.execute('SELECT MAX(Admin_ID) FROM Admin')
-        max_id = cursor.fetchone()[0]
-        new_id = 1001 if max_id is None else max_id + 1  # เริ่มที่ 1001 ถ้าไม่มีข้อมูล
+        # ตรวจสอบ Gender
+        if data['Gender'] not in ['Male', 'Female']:
+            return jsonify({'error': 'Gender must be either "Male" or "Female"'}), 400
 
-        # เพิ่มข้อมูลโดยระบุ ID
-        cursor.execute(
-            'INSERT INTO Admin (Admin_ID, Name, Surname, Email, Password) VALUES (%s, %s, %s, %s, %s)',
-            (new_id, data['Name'], data['Surname'], data['Email'], data['Password'])
-        )
+        # หา ID ล่าสุดสำหรับ admin
+        cursor.execute('SELECT MAX(User_ID) FROM Users WHERE role = "admin"')
+        max_id = cursor.fetchone()[0]
+        new_id = 1001 if max_id is None else max_id + 1
+
+        cursor.execute('''
+            INSERT INTO Users 
+            (User_ID, Name, Surname, Email, Password, Age, Gender, role, auth_type) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, 'admin', 'email')
+        ''', (new_id, data['Name'], data['Surname'], data['Email'], 
+              data['Password'], data['Age'], data['Gender']))
+        
         connection.commit()
         cursor.close()
         connection.close()
 
-        return jsonify({'message': 'Admin created successfully', 'Admin_ID': new_id}), 201
+        return jsonify({
+            'message': 'Admin created successfully',
+            'User_ID': new_id
+        }), 201
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -63,17 +72,62 @@ def create_admin():
 # Update admin
 @admin_bp.route('/<int:admin_id>', methods=['PUT'])
 def update_admin(admin_id):
-    data = request.json
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute(
-        'UPDATE Admin SET Name = %s, Surname = %s, Email = %s, Password = %s WHERE Admin_ID = %s',
-        (data['Name'], data['Surname'], data['Email'], data['Password'], admin_id)
-    )
-    connection.commit()
-    cursor.close()
-    connection.close()
-    return jsonify({'message': 'Admin updated successfully'})
+    try:
+        data = request.json
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        update_fields = []
+        update_values = []
+        
+        # ตรวจสอบว่ามีฟิลด์ไหนที่ต้องการอัพเดท
+        if 'Name' in data:
+            update_fields.append('Name = %s')
+            update_values.append(data['Name'])
+        if 'Surname' in data:
+            update_fields.append('Surname = %s')
+            update_values.append(data['Surname'])
+        if 'Email' in data:
+            update_fields.append('Email = %s')
+            update_values.append(data['Email'])
+        if 'Password' in data:
+            update_fields.append('Password = %s')
+            update_values.append(data['Password'])
+        if 'Age' in data:
+            update_fields.append('Age = %s')
+            update_values.append(data['Age'])
+        if 'Gender' in data:
+            if data['Gender'] not in ['Male', 'Female']:
+                return jsonify({'error': 'Gender must be either "Male" or "Female"'}), 400
+            update_fields.append('Gender = %s')
+            update_values.append(data['Gender'])
+
+        if not update_fields:
+            return jsonify({'message': 'No fields to update'}), 400
+
+        # เพิ่ม admin_id เข้าไปใน values
+        update_values.append(admin_id)
+
+        # สร้างคำสั่ง SQL
+        sql = f'''
+            UPDATE Users 
+            SET {', '.join(update_fields)}
+            WHERE User_ID = %s AND role = 'admin'
+        '''
+        
+        cursor.execute(sql, update_values)
+        connection.commit()
+        
+        if cursor.rowcount == 0:
+            return jsonify({'message': 'Admin not found'}), 404
+
+        cursor.close()
+        connection.close()
+
+        return jsonify({'message': 'Admin updated successfully'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Delete admin
 @admin_bp.route('/<int:admin_id>', methods=['DELETE'])
