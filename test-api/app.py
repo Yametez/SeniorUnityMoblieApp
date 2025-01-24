@@ -8,9 +8,9 @@ from routes.report import report_bp
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})  # กำหนด CORS ให้ชัดเจนขึ้น
+CORS(app)
 
-# ลงทะเบียน blueprint
+# Register blueprints
 app.register_blueprint(users_bp, url_prefix='/api/users')
 app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(exam_bp, url_prefix='/api/exam')
