@@ -1,0 +1,892 @@
+Using pre-set license
+Built from '2022.3/release' branch; Version is '2022.3.5f1 (9674261d40ee) revision 9860134'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'en' Physical Memory: 16296 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+D:\Unity project\2022.3.5f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker2
+-projectPath
+D:/for github/SeniorUnityMoblieApp
+-logFile
+Logs/AssetImportWorker2.log
+-srvPort
+51313
+Successfully changed project path to: D:/for github/SeniorUnityMoblieApp
+D:/for github/SeniorUnityMoblieApp
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [18304] Host "[IP] 172.0.0.123 [Port] 0 [Flags] 2 [Guid] 784651653 [EditorId] 784651653 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-VJH0G4A) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [18304] Host "[IP] 172.0.0.123 [Port] 0 [Flags] 2 [Guid] 784651653 [EditorId] 784651653 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-VJH0G4A) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 10.32 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.5f1 (9674261d40ee)
+[Subsystems] Discovering subsystems at path D:/Unity project/2022.3.5f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/for github/SeniorUnityMoblieApp/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1650 (ID=0x1f0a)
+    Vendor:   NVIDIA
+    VRAM:     3935 MB
+    Driver:   32.0.15.6636
+Initialize mono
+Mono path[0] = 'D:/Unity project/2022.3.5f1/Editor/Data/Managed'
+Mono path[1] = 'D:/Unity project/2022.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/Unity project/2022.3.5f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56632
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Unity project/2022.3.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/Unity project/2022.3.5f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: D:/Unity project/2022.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: D:/Unity project/2022.3.5f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
+Registered in 0.006767 seconds.
+- Loaded All Assemblies, in  0.314 seconds
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 265 ms
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.537 seconds
+Domain Reload Profiling: 851ms
+	BeginReloadAssembly (78ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (48ms)
+	LoadAllAssembliesAndSetupDomain (151ms)
+		LoadAssemblies (78ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (148ms)
+			TypeCache.Refresh (147ms)
+				TypeCache.ScanAssembly (133ms)
+			ScanForSourceGeneratedMonoScriptInfo (1ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (537ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (480ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (361ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (79ms)
+			ProcessInitializeOnLoadMethodAttributes (35ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\for github\SeniorUnityMoblieApp\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\for github\SeniorUnityMoblieApp\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.701 seconds
+Refreshing native plugins compatible for Editor in 6.71 ms, found 4 plugins.
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+- Finished resetting the current domain, in  0.548 seconds
+Domain Reload Profiling: 1249ms
+	BeginReloadAssembly (112ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (21ms)
+	RebuildCommonClasses (36ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (20ms)
+	LoadAllAssembliesAndSetupDomain (525ms)
+		LoadAssemblies (254ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (327ms)
+			TypeCache.Refresh (303ms)
+				TypeCache.ScanAssembly (285ms)
+			ScanForSourceGeneratedMonoScriptInfo (20ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (549ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (406ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (19ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (68ms)
+			ProcessInitializeOnLoadAttributes (287ms)
+			ProcessInitializeOnLoadMethodAttributes (26ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 4.73 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4299 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 83 unused Assets / (71.8 KB). Loaded Objects now: 4747.
+Memory consumption went from 156.2 MB to 156.1 MB.
+Total: 4.535700 ms (FindLiveObjects: 0.308100 ms CreateObjectMapping: 0.127700 ms MarkObjects: 3.892700 ms  DeleteObjects: 0.206400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 756ad292c208cfabdd7b50bc23989ffe -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 4228.987214 seconds.
+  path: Assets/Buttons/buttons.png
+  artifactKey: Guid(9d6738d80b1a977408aa93f3e5b08f36) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Buttons/buttons.png using Guid(9d6738d80b1a977408aa93f3e5b08f36) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de428207704f3d5ba05cb86ac423fa2a') in 0.199688 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Violet Theme Ui/Panels/Dark Panel Yellow.png
+  artifactKey: Guid(5f9fbceed0b35d2428c55a800ea8b1c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Panels/Dark Panel Yellow.png using Guid(5f9fbceed0b35d2428c55a800ea8b1c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52b58ca5999d983ef14855eb930c3ec9') in 0.067041 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Violet Theme Ui/Panels/Dark Panels Style 2 Green.png
+  artifactKey: Guid(b40d433859d7ac84bbaef8c466cbe4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Panels/Dark Panels Style 2 Green.png using Guid(b40d433859d7ac84bbaef8c466cbe4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8eaf5bf3e8a65da1851705e6dbd4ad75') in 0.038415 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Violet Theme Ui/Panels/Dark Panels Style 2 Blue.png
+  artifactKey: Guid(c0e73a4e12747dd46b7ca90d2284fb29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Panels/Dark Panels Style 2 Blue.png using Guid(c0e73a4e12747dd46b7ca90d2284fb29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed4fd12bc200dd075ee62a17bde27efb') in 0.035975 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Cross Arows.png
+  artifactKey: Guid(f74547b17045ca249b3758b6ed9bc68a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Cross Arows.png using Guid(f74547b17045ca249b3758b6ed9bc68a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '239d43d52ada368b0c146e5af793997f') in 0.074006 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Violet Theme Ui/Panels/Dark Panels Style 2 Pink.png
+  artifactKey: Guid(816373d26daf2fe40b59acd3712be032) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Panels/Dark Panels Style 2 Pink.png using Guid(816373d26daf2fe40b59acd3712be032) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '82235976ea4db61a3c9abbd07962d09f') in 0.026963 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Violet Theme Ui/Panels/Dark Panel Orange.png
+  artifactKey: Guid(d3775896da0a0d842bb96a97235b216f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Panels/Dark Panel Orange.png using Guid(d3775896da0a0d842bb96a97235b216f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a15b241462ba86dee25f795ec705530a') in 0.085562 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Controls.png
+  artifactKey: Guid(984423f0a5bc0be4f982eef9255f71a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Controls.png using Guid(984423f0a5bc0be4f982eef9255f71a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ea6c039fd1c147a39bea4cd954e97038') in 0.034723 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Coin.png
+  artifactKey: Guid(93978dcbff65c754c82f146ed36c1c45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Coin.png using Guid(93978dcbff65c754c82f146ed36c1c45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f3cfef297a6896d3d62ae0bc307eb1aa') in 0.015826 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Energy.png
+  artifactKey: Guid(0e97f32679693fb42816be9a80e0254b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Energy.png using Guid(0e97f32679693fb42816be9a80e0254b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5e08225e64a39195f7975d082a7aa66') in 0.012939 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.019262 seconds.
+  path: Assets/Violet Theme Ui/Sliders/Fill Green.png
+  artifactKey: Guid(5c6b1d8bbb4d72743bce6f67053ac941) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Sliders/Fill Green.png using Guid(5c6b1d8bbb4d72743bce6f67053ac941) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7229b6e0bb2cc217b06923a682a9d5e1') in 0.012421 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.121602 seconds.
+  path: Assets/Violet Theme Ui/Sliders/Fill Pink.png
+  artifactKey: Guid(e13090386b0ba8948876eaafcac9a9af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Sliders/Fill Pink.png using Guid(e13090386b0ba8948876eaafcac9a9af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '703bac76c5041b335294fb7f7ee2727f') in 0.011221 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.013836 seconds.
+  path: Assets/Violet Theme Ui/Sliders/Fill Red.png
+  artifactKey: Guid(89aff9e18247bb647979c8e71d9dc5c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Sliders/Fill Red.png using Guid(89aff9e18247bb647979c8e71d9dc5c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4c7802601d80d72a970a327e45d4902') in 0.011693 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.032025 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Film.png
+  artifactKey: Guid(0147758256f443c4aabf6e3f2478115a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Film.png using Guid(0147758256f443c4aabf6e3f2478115a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5349af40e6b9115596eedadc8d61fd5') in 0.015750 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.004525 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Gem 1 Blue.png
+  artifactKey: Guid(b0f85d5a744f799449233745652b567a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Gem 1 Blue.png using Guid(b0f85d5a744f799449233745652b567a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '923f9ee604cc7cde73a94e43ed1e53d4') in 0.014113 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.090967 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Gem 1 Purple.png
+  artifactKey: Guid(7ae2be9a267597a4596c1cdebed8f84d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Gem 1 Purple.png using Guid(7ae2be9a267597a4596c1cdebed8f84d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a2cbd2e71fd6c0917b4d267244597f6') in 0.066481 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.016612 seconds.
+  path: Assets/Violet Theme Ui/GemsAndCoins/Gem Sack.png
+  artifactKey: Guid(66635ef6a77b29b4b95afd31dd58971c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/GemsAndCoins/Gem Sack.png using Guid(66635ef6a77b29b4b95afd31dd58971c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfa9414e8da2002ce4530e97f408c174') in 0.013506 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.135113 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Gem.png
+  artifactKey: Guid(fdd7c39b6deb3f840b5fc0e9cbc6cb00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Gem.png using Guid(fdd7c39b6deb3f840b5fc0e9cbc6cb00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ea0ac9d2608d45c75c6ea0bc2265349') in 0.013564 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.005972 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Goal.png
+  artifactKey: Guid(ed3aa35479ded734b8b98f3132c71c43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Goal.png using Guid(ed3aa35479ded734b8b98f3132c71c43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd49349f26bd98a25b1fba12fddb3e0e0') in 0.012070 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.002701 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Gold Key.png
+  artifactKey: Guid(76a0ae3b6739b9d49b8afe591137c19d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Gold Key.png using Guid(76a0ae3b6739b9d49b8afe591137c19d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39acb2a2b446d3a731e6bab7748d0bb7') in 0.014385 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.009365 seconds.
+  path: Assets/Violet Theme Ui/Sliders/Handle Blue.png
+  artifactKey: Guid(90a65e5f1a9c4c04a89791b3a9eda3c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Sliders/Handle Blue.png using Guid(90a65e5f1a9c4c04a89791b3a9eda3c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f9e1b61ea6bcc15c780b59099dd7053') in 0.020026 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.173688 seconds.
+  path: Assets/Violet Theme Ui/Sliders/Handle Orange.png
+  artifactKey: Guid(d8a3082eb4aa84c41babf3558d2a77e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Sliders/Handle Orange.png using Guid(d8a3082eb4aa84c41babf3558d2a77e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e72b4dbeedfe85f11929ae5e398b0422') in 0.011607 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.005416 seconds.
+  path: Assets/Violet Theme Ui/Sliders/Handle Purple.png
+  artifactKey: Guid(404ffb4f6589b7d438379276024b6f39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Sliders/Handle Purple.png using Guid(404ffb4f6589b7d438379276024b6f39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '019debf3a2e427733c4f394e795a690a') in 0.017830 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.012782 seconds.
+  path: Assets/Violet Theme Ui/Sliders/Handle Violet.png
+  artifactKey: Guid(1bf6b9a3ebb8b9444b55cca415d03ac5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Sliders/Handle Violet.png using Guid(1bf6b9a3ebb8b9444b55cca415d03ac5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c722230d3e74cb359fb9281297466e54') in 0.020809 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.154887 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Heart Dark.png
+  artifactKey: Guid(c52c66e8c335c1640a21e3d2c274bfd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Heart Dark.png using Guid(c52c66e8c335c1640a21e3d2c274bfd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32edf836d6f22de7693694adfb459ac2') in 0.015551 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.012616 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Hour Glass.png
+  artifactKey: Guid(647a538c2f2902245bf207b897881a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Hour Glass.png using Guid(647a538c2f2902245bf207b897881a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3edaa2742f02a42cc81fc9dbd5438765') in 0.013416 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 1.086843 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/meat.png
+  artifactKey: Guid(f2846ec1658c8534d8487b998ae89b4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/meat.png using Guid(f2846ec1658c8534d8487b998ae89b4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b65131c3c757cf5369c5f73bf54af7d8') in 0.021516 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.035152 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Messages.png
+  artifactKey: Guid(a45f57030d9f2c74cac4e4517b2846a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Messages.png using Guid(a45f57030d9f2c74cac4e4517b2846a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb9871126cb250f8c7617e89c49d3f94') in 0.012342 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.013256 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/orange.png
+  artifactKey: Guid(b26193825d007d7419f7e53259af7102) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/orange.png using Guid(b26193825d007d7419f7e53259af7102) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8d234aa466468ef154040f879d9b8110') in 0.015729 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.111033 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/pot of gold.png
+  artifactKey: Guid(51d736afd0db7194b8ef184a5ae24672) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/pot of gold.png using Guid(51d736afd0db7194b8ef184a5ae24672) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba2f049aeb648af3e3461058e14b5ada') in 0.022783 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.010640 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Potion Red.png
+  artifactKey: Guid(9035a2602b4b6774fb8c30b4f5872fca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Potion Red.png using Guid(9035a2602b4b6774fb8c30b4f5872fca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f203e7c702f56f45b49b04ee0ed6721') in 0.031203 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.018000 seconds.
+  path: Assets/Violet Theme Ui/White Icons/PowerUp1.png
+  artifactKey: Guid(12c7ee7a153b80e459933263e2a26be6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/PowerUp1.png using Guid(12c7ee7a153b80e459933263e2a26be6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c8725f4c4b90cb78d1943af17763394') in 0.014421 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 1.218684 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Right.png
+  artifactKey: Guid(8cfc3be0827dfcb4584b460907d7a761) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Right.png using Guid(8cfc3be0827dfcb4584b460907d7a761) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4809667d4ab0375cf6477a2fa4636d45') in 0.014698 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.010251 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/shield blue.png
+  artifactKey: Guid(888bc6c3bee4a644894eb075d8d389f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/shield blue.png using Guid(888bc6c3bee4a644894eb075d8d389f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d7b4bf42726045757001de5b2a92d18') in 0.019280 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.044718 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Silver Key.png
+  artifactKey: Guid(470da63d7c6afa64db7287d30ce49c90) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Silver Key.png using Guid(470da63d7c6afa64db7287d30ce49c90) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '603746829e8c8a49393ca0f979cc6d34') in 0.022309 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.484285 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Skull.png
+  artifactKey: Guid(18050bc5ddbcb9f4e8a573db7f543236) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Skull.png using Guid(18050bc5ddbcb9f4e8a573db7f543236) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7b9583df190305823b748eceb5f2407') in 0.024742 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.299634 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Sound.png
+  artifactKey: Guid(aa7f0fb09d0e28744b8553b6bbf51cb3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Sound.png using Guid(aa7f0fb09d0e28744b8553b6bbf51cb3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5469f5e3de3d561ae0d709ba3128233a') in 0.017277 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.401158 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Star.png
+  artifactKey: Guid(174cd13a4c04d4944a6e414d9e3987f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Star.png using Guid(174cd13a4c04d4944a6e414d9e3987f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b91ef9583288312927b4b3fcbf8a06b') in 0.015448 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.014535 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Store 1.png
+  artifactKey: Guid(448349a00cacb4d4a9f92ac041a2cfb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Store 1.png using Guid(448349a00cacb4d4a9f92ac041a2cfb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d16873a0a0e4325d0cf4e480fc83e44') in 0.015747 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.013687 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Store 2.png
+  artifactKey: Guid(c1db3d1c6576a28499770b3b9fc946e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Store 2.png using Guid(c1db3d1c6576a28499770b3b9fc946e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc66684cc7c423e729ed892ed44d6a48') in 0.014089 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 1.687966 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Touch.png
+  artifactKey: Guid(311c2d5a384d93e49b14d80905a024fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Touch.png using Guid(311c2d5a384d93e49b14d80905a024fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '77b394fb86e9cafda1bf1fbd01bab762') in 0.038140 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.172314 seconds.
+  path: Assets/Violet Theme Ui/Colored Icons/Up.png
+  artifactKey: Guid(0c830f34fa702d84a9786a9740186963) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Colored Icons/Up.png using Guid(0c830f34fa702d84a9786a9740186963) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a087e849b64a7935c3e088b040dbcae1') in 0.015206 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.011919 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White A1.png
+  artifactKey: Guid(785654e3ef0028d468a83acb819a4d3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White A1.png using Guid(785654e3ef0028d468a83acb819a4d3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '346cc46666976ff7e0e525c3cab9238a') in 0.016495 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.003304 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Acorn.png
+  artifactKey: Guid(ce30ae4f5d358f243ad68cbfc8c41f4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Acorn.png using Guid(ce30ae4f5d358f243ad68cbfc8c41f4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b329c4fbb9722169fa78bab0d0b198b') in 0.021690 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Add.png
+  artifactKey: Guid(6ae0fe68f93b83843b430c78ad694acc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Add.png using Guid(6ae0fe68f93b83843b430c78ad694acc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fdc207e5ebe09384bd114915e6d98d1c') in 0.013987 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.004061 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White AddFriend.png
+  artifactKey: Guid(32fb0e71e5c2dfc4f8f275025f792fc6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White AddFriend.png using Guid(32fb0e71e5c2dfc4f8f275025f792fc6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '75abd69837e4fe82b1111b022145fc59') in 0.064650 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.204553 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Airplane.png
+  artifactKey: Guid(3d791145439c0ca448d67c427d476b89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Airplane.png using Guid(3d791145439c0ca448d67c427d476b89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2252276391efe986f47eef0f613a2a88') in 0.014198 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.014638 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Alarm 2.png
+  artifactKey: Guid(e3937cebe64821a4f82f9d49c3c175db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Alarm 2.png using Guid(e3937cebe64821a4f82f9d49c3c175db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23bd0ae9f40cdeac6ba957dfa750361b') in 0.012839 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.190903 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Alert.png
+  artifactKey: Guid(a9f32f23d12396345a8684444399eba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Alert.png using Guid(a9f32f23d12396345a8684444399eba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74bd9e46e12723d04d7508b7f145782a') in 0.016990 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.003819 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Anchor.png
+  artifactKey: Guid(0e15a54d8d16a5a4aa53344f2f594196) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Anchor.png using Guid(0e15a54d8d16a5a4aa53344f2f594196) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5cb9b7a564ccebc79c77da798f0b51da') in 0.034840 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 1.321484 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Axe 3.png
+  artifactKey: Guid(7173802728af7ad41b6e28336f8dd622) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Axe 3.png using Guid(7173802728af7ad41b6e28336f8dd622) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a460b0641b72c3cde3725dcbc61d92e') in 0.014681 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.055528 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Backward 2.png
+  artifactKey: Guid(c962ddd9b0a42d3418bf5991eb64eeb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Backward 2.png using Guid(c962ddd9b0a42d3418bf5991eb64eeb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '194426a66224027cb1a3435c8b249922') in 0.014441 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.279940 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Books.png
+  artifactKey: Guid(b705d170dd672dd49afc1159577a57fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Books.png using Guid(b705d170dd672dd49afc1159577a57fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7e5d6b6186c30b496cba69da769e5437') in 0.024830 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 8
+========================================================================
+Received Import Request.
+  Time since last request: 0.089815 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Building.png
+  artifactKey: Guid(3580e3b3da4859240ac7a3e3c6cedc81) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Building.png using Guid(3580e3b3da4859240ac7a3e3c6cedc81) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eb0c49a46eb6adefb194d93c47686598') in 0.033533 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.056728 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Chat.png
+  artifactKey: Guid(e0e00ede350534947bddc09603379697) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Chat.png using Guid(e0e00ede350534947bddc09603379697) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a196b6e695a321b77b0bb0d2c28d827d') in 0.014073 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.018304 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Check.png
+  artifactKey: Guid(cfd28c4685f7c504c8541bb8903d4ec8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Check.png using Guid(cfd28c4685f7c504c8541bb8903d4ec8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '188bf83fb35abdfcb7e30ba5e47e26cc') in 0.017152 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.032201 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Cross.png
+  artifactKey: Guid(a292199eee9f1e54bb7060b491996fbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Cross.png using Guid(a292199eee9f1e54bb7060b491996fbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9baa6d8a14db7f0fdf97458c415f9c5d') in 0.016715 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.004078 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Crown 1.png
+  artifactKey: Guid(ca3d94d268f761647b08ccf4ae103e85) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Crown 1.png using Guid(ca3d94d268f761647b08ccf4ae103e85) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb76460408d5fa860a1a8a4d54081304') in 0.020423 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.172346 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Fast Rewind.png
+  artifactKey: Guid(18f5c7c82bce94247913d6fb040a0eff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Fast Rewind.png using Guid(18f5c7c82bce94247913d6fb040a0eff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ccbf23061a0a1df1aaf11f1aa58ad9b5') in 0.014035 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.016601 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Gem 1.png
+  artifactKey: Guid(8cfc8996f86100140ba35ba4c4db25a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Gem 1.png using Guid(8cfc8996f86100140ba35ba4c4db25a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '559d765f7fed807a1aa35954107a6cfb') in 0.029366 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.015743 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Gift.png
+  artifactKey: Guid(828cca5c37b17bf4fb0115a66ea7ffb6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Gift.png using Guid(828cca5c37b17bf4fb0115a66ea7ffb6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ada745f224696baf0a328d740501b014') in 0.020119 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 0.024946 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Google.png
+  artifactKey: Guid(9378ca643c0815e47b5a52ea94f78f9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Google.png using Guid(9378ca643c0815e47b5a52ea94f78f9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a244cb74351a21851274601add739ca') in 0.022043 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.016423 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Gun 2.png
+  artifactKey: Guid(2b5e509a6a8c71c43a674c1f4d849028) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Gun 2.png using Guid(2b5e509a6a8c71c43a674c1f4d849028) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5d8ea37362e50dc6f70e19a112d1303') in 0.018418 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.015585 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Infinite Symbol.png
+  artifactKey: Guid(0e70e078c52c4a34394c154f5f18c19b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Infinite Symbol.png using Guid(0e70e078c52c4a34394c154f5f18c19b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7613813ab2cde2b98c73e4ff8e752371') in 0.013579 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.001723 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Info 1.png
+  artifactKey: Guid(458eadb5d498dba4f8a494ff07209f5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Info 1.png using Guid(458eadb5d498dba4f8a494ff07209f5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32789024dc2ec02b964e0afae60d11ec') in 0.012853 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.017310 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Japanese Yen.png
+  artifactKey: Guid(15791b09182bf5b4080a9a894bc69a19) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Japanese Yen.png using Guid(15791b09182bf5b4080a9a894bc69a19) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '231a552106bf8536a26dd2815d93b805') in 0.014417 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.036308 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Knight.png
+  artifactKey: Guid(af110be8027e357439d474cf14816c44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Knight.png using Guid(af110be8027e357439d474cf14816c44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7bed6f8f47a0df9f92412a42089ae876') in 0.027842 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.150221 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Move UpDown.png
+  artifactKey: Guid(5ae8b65f9470c4d4d883d30c7009223d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Move UpDown.png using Guid(5ae8b65f9470c4d4d883d30c7009223d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '05f5feb038014b7dfc2d2006121ccfd0') in 0.029642 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.012002 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Number Sign.png
+  artifactKey: Guid(8d4e5c67b99afd5449e950322516ba1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Number Sign.png using Guid(8d4e5c67b99afd5449e950322516ba1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6319f5d88c979e377408f8c8c55dad7c') in 0.011842 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.411322 seconds.
+  path: Assets/Violet Theme Ui/Panels/White Panel Yellow.png
+  artifactKey: Guid(8881b55d27a421e40912e51f02f4791f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/Panels/White Panel Yellow.png using Guid(8881b55d27a421e40912e51f02f4791f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4a9b7cb2aae62b1850a63e85553d637') in 0.017648 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 315.461995 seconds.
+  path: Assets/Buttons/PNG/10Button_Midl_Yellow.png
+  artifactKey: Guid(d7b4d635d5ebc2a4c967aed03f5c932c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Buttons/PNG/10Button_Midl_Yellow.png using Guid(d7b4d635d5ebc2a4c967aed03f5c932c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f7587fcc0b9d8f88532a77e0aeabbf2') in 0.014879 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.016225 seconds.
+  path: Assets/Buttons/PNG/12Button_Long_Blue.png
+  artifactKey: Guid(4e75355f0aa718a498d932c89b2b994c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Buttons/PNG/12Button_Long_Blue.png using Guid(4e75355f0aa718a498d932c89b2b994c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '983c80e3b812341c1561dd1015200faf') in 0.016792 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.098979 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Backward.png
+  artifactKey: Guid(7b1fc72ce1c2e774fae4dc31adce7ebf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Backward.png using Guid(7b1fc72ce1c2e774fae4dc31adce7ebf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e16be49dfc02c8d788f517d785ca65b') in 0.017368 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.067547 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Clock.png
+  artifactKey: Guid(963e3ccea09488348a07e88fcbefd958) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Clock.png using Guid(963e3ccea09488348a07e88fcbefd958) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cea8762a7df7f20ec0955988db643881') in 0.025989 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Cloud 2.png
+  artifactKey: Guid(fa97c0870713ae74b9f6c5d293e516c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Cloud 2.png using Guid(fa97c0870713ae74b9f6c5d293e516c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1896fdfc485003e4c683bffd919192f4') in 0.017941 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Cloud.png
+  artifactKey: Guid(83c044260d3230e45b3a6cb006416df2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Cloud.png using Guid(83c044260d3230e45b3a6cb006416df2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3342d3c9f71e4fc858d64a76354fb857') in 0.014623 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.007082 seconds.
+  path: Assets/Violet Theme Ui/White Icons/White Compass.png
+  artifactKey: Guid(12e105ba6efad2142bbc212df2701300) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Violet Theme Ui/White Icons/White Compass.png using Guid(12e105ba6efad2142bbc212df2701300) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27b213f5a9d571fd698abd0f7aec5110') in 0.037515 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 2.892385 seconds.
+  path: Assets/images/search.png
+  artifactKey: Guid(3cee3834b28e1aa439ed9bf34578aa41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/images/search.png using Guid(3cee3834b28e1aa439ed9bf34578aa41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd4996a504f270e71216fed85c3fcfafc') in 0.036626 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\for github\SeniorUnityMoblieApp\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\for github\SeniorUnityMoblieApp\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.577 seconds
+Refreshing native plugins compatible for Editor in 4.43 ms, found 4 plugins.
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+- Finished resetting the current domain, in  0.725 seconds
+Domain Reload Profiling: 1301ms
+	BeginReloadAssembly (127ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (10ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (43ms)
+	RebuildCommonClasses (24ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (21ms)
+	LoadAllAssembliesAndSetupDomain (394ms)
+		LoadAssemblies (207ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (236ms)
+			TypeCache.Refresh (229ms)
+				TypeCache.ScanAssembly (219ms)
+			ScanForSourceGeneratedMonoScriptInfo (3ms)
+			ResolveRequiredComponents (3ms)
+	FinalizeReload (725ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (340ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (17ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (53ms)
+			ProcessInitializeOnLoadAttributes (233ms)
+			ProcessInitializeOnLoadMethodAttributes (32ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (11ms)
+Refreshing native plugins compatible for Editor in 5.27 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4275 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 55 unused Assets / (46.2 KB). Loaded Objects now: 4877.
+Memory consumption went from 149.6 MB to 149.6 MB.
+Total: 3.130200 ms (FindLiveObjects: 0.302200 ms CreateObjectMapping: 0.116000 ms MarkObjects: 2.635700 ms  DeleteObjects: 0.075500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 756ad292c208cfabdd7b50bc23989ffe -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
