@@ -11,6 +11,8 @@ public class ResultPanel : MonoBehaviour
     public Text coin1ResultText;
     public Text totalScoreText;
     
+    [SerializeField] private RadarChartManager radarChartManager;
+    
     public void ShowResults(float time, int coin10Count, int coin5Count, int coin1Count, int totalScore)
     {
         Debug.Log("ShowResults called");
@@ -35,6 +37,30 @@ public class ResultPanel : MonoBehaviour
 
         Debug.Log($"Result Panel - Coins: 10B={coin10Count}, 5B={coin5Count}, 1B={coin1Count}");
         Debug.Log($"Result Panel - Calculated Score: {totalScore}");
+
+        if (radarChartManager != null)
+        {
+            float speed = CalculateSpeedScore(time);
+            float accuracy = CalculateAccuracyScore(coin10Count, coin5Count, coin1Count);
+            float normalizedScore = (float)totalScore / 100f;
+            
+            radarChartManager.UpdateChartData(speed, accuracy, normalizedScore);
+        }
+    }
+
+    private float CalculateSpeedScore(float time)
+    {
+        float maxTime = 300f;
+        return Mathf.Max(0, (1 - (time / maxTime)) * 100f);
+    }
+
+    private float CalculateAccuracyScore(int coin10, int coin5, int coin1)
+    {
+        int totalCoins = coin10 + coin5 + coin1;
+        if (totalCoins == 0) return 0;
+
+        float weightedScore = (coin10 * 1.0f + coin5 * 0.7f + coin1 * 0.4f) / totalCoins;
+        return weightedScore * 100f;
     }
 
     public void OnBackHomeButtonClick()
