@@ -60,7 +60,7 @@ python app.py
 * Users API: /api/users
 * Admin API: /api/admin
 * Exam API: /api/exam
-* Quiz API: /api/quiz
+* Quiz API: /api/training
 * Report API: /api/report
 
 # หมายเหตุสำคัญ
