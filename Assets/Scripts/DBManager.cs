@@ -4,10 +4,10 @@ using System;
 
 public class DBManager : MonoBehaviour
 {
-    private static string server = "game-db.c7qyusm66l6s.ap-southeast-2.rds.amazonaws.com";
+    private static string server = "localhost";
     private static string database = "game_db";
     private static string uid = "root";
-    private static string password = "gameDB2545";
+    private static string password = "2545";
     private static MySqlConnection connection;
 
     public static bool IsConnected()
