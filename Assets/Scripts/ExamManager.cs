@@ -1,0 +1,105 @@
+using UnityEngine;
+using UnityEngine.Networking;
+using System.Collections;
+using System;
+
+[Serializable]
+public class ResultData
+{
+    public float speed;
+    public float accuracy;
+    public float memory;
+}
+
+[Serializable]
+public class ExamData
+{
+    public string Exame_name;
+    public string Start_Time;
+    public string End_Time;
+    public int Time_limit;
+    public ResultData Result_Exam;
+}
+
+public class ExamManager : MonoBehaviour
+{
+    private const string API_URL = "http://localhost:3000/api/exam/";
+    private bool isSaving = false;
+    private string lastSavedData = ""; // เพิ่มตัวแปรเก็บข้อมูลล่าสุดที่บันทึก
+
+    public void SaveExamResult(string examName, DateTime startTime, DateTime endTime, int timeLimit, float speed, float accuracy, float memory)
+    {
+        if (isSaving)
+        {
+            Debug.Log("Already saving exam result, please wait...");
+            return;
+        }
+
+        // สร้าง JSON string เพื่อเปรียบเทียบ
+        string jsonData = $@"{{
+            ""Exame_name"": ""{examName}"",
+            ""Start_Time"": ""{startTime:yyyy-MM-dd HH:mm:ss}"",
+            ""End_Time"": ""{endTime:yyyy-MM-dd HH:mm:ss}"",
+            ""Time_limit"": {timeLimit},
+            ""Result_Exam"": {{
+                ""speed"": {(int)speed},
+                ""accuracy"": {(int)accuracy},
+                ""memory"": {(int)memory}
+            }}
+        }}";
+
+        // เช็คว่าข้อมูลซ้ำกับครั้งล่าสุดหรือไม่
+        if (jsonData == lastSavedData)
+        {
+            Debug.Log("Duplicate data detected, skipping save...");
+            return;
+        }
+
+        StartCoroutine(CreateExamRecord(jsonData));
+    }
+
+    private IEnumerator CreateExamRecord(string jsonData)
+    {
+        isSaving = true;
+
+        try
+        {
+            using (UnityWebRequest request = new UnityWebRequest(API_URL, "POST"))
+            {
+                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+                request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                request.downloadHandler = new DownloadHandlerBuffer();
+                request.SetRequestHeader("Content-Type", "application/json");
+
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log($"Exam result saved successfully: {request.downloadHandler.text}");
+                    lastSavedData = jsonData; // บันทึกข้อมูลล่าสุดที่สำเร็จ
+                }
+                else
+                {
+                    Debug.LogError($"Error saving exam result: {request.error}");
+                    Debug.LogError($"Response: {request.downloadHandler.text}");
+                }
+            }
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+}
+
+// Wrapper class สำหรับ JsonUtility
+[Serializable]
+public class JsonWrapper<T>
+{
+    public T data;
+
+    public JsonWrapper(T data)
+    {
+        this.data = data;
+    }
+}

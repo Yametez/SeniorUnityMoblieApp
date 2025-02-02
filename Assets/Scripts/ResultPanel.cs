@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using CoinGame;
+using System;
 
 public class ResultPanel : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ResultPanel : MonoBehaviour
     public Text totalScoreText;
     
     [SerializeField] private ResultAnalysis resultAnalysis;
+    [SerializeField] private ExamManager examManager;
 
     public void ShowResults(float time, int coin10Count, int coin5Count, int coin1Count, int totalScore)
     {
@@ -45,6 +47,23 @@ public class ResultPanel : MonoBehaviour
             float memoryScore = CalculateMemoryScore(coin10Count, coin5Count, coin1Count);
             
             resultAnalysis.UpdateResults(speedScore, accuracyScore, memoryScore);
+
+            // บันทึกผลลงฐานข้อมูล
+            if (examManager != null)
+            {
+                DateTime endTime = DateTime.Now;
+                DateTime startTime = endTime.AddSeconds(-time);
+                
+                examManager.SaveExamResult(
+                    "Coin Game",
+                    startTime,
+                    endTime,
+                    500, // time limit 5 minutes
+                    speedScore,
+                    accuracyScore,
+                    memoryScore
+                );
+            }
         }
     }
 
