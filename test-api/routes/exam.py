@@ -63,21 +63,24 @@ def get_exam(exam_id):
 def create_exam():
     try:
         data = request.get_json()
-        print("Received data:", data)
         
-        if not data:
-            return jsonify({'error': 'No data received'}), 400
-
-        # ตรวจสอบข้อมูลที่จำเป็น
-        required_fields = ['Exame_name', 'Start_Time', 'End_Time', 'Time_limit', 'Result_Exam']
-        for field in required_fields:
-            if field not in data:
-                return jsonify({'error': f'Missing required field: {field}'}), 400
+        if not data or 'User_ID' not in data:
+            return jsonify({'error': 'No data or User_ID not provided'}), 400
 
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        # เช็คว่ามีข้อมูลซ้ำหรือไม่
+        # หา GameSession_ID ล่าสุดของ User นี้
+        cursor.execute('''
+            SELECT MAX(GameSession_ID) 
+            FROM Exam 
+            WHERE User_ID = %s
+        ''', (data['User_ID'],))
+        
+        last_session = cursor.fetchone()[0]
+        new_session_id = 1 if last_session is None else last_session + 1
+
+        # เช็คข้อมูลซ้ำ
         cursor.execute('''
             SELECT COUNT(*) FROM Exam 
             WHERE Exame_name = %s 
@@ -85,12 +88,14 @@ def create_exam():
             AND End_Time = %s 
             AND Time_limit = %s
             AND Result_Exam = %s
+            AND User_ID = %s
         ''', (
             data['Exame_name'],
             data['Start_Time'],
             data['End_Time'],
             data['Time_limit'],
-            json.dumps(data['Result_Exam'])
+            json.dumps(data['Result_Exam']),
+            data['User_ID']
         ))
         
         if cursor.fetchone()[0] > 0:
@@ -98,16 +103,33 @@ def create_exam():
             connection.close()
             return jsonify({'message': 'Duplicate exam record, skipped'}), 200
 
-        # ถ้าไม่ซ้ำ ดำเนินการบันทึก
-        result_exam_json = json.dumps(data['Result_Exam'])
+        # บันทึกข้อมูลใหม่
         cursor.execute('SELECT MAX(Exam_ID) FROM Exam')
         max_id = cursor.fetchone()[0]
         new_id = 301 if max_id is None else max_id + 1
 
-        cursor.execute(
-            'INSERT INTO Exam (Exam_ID, Exame_name, Start_Time, End_Time, Time_limit, Result_Exam) VALUES (%s, %s, %s, %s, %s, %s)',
-            (new_id, data['Exame_name'], data['Start_Time'], data['End_Time'], data['Time_limit'], result_exam_json)
-        )
+        cursor.execute('''
+            INSERT INTO Exam (
+                Exam_ID, 
+                Exame_name, 
+                Start_Time, 
+                End_Time, 
+                Time_limit, 
+                Result_Exam, 
+                User_ID, 
+                GameSession_ID
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        ''', (
+            new_id,
+            data['Exame_name'],
+            data['Start_Time'],
+            data['End_Time'],
+            data['Time_limit'],
+            json.dumps(data['Result_Exam']),
+            data['User_ID'],
+            new_session_id
+        ))
+        
         connection.commit()
         cursor.close()
         connection.close()
@@ -115,6 +137,7 @@ def create_exam():
         return jsonify({
             'message': 'Exam created successfully',
             'Exam_ID': new_id,
+            'GameSession_ID': new_session_id,
             'data': data
         }), 201
         
