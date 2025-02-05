@@ -25,7 +25,8 @@ public static class DBManager
                         return new UserData
                         {
                             email = reader["Email"].ToString(),
-                            name = reader["Name"].ToString()
+                            name = reader["Name"].ToString(),
+                            userId = Convert.ToInt32(reader["User_ID"])
                         };
                     }
                 }

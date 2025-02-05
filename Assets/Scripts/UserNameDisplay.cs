@@ -20,6 +20,12 @@ public class UserNameDisplay : MonoBehaviour
         if (currentUser != null)
         {
             userNameText.text = $"สวัสดี, คุณ{currentUser.name}";
+            Debug.Log($"Current User ID: {currentUser.userId}");
+            Debug.Log($"Current User Email: {currentUser.email}");
+        }
+        else
+        {
+            Debug.Log("No user currently logged in");
         }
     }
 } 
