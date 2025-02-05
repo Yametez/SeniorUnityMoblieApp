@@ -9,8 +9,28 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
-        pauseMenuPanel.SetActive(false); // ซ่อน Panel ตอนเริ่มเกม
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // เก็บ GameManager ไว้ระหว่าง Scene
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        ResetGameState();
+    }
+
+    public void ResetGameState()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+        if (pauseMenuPanel != null)
+        {
+            pauseMenuPanel.SetActive(false);
+        }
     }
 
     public void TogglePause()
@@ -29,6 +49,22 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+        ResetGameState();
         SceneManager.LoadScene(2); // หรือใช้ Application.Quit(); ถ้าต้องการออกจากเกมเลย
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ResetGameState();
     }
 } 

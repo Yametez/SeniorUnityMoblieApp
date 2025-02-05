@@ -37,8 +37,10 @@ namespace CoinGame
 
         void Start()
         {
+            // เพิ่มการ reset time scale
+            Time.timeScale = 1f;
+            
             Debug.Log("Start called");
-            // ซ่อน ResultPanel ก่อนเริ่มเกม
             if (resultPanel != null)
             {
                 resultPanel.gameObject.SetActive(false);
@@ -51,7 +53,7 @@ namespace CoinGame
                 Destroy(coin);
             }
 
-            StartNewGame();
+            ResetGame(); // เปลี่ยนจาก StartNewGame เป็น ResetGame
         }
 
         void Update()
@@ -75,9 +77,17 @@ namespace CoinGame
             }
         }
 
-        public void StartNewGame()
+        // เพิ่มฟังก์ชันใหม่
+        public void ResetGame()
         {
-            Debug.Log("StartNewGame called");
+            // รีเซ็ตค่าทั้งหมด
+            gameTimer = 0;
+            isGameActive = true;
+            coin10Count = 0;
+            coin5Count = 0;
+            coin1Count = 0;
+            totalScore = 0;
+            totalCoinsInGame = 0;
             
             // เคลียร์เหรียญเก่า
             foreach (var coin in activeCoinPile)
@@ -89,32 +99,9 @@ namespace CoinGame
             }
             activeCoinPile.Clear();
 
-            // รีเซ็ตค่าต่างๆ
-            gameTimer = 0;
-            isGameActive = true;
-            coin10Count = 0;
-            coin5Count = 0;
-            coin1Count = 0;
-            totalScore = 0;
-            totalCoinsInGame = 0;
+            // อัพเดท UI
+            UpdateUI();
             
-            // ซ่อน ResultPanel และรีเซ็ตการอ้างอิง
-            if (resultPanel == null)
-            {
-                Debug.LogError("ResultPanel is null! Trying to find it...");
-                resultPanel = FindObjectOfType<ResultPanel>();
-            }
-            
-            if (resultPanel != null)
-            {
-                resultPanel.gameObject.SetActive(false);
-            }
-            else
-            {
-                Debug.LogError("Could not find ResultPanel!");
-                return;
-            }
-
             // สร้างเหรียญใหม่
             foreach (var coinType in coinTypes)
             {
@@ -122,9 +109,15 @@ namespace CoinGame
                 totalCoinsInGame += coinType.count;
                 SpawnCoins(coinType);
             }
+        }
 
-            Debug.Log($"New game started with {totalCoinsInGame} coins");
-            UpdateUI();
+        public void StartNewGame()
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.ResetGameState();
+            }
+            ResetGame();
         }
 
         void SpawnCoins(CoinType coinType)

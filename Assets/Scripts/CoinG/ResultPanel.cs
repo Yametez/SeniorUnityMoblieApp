@@ -90,12 +90,25 @@ public class ResultPanel : MonoBehaviour
 
     public void OnBackHomeButtonClick()
     {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ResetGameState();
+        }
         SceneManager.LoadScene(2);
     }
 
     public void OnRestartButtonClick()
     {
         gameObject.SetActive(false);
-        FindObjectOfType<CoinManager>().StartNewGame();
+        var coinManager = FindObjectOfType<CoinManager>();
+        if (coinManager != null)
+        {
+            coinManager.ResetGame();
+        }
+        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ResetGameState();
+        }
     }
 } 
