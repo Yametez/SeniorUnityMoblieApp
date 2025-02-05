@@ -29,8 +29,10 @@ public class LoginButtonController : MonoBehaviour
             return;
         }
 
-        if (DBManager.ValidateLogin(email, password))
+        var userData = DBManager.GetUserData(email, password);
+        if (userData != null)
         {
+            CurrentUser.SetCurrentUser(userData);
             SceneManager.LoadScene("FistHomePage");
         }
         else

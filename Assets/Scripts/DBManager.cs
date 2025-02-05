@@ -2,68 +2,39 @@ using UnityEngine;
 using MySql.Data.MySqlClient;
 using System;
 
-public class DBManager : MonoBehaviour
+public static class DBManager
 {
-    private static string server = "localhost";
-    private static string database = "game_db";
-    private static string uid = "root";
-    private static string password = "2545";
-    private static MySqlConnection connection;
+    private static string connStr = "server=localhost;user=root;database=game_db;port=3306;password=2545";
 
-    public static bool IsConnected()
+    public static UserData GetUserData(string email, string password)
     {
-        return connection != null;
-    }
-
-    public static void Connect()
-    {
-        string connectionString = $"Server={server};Database={database};Uid={uid};Pwd={password};";
-
-        try
+        using (MySqlConnection conn = new MySqlConnection(connStr))
         {
-            connection = new MySqlConnection(connectionString);
-            connection.Open();
-            Debug.Log("Successfully connected to database.");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Cannot connect to database: {e.Message}");
-        }
-    }
-
-    public static void Close()
-    {
-        if (connection != null)
-        {
-            connection.Close();
-            connection = null;
-        }
-    }
-
-    // ฟังก์ชันสำหรับ Login
-    public static bool ValidateLogin(string email, string password)
-    {
-        if (connection == null)
-        {
-            Connect();
-        }
-
-        try
-        {
-            string query = "SELECT * FROM users WHERE Email=@email AND Password=@password";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@password", password);
-
-            using (MySqlDataReader reader = cmd.ExecuteReader())
+            try
             {
-                return reader.HasRows;
+                conn.Open();
+                string sql = "SELECT * FROM users WHERE Email = @email AND Password = @password";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@password", password);
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new UserData
+                        {
+                            email = reader["Email"].ToString(),
+                            name = reader["Name"].ToString()
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Database error: {ex.Message}");
             }
         }
-        catch (Exception e)
-        {
-            Debug.LogError($"Error validating login: {e.Message}");
-            return false;
-        }
+        return null;
     }
 } 
