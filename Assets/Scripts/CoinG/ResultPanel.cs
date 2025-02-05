@@ -58,7 +58,7 @@ public class ResultPanel : MonoBehaviour
                     "Coin Game",
                     startTime,
                     endTime,
-                    500, // time limit 5 minutes
+                    time,  // ส่งเวลาที่ใช้จริงแทน time limit
                     speedScore,
                     accuracyScore,
                     memoryScore

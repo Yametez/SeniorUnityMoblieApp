@@ -25,9 +25,9 @@ public class ExamManager : MonoBehaviour
 {
     private const string API_URL = "http://localhost:3000/api/exam/";
     private bool isSaving = false;
-    private string lastSavedData = ""; // เพิ่มตัวแปรเก็บข้อมูลล่าสุดที่บันทึก
+    private string lastSavedData = "";
 
-    public void SaveExamResult(string examName, DateTime startTime, DateTime endTime, int timeLimit, float speed, float accuracy, float memory)
+    public void SaveExamResult(string examName, DateTime startTime, DateTime endTime, float actualPlayTime, float speed, float accuracy, float memory)
     {
         if (isSaving)
         {
@@ -35,12 +35,23 @@ public class ExamManager : MonoBehaviour
             return;
         }
 
-        // สร้าง JSON string เพื่อเปรียบเทียบ
+        // ดึงข้อมูล User จาก UserManager แทน
+        UserData currentUser = UserManager.Instance.GetCurrentUser();
+        if (currentUser == null)
+        {
+            Debug.LogError("No user data available in UserManager. Cannot save exam result.");
+            return;
+        }
+
+        // แปลงเวลาเป็นวินาที และปัดเศษทศนิยม
+        int timeInSeconds = Mathf.RoundToInt(actualPlayTime);
+
         string jsonData = $@"{{
+            ""User_ID"": {currentUser.userId},
             ""Exame_name"": ""{examName}"",
             ""Start_Time"": ""{startTime:yyyy-MM-dd HH:mm:ss}"",
             ""End_Time"": ""{endTime:yyyy-MM-dd HH:mm:ss}"",
-            ""Time_limit"": {timeLimit},
+            ""Time_limit"": {timeInSeconds},
             ""Result_Exam"": {{
                 ""speed"": {(int)speed},
                 ""accuracy"": {(int)accuracy},

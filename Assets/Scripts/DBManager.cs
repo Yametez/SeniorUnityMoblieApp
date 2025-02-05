@@ -22,12 +22,19 @@ public static class DBManager
                 {
                     if (reader.Read())
                     {
-                        return new UserData
+                        UserData userData = new UserData
                         {
                             email = reader["Email"].ToString(),
                             name = reader["Name"].ToString(),
                             userId = Convert.ToInt32(reader["User_ID"])
                         };
+                        
+                        if (UserManager.Instance != null)
+                        {
+                            UserManager.Instance.SetCurrentUser(userData);
+                        }
+                        
+                        return userData;
                     }
                 }
             }
