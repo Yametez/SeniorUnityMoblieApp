@@ -26,9 +26,16 @@ public class ExamManager : MonoBehaviour
     private const string API_URL = "http://localhost:3000/api/exam/";
     private bool isSaving = false;
     private string lastSavedData = "";
+    private bool hasBeenSaved = false;
 
     public void SaveExamResult(string examName, DateTime startTime, DateTime endTime, float actualPlayTime, float speed, float accuracy, float memory)
     {
+        if (hasBeenSaved)
+        {
+            Debug.Log("This exam result has already been saved.");
+            return;
+        }
+
         if (isSaving)
         {
             Debug.Log("Already saving exam result, please wait...");
@@ -92,6 +99,7 @@ public class ExamManager : MonoBehaviour
                 {
                     Debug.Log($"Exam result saved successfully: {request.downloadHandler.text}");
                     lastSavedData = jsonData;
+                    hasBeenSaved = true;
                 }
                 else
                 {
@@ -104,6 +112,12 @@ public class ExamManager : MonoBehaviour
         {
             isSaving = false;
         }
+    }
+
+    public void ResetSaveStatus()
+    {
+        hasBeenSaved = false;
+        lastSavedData = "";
     }
 }
 
