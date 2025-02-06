@@ -19,6 +19,7 @@ def get_all_exams():
         for exam in exams:
             serializable_exam = {
                 'Exam_ID': str(exam['Exam_ID']),
+                'id': str(exam['id']),  # เพิ่ม id ในการส่งกลับ
                 'Exame_name': exam['Exame_name'],
                 'Start_Time': exam['Start_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(exam['Start_Time'], datetime) else str(exam['Start_Time']),
                 'End_Time': exam['End_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(exam['End_Time'], datetime) else str(exam['End_Time']),
@@ -50,6 +51,8 @@ def get_exam(exam_id):
             # แปลง Result_Exam จาก JSON string กลับเป็น dictionary
             if exam['Result_Exam']:
                 exam['Result_Exam'] = json.loads(exam['Result_Exam'])
+            # เพิ่ม id ในการส่งกลับ
+            exam['id'] = str(exam['id'])
             return jsonify(exam)
             
         return jsonify({'message': 'Exam not found'}), 404
@@ -69,6 +72,14 @@ def create_exam():
 
         connection = get_db_connection()
         cursor = connection.cursor()
+
+        # หา Exam_ID ล่าสุด
+        cursor.execute('SELECT MAX(Exam_ID) FROM Exam')
+        last_exam_id = cursor.fetchone()[0]
+        new_exam_id = 1 if last_exam_id is None else last_exam_id + 1
+
+        # กำหนดค่า id จากข้อมูลที่ส่งมา
+        game_id = data.get('id', 302)  # ถ้าไม่มี id ให้ใช้ค่า default เป็น 302
 
         # หา GameSession_ID ล่าสุดของ User นี้
         cursor.execute('''
@@ -104,13 +115,10 @@ def create_exam():
             return jsonify({'message': 'Duplicate exam record, skipped'}), 200
 
         # บันทึกข้อมูลใหม่
-        cursor.execute('SELECT MAX(Exam_ID) FROM Exam')
-        max_id = cursor.fetchone()[0]
-        new_id = 301 if max_id is None else max_id + 1
-
         cursor.execute('''
             INSERT INTO Exam (
-                Exam_ID, 
+                Exam_ID,
+                id, 
                 Exame_name, 
                 Start_Time, 
                 End_Time, 
@@ -118,9 +126,10 @@ def create_exam():
                 Result_Exam, 
                 User_ID, 
                 GameSession_ID
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         ''', (
-            new_id,
+            new_exam_id,
+            game_id,  # ใช้ค่า id ที่ส่งมา
             data['Exame_name'],
             data['Start_Time'],
             data['End_Time'],
@@ -136,13 +145,13 @@ def create_exam():
         
         return jsonify({
             'message': 'Exam created successfully',
-            'Exam_ID': new_id,
+            'Exam_ID': new_exam_id,
             'GameSession_ID': new_session_id,
             'data': data
         }), 201
         
     except Exception as e:
-        print("Error:", str(e))
+        print("Error:", str(e))  # เพิ่ม debug log
         return jsonify({'error': str(e)}), 500
 
 # Update exam

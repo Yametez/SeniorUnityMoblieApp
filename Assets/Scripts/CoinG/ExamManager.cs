@@ -46,8 +46,12 @@ public class ExamManager : MonoBehaviour
         // แปลงเวลาเป็นวินาที และปัดเศษทศนิยม
         int timeInSeconds = Mathf.RoundToInt(actualPlayTime);
 
+        // กำหนดค่า id ตามชื่อเกม
+        int gameId = examName == "Coin Game" ? 301 : 302;
+
         string jsonData = $@"{{
             ""User_ID"": {currentUser.userId},
+            ""id"": {gameId},
             ""Exame_name"": ""{examName}"",
             ""Start_Time"": ""{startTime:yyyy-MM-dd HH:mm:ss}"",
             ""End_Time"": ""{endTime:yyyy-MM-dd HH:mm:ss}"",
@@ -87,7 +91,7 @@ public class ExamManager : MonoBehaviour
                 if (request.result == UnityWebRequest.Result.Success)
                 {
                     Debug.Log($"Exam result saved successfully: {request.downloadHandler.text}");
-                    lastSavedData = jsonData; // บันทึกข้อมูลล่าสุดที่สำเร็จ
+                    lastSavedData = jsonData;
                 }
                 else
                 {
