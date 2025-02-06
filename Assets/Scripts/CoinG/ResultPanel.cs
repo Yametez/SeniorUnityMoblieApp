@@ -94,6 +94,12 @@ public class ResultPanel : MonoBehaviour
         {
             GameManager.Instance.ResetGameState();
         }
+
+        if (examManager != null)
+        {
+            examManager.ResetSaveStatus();
+        }
+
         SceneManager.LoadScene(2);
     }
 
@@ -109,6 +115,11 @@ public class ResultPanel : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ResetGameState();
+        }
+
+        if (examManager != null)
+        {
+            examManager.ResetSaveStatus();
         }
     }
 } 
