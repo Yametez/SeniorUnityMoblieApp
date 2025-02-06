@@ -37,7 +37,7 @@ public class ResultAnalysis : MonoBehaviour
         if (score >= 60f)
         {
             resultText.text = "ผลการประเมิน:ไม่พบความเสี่ยง";
-            adviceText.text = "สมองของคุณทำงานได้ดี\nควรรักษาสุขภาพสมองด้วยการออก\nกำลังกายสม่ำเสมอ";
+            adviceText.text = "สมองของคุณทำงานได้ดี\nควรรักษาสุขภาพสมองด้วย\nการออกกำลังกายสม่ำเสมอ";
             resultText.color = Color.green;
         }
         else if (score >= 40f)
