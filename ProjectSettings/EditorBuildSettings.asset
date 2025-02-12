@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CoinGame.unity
     guid: a351b80f6f6eae4479017b09db1f858f
+  - enabled: 1
+    path: Assets/Scenes/HistoryExam.unity
+    guid: d9ab11d0dbe6a124e83f177adc7ae4c6
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 4b916ad8cac70e941933cadd561a6c01, type: 2}

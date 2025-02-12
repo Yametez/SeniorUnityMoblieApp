@@ -12,4 +12,9 @@ public class ButtonFirstHomePage : MonoBehaviour
     {
         SceneManager.LoadScene("Login");
     }
+
+    public void GoToHistoryExam()
+    {
+        SceneManager.LoadScene("HistoryExam");
+    }
 }
