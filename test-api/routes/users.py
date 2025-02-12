@@ -44,8 +44,7 @@ def create_user():
         if data['Gender'] not in ['Male', 'Female']:
             return jsonify({'error': 'Gender must be either "Male" or "Female"'}), 400
 
-        # กำหนด auth_type (default เป็น 'email')
-        auth_type = data.get('auth_type', 'email')
+        # กำหนด auth_type (เป็น 'email' อย่างเดียว)
         role = data.get('role', 'user')
 
         # หา ID ล่าสุดตาม role
@@ -61,9 +60,9 @@ def create_user():
         cursor.execute('''
             INSERT INTO users 
             (User_ID, Name, Surname, Email, Password, Age, Gender, role, auth_type) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 'email')
         ''', (new_id, data['Name'], data['Surname'], data['Email'], 
-              data['Password'], data['Age'], data['Gender'], role, auth_type))
+              data['Password'], data['Age'], data['Gender'], role))
         
         connection.commit()
         cursor.close()
@@ -100,56 +99,3 @@ def delete_user(user_id):
     cursor.close()
     connection.close()
     return jsonify({'message': 'User deleted successfully'})
-
-# เพิ่ม endpoint สำหรับ Google Sign-In
-@users_bp.route('/google-signin', methods=['POST'])
-def google_signin():
-    try:
-        data = request.json
-        email = data['email']
-        google_id = data['google_id']
-        
-        connection = get_db_connection()
-        cursor = connection.cursor(dictionary=True)
-        
-        # ตรวจสอบว่ามี email นี้อยู่แล้วหรือไม่
-        cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
-        user = cursor.fetchone()
-        
-        if user:
-            # อัพเดท google_id ถ้าจำเป็น
-            if not user['google_id']:
-                cursor.execute('''
-                    UPDATE Users 
-                    SET google_id = %s, auth_type = 'google' 
-                    WHERE User_ID = %s
-                ''', (google_id, user['User_ID']))
-                connection.commit()
-        else:
-            # สร้าง user ใหม่
-            cursor.execute('SELECT MAX(User_ID) FROM users WHERE role = "user"')
-            max_id = cursor.fetchone()[0]
-            new_id = 101 if max_id is None else max_id + 1
-            
-            cursor.execute('''
-                INSERT INTO users 
-                (User_ID, Email, google_id, role, auth_type) 
-                VALUES (%s, %s, %s, 'user', 'google')
-            ''', (new_id, email, google_id))
-            connection.commit()
-            user = {
-                'User_ID': new_id,
-                'Email': email,
-                'role': 'user'
-            }
-        
-        cursor.close()
-        connection.close()
-        
-        return jsonify({
-            'success': True,
-            'user': user
-        })
-        
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
