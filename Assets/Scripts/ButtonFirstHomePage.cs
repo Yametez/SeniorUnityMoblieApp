@@ -15,6 +15,6 @@ public class ButtonFirstHomePage : MonoBehaviour
 
     public void GoToHistoryExam()
     {
-        SceneManager.LoadScene("HistoryExam");
+        SceneManager.LoadScene("HistoryExam"); // เปลี่ยนชื่อ Scene เป็น "HistoryExam"
     }
 }

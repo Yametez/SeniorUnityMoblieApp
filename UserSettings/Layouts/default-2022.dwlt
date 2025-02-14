@@ -363,9 +363,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 98630000
       m_LastClickedID: 0
-      m_ExpandedIDs: eabeffff14c2ffff16c2ffffa4cdffffa6cdffff24ceffffa6ceffff90cfffff32d0ffff8aecffff94ecffff9cecffffa0ecffffb4ecffff5cedffff32eeffff00f0ffff80f0ffff9cf2ffff70f4ffff18f7fffff8f7ffff5ef8ffff7cf9ffff0efbffff2a650000106900008c6f0000067000003c730000ac7300000a8c0000708f0000aa9900002a9b0000
+      m_ExpandedIDs: 64faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -972,21 +972,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 6}
     m_SelectedIDs: 88640000
     m_LastClickedID: 25736
-    m_ExpandedIDs: 00000000666400008a64000000ca9a3bffffff7f
+    m_ExpandedIDs: 000000001a6500001c650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Scripts
-      m_OriginalName: Scripts
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 25738
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 13}
     m_SearchString: 
@@ -1000,7 +1000,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000066640000
+    m_ExpandedIDs: 000000001a6500001c650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
