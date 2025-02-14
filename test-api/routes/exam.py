@@ -14,18 +14,20 @@ def get_all_exams():
         cursor.execute('SELECT * FROM Exam')
         exams = cursor.fetchall()
         
-        # แปลงข้อมูลให้เป็น JSON serializable
         serializable_exams = []
         for exam in exams:
             serializable_exam = {
                 'Exam_ID': str(exam['Exam_ID']),
-                'id': str(exam['id']),  # เพิ่ม id ในการส่งกลับ
+                'User_ID': str(exam['User_ID']),
+                'id': str(exam['id']),
                 'Exame_name': exam['Exame_name'],
                 'Start_Time': exam['Start_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(exam['Start_Time'], datetime) else str(exam['Start_Time']),
                 'End_Time': exam['End_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(exam['End_Time'], datetime) else str(exam['End_Time']),
                 'Time_limit': str(exam['Time_limit'].total_seconds()) if isinstance(exam['Time_limit'], timedelta) else str(exam['Time_limit']),
-                'Result_Exam': json.loads(exam['Result_Exam']) if exam['Result_Exam'] else None
+                'Result_Exam': json.loads(exam['Result_Exam']) if exam['Result_Exam'] else None,
+                'GameSession_ID': str(exam['GameSession_ID'])  # เพิ่ม GameSession_ID ด้วย
             }
+            print("Debug - exam data:", serializable_exam)  # เพิ่ม debug log
             serializable_exams.append(serializable_exam)
                 
         cursor.close()
@@ -33,7 +35,7 @@ def get_all_exams():
         return jsonify(serializable_exams)
         
     except Exception as e:
-        print("Error:", str(e))  # เพิ่ม debug log
+        print("Error:", str(e))
         return jsonify({'error': str(e)}), 500
 
 # Get exam by ID
