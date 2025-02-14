@@ -8,4 +8,9 @@ public class BackButtonHistory : MonoBehaviour
         // โหลด Scene FistHomePage
         SceneManager.LoadScene("FistHomePage");
     }
+    public void BackToHistoryExam()
+    {
+        // โหลด Scene HistoryExam
+        SceneManager.LoadScene("HistoryExam");
+    }
 } 
