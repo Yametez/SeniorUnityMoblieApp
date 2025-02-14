@@ -8,17 +8,40 @@ using System.Linq; // เพิ่มเพื่อใช้ OrderByDescending
 
 public class HistoryManager : MonoBehaviour
 {
+    [SerializeField] private RectTransform contentParent;  // เปลี่ยนจาก Transform เป็น RectTransform
     [SerializeField] private GameObject historyItemPrefab;
-    [SerializeField] private Transform contentParent; // ScrollView's content
     [SerializeField] private string apiUrl = "http://localhost:3000/api/exam"; // ตรวจสอบ URL ให้ถูกต้อง
     
-    private string userId; // จะได้มาจาก PlayerPrefs
+    private string userId;
+
+    // เพิ่มตัวแปรสำหรับกำหนดค่าเริ่มต้น
+    private const float INITIAL_Y_OFFSET = -318.0409f; // ตำแหน่ง Y เริ่มต้นตามที่ต้องการ
+    private const float ITEM_HEIGHT = 100f;
+    private const float ITEM_SPACING = 10f;
+    private const float BOTTOM_PADDING = 20f; // padding ด้านล่างสุด
 
     void Start()
     {
-        userId = PlayerPrefs.GetString("UserID");
-        Debug.Log($"Current UserID from PlayerPrefs: {userId}"); // เช็คค่า UserID ที่ได้
-        StartCoroutine(LoadHistoryData());
+        // ใช้ CurrentUser แทน PlayerPrefs
+        var currentUser = CurrentUser.GetCurrentUser();
+        if (currentUser != null)
+        {
+            // แปลง userId เป็น string
+            userId = currentUser.userId.ToString();
+            Debug.Log($"Current UserID from CurrentUser: {userId}");
+            StartCoroutine(LoadHistoryData());
+        }
+        else
+        {
+            Debug.LogError("No user currently logged in!");
+        }
+        
+        // รีเซ็ต Content position
+        RectTransform contentRT = contentParent.GetComponent<RectTransform>();
+        contentRT.anchorMin = new Vector2(0, 1);
+        contentRT.anchorMax = new Vector2(1, 1);
+        contentRT.pivot = new Vector2(0.5f, 1f);
+        contentRT.anchoredPosition = new Vector2(0, INITIAL_Y_OFFSET);
     }
 
     [Serializable]
@@ -45,30 +68,32 @@ public class HistoryManager : MonoBehaviour
                     List<ExamHistory> histories = JsonUtility.FromJson<ExamList>("{\"exams\":" + jsonResponse + "}").exams;
                     Debug.Log($"Total histories before filter: {histories.Count}");
 
-                    // เปลี่ยนมาใช้ User_ID จาก id แทน
+                    // กรองข้อมูลเฉพาะของ user ที่ login โดยเทียบ User_ID
                     var filteredHistories = histories
-                        .Where(h => h.User_ID == userId || h.id == userId)  // ลองเช็คทั้ง User_ID และ id
+                        .Where(h => h.User_ID == userId)  // เทียบเฉพาะ User_ID
                         .OrderByDescending(h => DateTime.Parse(h.Start_Time))
                         .ToList();
 
                     Debug.Log($"Filtered histories for user {userId}: {filteredHistories.Count}");
 
-                    // ลบ history items เก่าออก
+                    // ลบ history items เก่า
                     foreach (Transform child in contentParent)
                     {
                         Destroy(child.gameObject);
                     }
 
-                    // สร้าง items ใหม่
-                    foreach (var history in histories)  // แสดงทั้งหมดก่อนเพื่อเช็ค
+                    // สร้าง items
+                    foreach (var history in filteredHistories)
                     {
                         CreateHistoryItem(history);
-                        Debug.Log($"Created item - User_ID: {history.User_ID}, id: {history.id}, Game: {history.Exame_name}");
                     }
+
+                    // อัพเดทขนาด Content หลังสร้าง items ทั้งหมด
+                    UpdateContentSize();
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"Error processing data: {e.Message}\nStackTrace: {e.StackTrace}");
+                    Debug.LogError($"Error: {e.Message}");
                 }
             }
             else
@@ -78,21 +103,48 @@ public class HistoryManager : MonoBehaviour
         }
     }
 
-    void CreateHistoryItem(ExamHistory history)
+    private void CreateHistoryItem(ExamHistory history)
     {
-        Debug.Log($"Attempting to create item at position: {contentParent.position}");
         GameObject item = Instantiate(historyItemPrefab, contentParent);
-        Debug.Log($"Item created: {item.name} at position: {item.transform.position}");
         
-        HistoryItemUI itemUI = item.GetComponent<HistoryItemUI>();
-        if (itemUI != null)
+        RectTransform rt = item.GetComponent<RectTransform>();
+        rt.anchorMin = new Vector2(0, 1);
+        rt.anchorMax = new Vector2(1, 1);
+        rt.pivot = new Vector2(0.5f, 1f);
+        
+        // คำนวณตำแหน่ง Y
+        int itemCount = contentParent.childCount - 1;
+        float yPosition = -(ITEM_HEIGHT + ITEM_SPACING) * itemCount;
+        
+        // ตั้งค่าขนาดและตำแหน่ง
+        rt.sizeDelta = new Vector2(-20f, ITEM_HEIGHT);
+        rt.anchoredPosition = new Vector2(0, yPosition);
+        
+        // ปรับขนาด Content ตามจำนวน items
+        float minContentHeight = 340f; // ความสูงขั้นต่ำของ content
+        float requiredHeight = (ITEM_HEIGHT + ITEM_SPACING) * (itemCount + 1) + BOTTOM_PADDING;
+        float contentHeight = Mathf.Max(minContentHeight, requiredHeight);
+        
+        contentParent.sizeDelta = new Vector2(0, contentHeight);
+        
+        var historyItemUI = item.GetComponent<HistoryItemUI>();
+        if (historyItemUI != null)
         {
-            itemUI.SetData(history);
+            historyItemUI.SetData(history);
         }
-        else
-        {
-            Debug.LogError("HistoryItemUI component missing from prefab!");
-        }
+
+        Debug.Log($"Created item at position Y: {yPosition}, Content height: {contentHeight}");
+    }
+
+    private void UpdateContentSize()
+    {
+        // อัพเดทขนาด Content หลังจากสร้าง items ทั้งหมด
+        int totalItems = contentParent.childCount;
+        float minContentHeight = 340f;
+        float requiredHeight = (ITEM_HEIGHT + ITEM_SPACING) * totalItems + BOTTOM_PADDING;
+        float contentHeight = Mathf.Max(minContentHeight, requiredHeight);
+        
+        contentParent.sizeDelta = new Vector2(0, contentHeight);
     }
 }
 

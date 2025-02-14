@@ -20,20 +20,36 @@ public class HistoryItemUI : MonoBehaviour
         }
     }
 
-    public void SetData(ExamHistory data)
+    void Start()
     {
-        if (data == null) return;
+        // กำหนดขนาดของ item ให้ใหญ่ขึ้น
+        RectTransform rt = GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(0, 150); // เพิ่มความสูงเป็น 150
+    }
 
-        historyData = data;
+    public void SetData(ExamHistory history)
+    {
+        // แปลง string เป็น DateTime
+        DateTime startTime = DateTime.Parse(history.Start_Time);
         
-        // แปลงและแสดงวันที่
-        DateTime startTime = DateTime.Parse(data.Start_Time);
+        // จัดรูปแบบวันที่ให้เป็นภาษาไทย
         dateText.text = startTime.ToString("dd/MM/yyyy");
+        examNameText.text = history.Exame_name;
         
-        // แสดงชื่อเกม
-        examNameText.text = data.Exame_name;
+        // เพิ่ม Debug
+        Debug.Log($"Setting UI - Date: {dateText.text}, Game: {examNameText.text}");
+        Debug.Log($"Item size: {GetComponent<RectTransform>().sizeDelta}");
         
-        Debug.Log($"Setting UI data - Date: {dateText.text}, Game: {examNameText.text}");
+        // ตรวจสอบว่า Text components ทำงานถูกต้อง
+        if (dateText == null) Debug.LogError("dateText is null");
+        if (examNameText == null) Debug.LogError("examNameText is null");
+        
+        // ตรวจสอบว่า parent canvas เปิดใช้งานอยู่
+        Canvas parentCanvas = GetComponentInParent<Canvas>();
+        if (parentCanvas != null)
+        {
+            Debug.Log($"Parent canvas enabled: {parentCanvas.enabled}");
+        }
     }
 
     public void OnDetailButtonClick()
