@@ -42,13 +42,35 @@ public class ResultPanel : MonoBehaviour
 
         if (resultAnalysis != null)
         {
-            float speedScore = CalculateSpeedScore(time);
-            float accuracyScore = CalculateAccuracyScore(coin10Count + coin5Count + coin1Count);
-            float memoryScore = CalculateMemoryScore(coin10Count, coin5Count, coin1Count);
+            float speedPercentage = CalculateSpeedScore(time);
+            float accuracyPercentage = CalculateAccuracyScore(coin10Count + coin5Count + coin1Count);
+            float memoryPercentage = CalculateMemoryScore(coin10Count, coin5Count, coin1Count);
             
-            resultAnalysis.UpdateResults(speedScore, accuracyScore, memoryScore);
+            resultAnalysis.UpdateResults(speedPercentage, accuracyPercentage, memoryPercentage);
 
-            // บันทึกผลลงฐานข้อมูล
+            // สร้าง object สำหรับเก็บผลการประเมิน
+            string evaluationResult = "";
+            string adviceText = "";
+            
+            // ดึงผลการประเมินจาก ResultAnalysis
+            float averageScore = (speedPercentage + accuracyPercentage + memoryPercentage) / 3f;
+            if (averageScore >= 60f)
+            {
+                evaluationResult = "ไม่พบความเสี่ยง";
+                adviceText = "สมองของคุณทำงานได้ดี\nควรรักษาสุขภาพสมองด้วย\nการออกกำลังกายสม่ำเสมอ";
+            }
+            else if (averageScore >= 40f)
+            {
+                evaluationResult = "พบความเสี่ยงต่ำ";
+                adviceText = "ควรเพิ่มการฝึกฝนความจำและการคิด\nแนะนำให้ปรึกษาแพทย์";
+            }
+            else
+            {
+                evaluationResult = "พบความเสี่ยงสูง";
+                adviceText = "แนะนำให้พบแพทย์โดยเร็ว\nควรได้รับการตรวจประเมินอย่างละเอียด";
+            }
+
+            // บันทึกผลการเล่นพร้อมผลการประเมิน
             if (examManager != null)
             {
                 DateTime endTime = DateTime.Now;
@@ -58,10 +80,12 @@ public class ResultPanel : MonoBehaviour
                     "Coin Game",
                     startTime,
                     endTime,
-                    time,  // ส่งเวลาที่ใช้จริงแทน time limit
-                    speedScore,
-                    accuracyScore,
-                    memoryScore
+                    time,
+                    speedPercentage,
+                    accuracyPercentage,
+                    memoryPercentage,
+                    evaluationResult,  // เพิ่มผลการประเมิน
+                    adviceText        // เพิ่มคำแนะนำ
                 );
             }
         }

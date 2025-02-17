@@ -28,7 +28,7 @@ public class ExamManager : MonoBehaviour
     private string lastSavedData = "";
     private bool hasBeenSaved = false;
 
-    public void SaveExamResult(string examName, DateTime startTime, DateTime endTime, float actualPlayTime, float speed, float accuracy, float memory)
+    public void SaveExamResult(string examName, DateTime startTime, DateTime endTime, float actualPlayTime, float speed, float accuracy, float memory, string evaluationResult, string advice)
     {
         if (hasBeenSaved)
         {
@@ -66,7 +66,9 @@ public class ExamManager : MonoBehaviour
             ""Result_Exam"": {{
                 ""speed"": {(int)speed},
                 ""accuracy"": {(int)accuracy},
-                ""memory"": {(int)memory}
+                ""memory"": {(int)memory},
+                ""evaluation"": ""{evaluationResult}"",
+                ""advice"": ""{advice.Replace("\n", "\\n")}""
             }}
         }}";
 
