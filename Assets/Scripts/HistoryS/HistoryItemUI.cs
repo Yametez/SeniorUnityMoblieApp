@@ -14,8 +14,9 @@ public class HistoryItemUI : MonoBehaviour
 
     void Start()
     {
-        // ดึง userId ที่เก็บไว้ตั้งแต่ login
+        // เก็บข้อมูลจาก Login
         userId = PlayerPrefs.GetString("UserID");
+        string username = PlayerPrefs.GetString("Username");
         
         // เพิ่ม listener ให้กับปุ่ม
         if (detailButton != null)
@@ -70,7 +71,6 @@ public class HistoryItemUI : MonoBehaviour
 
     private void OnDetailButtonClick()
     {
-        // ตรวจสอบว่ามีข้อมูลก่อนที่จะใช้
         if (historyData == null)
         {
             Debug.LogError("No history data available!");
@@ -79,16 +79,17 @@ public class HistoryItemUI : MonoBehaviour
 
         try
         {
-            // เก็บข้อมูลที่จำเป็นไว้ใน PlayerPrefs
-            PlayerPrefs.SetString("SelectedExamId", historyData.Exam_ID);
+            // เก็บข้อมูลทั้งหมดที่จำเป็น
+            PlayerPrefs.SetString("SelectedExamId", historyData.Exam_ID);        // ลำดับงาน
+            PlayerPrefs.SetString("SelectedGameId", historyData.id);             // รหัสเกม (301)
             PlayerPrefs.SetString("SelectedExamName", historyData.Exame_name);
             PlayerPrefs.SetString("SelectedUserId", userId);
             PlayerPrefs.SetString("SelectedExamDate", historyData.Start_Time);
             
-            // Debug log ก่อนเปลี่ยน Scene
-            Debug.Log($"Saving exam data - ID: {historyData.Exam_ID}, Name: {historyData.Exame_name}");
+            // Debug log เพื่อตรวจสอบข้อมูล
+            Debug.Log($"Sending to detail - ExamID: {historyData.Exam_ID}, GameID: {historyData.id}");
+            Debug.Log($"Date: {historyData.Start_Time}, Name: {historyData.Exame_name}");
             
-            // เปลี่ยนไปยัง Scene HistoryDetail
             SceneManager.LoadScene("HistoryDetail");
         }
         catch (Exception e)

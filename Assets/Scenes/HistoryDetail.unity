@@ -1825,7 +1825,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.6
-  m_Text: "\u0E1C\u0E25\u0E01\u0E32\u0E23\u0E1B\u0E23\u0E30\u0E40\u0E21\u0E34\u0E19:\u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07"
+  m_Text: "\u0E1C\u0E25\u0E01\u0E32\u0E23\u0E1B\u0E23\u0E30\u0E40\u0E21\u0E34\u0E19:-"
 --- !u!222 &1396248314
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2025,7 +2025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1624176025
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2229,6 +2229,9 @@ MonoBehaviour:
   totalScoreText: {fileID: 0}
   resultText: {fileID: 1396248313}
   adviceText: {fileID: 154210952}
+  memorySlider: {fileID: 628264249}
+  accuracySlider: {fileID: 1730478728}
+  speedSlider: {fileID: 1556221537}
 --- !u!1 &1730478726
 GameObject:
   m_ObjectHideFlags: 0
