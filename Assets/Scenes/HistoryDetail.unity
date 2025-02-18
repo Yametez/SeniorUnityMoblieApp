@@ -338,7 +338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.25531006, y: -200.97174}
+  m_AnchoredPosition: {x: -0.25531006, y: -205}
   m_SizeDelta: {x: 711.89, y: 241.66003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &154210952
@@ -1434,7 +1434,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3af3701798f178542a5a65d567868863, type: 3}
-    m_FontSize: 45
+    m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2226,12 +2226,15 @@ MonoBehaviour:
   dateText: {fileID: 1310705576}
   examNameText: {fileID: 0}
   userIdText: {fileID: 0}
-  totalScoreText: {fileID: 0}
-  resultText: {fileID: 1396248313}
+  speedText: {fileID: 1309566010}
+  accuracyText: {fileID: 1219530206}
+  memoryText: {fileID: 2040972517}
+  evaluationText: {fileID: 1396248313}
   adviceText: {fileID: 154210952}
-  memorySlider: {fileID: 628264249}
-  accuracySlider: {fileID: 1730478728}
+  timeResultText: {fileID: 1224012085}
   speedSlider: {fileID: 1556221537}
+  accuracySlider: {fileID: 1730478728}
+  memorySlider: {fileID: 628264249}
 --- !u!1 &1730478726
 GameObject:
   m_ObjectHideFlags: 0

@@ -188,3 +188,35 @@ def delete_exam(exam_id):
     cursor.close()
     connection.close()
     return jsonify({'message': 'Exam deleted successfully'})
+
+# Get exam by Exam_ID (เพิ่มใหม่)
+@exam_bp.route('/detail/<int:exam_id>', methods=['GET'])
+def get_exam_detail(exam_id):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute('SELECT * FROM Exam WHERE Exam_ID = %s', (exam_id,))
+        exam = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        
+        if exam:
+            # แปลงข้อมูลให้เป็น JSON serializable
+            serializable_exam = {
+                'Exam_ID': str(exam['Exam_ID']),
+                'User_ID': str(exam['User_ID']),
+                'id': str(exam['id']),  # รหัสเกม (301 = Coin Game)
+                'Exame_name': exam['Exame_name'],
+                'Start_Time': exam['Start_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(exam['Start_Time'], datetime) else str(exam['Start_Time']),
+                'End_Time': exam['End_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(exam['End_Time'], datetime) else str(exam['End_Time']),
+                'Time_limit': str(exam['Time_limit'].total_seconds()) if isinstance(exam['Time_limit'], timedelta) else str(exam['Time_limit']),
+                'GameSession_ID': str(exam['GameSession_ID']),
+                'Result_Exam': json.loads(exam['Result_Exam']) if exam['Result_Exam'] else None
+            }
+            return jsonify(serializable_exam)
+            
+        return jsonify({'message': 'Exam not found'}), 404
+        
+    except Exception as e:
+        print("Error:", str(e))
+        return jsonify({'error': str(e)}), 500
