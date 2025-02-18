@@ -8,14 +8,15 @@ using System.Linq; // เพิ่มเพื่อใช้ OrderByDescending
 
 public class HistoryManager : MonoBehaviour
 {
-    [SerializeField] private RectTransform contentParent;  // เปลี่ยนจาก Transform เป็น RectTransform
+    [SerializeField] private ScrollRect scrollView;
+    [SerializeField] private RectTransform contentParent;
     [SerializeField] private GameObject historyItemPrefab;
     [SerializeField] private string apiUrl = "http://localhost:3000/api/exam"; // ตรวจสอบ URL ให้ถูกต้อง
     
     private string userId;
 
     // เพิ่มตัวแปรสำหรับกำหนดค่าเริ่มต้น
-    private const float INITIAL_Y_OFFSET = -318.0409f; // ตำแหน่ง Y เริ่มต้นตามที่ต้องการ
+    private const float INITIAL_Y_OFFSET = -335.0477f; // ตำแหน่ง Y เริ่มต้นตามที่ต้องการ -335.0477/-318.0409
     private const float ITEM_HEIGHT = 100f;
     private const float ITEM_SPACING = 10f;
     private const float BOTTOM_PADDING = 20f; // padding ด้านล่างสุด
@@ -42,6 +43,31 @@ public class HistoryManager : MonoBehaviour
         contentRT.anchorMax = new Vector2(1, 1);
         contentRT.pivot = new Vector2(0.5f, 1f);
         contentRT.anchoredPosition = new Vector2(0, INITIAL_Y_OFFSET);
+
+        // ตั้งค่า Scroll View
+        if (scrollView != null)
+        {
+            // จำกัดการเลื่อนในแนวตั้ง
+            scrollView.vertical = true;
+            scrollView.horizontal = false;
+            
+            // ปรับ Content Size Fitter
+            ContentSizeFitter sizeFitter = contentParent.GetComponent<ContentSizeFitter>();
+            if (sizeFitter == null)
+            {
+                sizeFitter = contentParent.gameObject.AddComponent<ContentSizeFitter>();
+            }
+            sizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            
+            // ปรับ Vertical Layout Group
+            VerticalLayoutGroup verticalLayout = contentParent.GetComponent<VerticalLayoutGroup>();
+            if (verticalLayout == null)
+            {
+                verticalLayout = contentParent.gameObject.AddComponent<VerticalLayoutGroup>();
+            }
+            verticalLayout.spacing = 5f; // ระยะห่างระหว่างรายการ
+            verticalLayout.padding = new RectOffset(10, 10, 10, 10); // ระยะขอบ
+        }
     }
 
     [Serializable]
