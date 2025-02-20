@@ -14,6 +14,7 @@ public class RegisterButtonController : MonoBehaviour
     [SerializeField] private InputField ageInput;
     [SerializeField] private ToggleGroup genderToggle;
     [SerializeField] private Toggle acceptTermsToggle;
+    [SerializeField] private TermsPopupController termsPopupController;
     private Button registerButton;
 
     private string apiUrl = "http://localhost:3000/api/users/";
@@ -149,5 +150,14 @@ public class RegisterButtonController : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void OnTermsToggleClicked(bool isOn)
+    {
+        if (isOn)
+        {
+            termsPopupController.Show();
+            acceptTermsToggle.isOn = false;
+        }
     }
 } 
