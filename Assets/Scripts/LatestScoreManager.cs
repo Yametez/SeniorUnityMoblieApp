@@ -12,6 +12,7 @@ public class LatestScoreManager : MonoBehaviour
     [SerializeField] private Text adviceText;       // คำแนะนำ
     [SerializeField] private Text userIdText;       // ชื่อผู้ใช้
     [SerializeField] private Text dateText;         // วันที่เล่น
+    [SerializeField] private Image scoreCircleImage;  // เพิ่ม reference ไปยัง Image component ของวงกลม
 
     [Header("Total Progress Bar")]
     [SerializeField] private Slider totalScoreSlider;   // Progress Bar รวมคะแนน
@@ -56,6 +57,7 @@ public class LatestScoreManager : MonoBehaviour
             if (currentUser == null || currentUser.userId <= 0)
             {
                 Debug.LogWarning("User data not found!");
+                ShowDefaultValues(currentUser);
                 return;
             }
 
@@ -74,32 +76,64 @@ public class LatestScoreManager : MonoBehaviour
                 if (request.result == UnityWebRequest.Result.Success)
                 {
                     string jsonResponse = request.downloadHandler.text;
-                    ExamData examData = JsonUtility.FromJson<ExamData>(jsonResponse);
+                    Debug.Log($"API Response: {jsonResponse}");
                     
-                    // ถ้าไม่พบประวัติการทดสอบ แสดงค่าเริ่มต้น
-                    if (examData == null || examData.Result_Exam == null)
+                    // แปลง JSON response เป็น anonymous object เพื่อตรวจสอบ has_history
+                    var response = JsonUtility.FromJson<ApiResponse>(jsonResponse);
+                    
+                    if (response.has_history)
+                    {
+                        ExamData examData = JsonUtility.FromJson<ExamData>(jsonResponse);
+                        if (examData != null && examData.Result_Exam != null)
+                        {
+                            UpdateUI(examData, currentUser);
+                        }
+                    }
+                    else
                     {
                         Debug.Log("No exam history found, showing default values");
                         ShowDefaultValues(currentUser);
                     }
-                    else
-                    {
-                        UpdateUI(examData, currentUser);
-                    }
+                }
+                else
+                {
+                    Debug.LogError($"API Error: {request.error}");
+                    ShowDefaultValues(currentUser);
                 }
             }
         }
         catch (Exception e)
         {
             Debug.LogError($"Error in Start: {e.Message}");
+            ShowDefaultValues(CurrentUser.GetCurrentUser());
         }
+    }
+
+    // เพิ่ม class สำหรับตรวจสอบ response
+    [System.Serializable]
+    private class ApiResponse
+    {
+        public bool has_history;
+        public string message;
     }
 
     private void ShowDefaultValues(UserData userData)
     {
-        // แสดงคะแนนเริ่มต้น
         if (scoreText != null)
-            scoreText.text = defaultScore;
+            scoreText.text = defaultScore;  // "00"
+
+        if (scoreCircleImage != null)
+        {
+            scoreCircleImage.color = new Color(0f, 1f, 1f);  // สีฟ้า (Cyan)
+        }
+
+        if (evaluationText != null)
+        {
+            evaluationText.text = "\n<color=#00FFFF>ไม่มีประวัติ</color>";  // สีดำสำหรับ "ผลการประเมิน:" และสีฟ้าสำหรับ "ไม่มีประวัติ"
+        }
+
+        if (adviceText != null)
+            adviceText.text = "ลองทำแบบประเมิน\nเพื่อดูคะแนนที่ได้สิ";
 
         // แสดงชื่อผู้ใช้
         if (userIdText != null && userData != null)
@@ -116,17 +150,6 @@ public class LatestScoreManager : MonoBehaviour
             totalScoreSlider.value = 0f;
         }
 
-        // แสดงผลการประเมินเริ่มต้น
-        if (evaluationText != null)
-        {
-            evaluationText.text = $"ผลการประเมิน:\n{defaultEvaluation}";
-            evaluationText.color = Color.black;
-        }
-
-        // แสดงคำแนะนำเริ่มต้น
-        if (adviceText != null)
-            adviceText.text = defaultAdvice;
-
         // ซ่อนเวลา
         if (timeText != null)
             timeText.text = "";
@@ -136,14 +159,32 @@ public class LatestScoreManager : MonoBehaviour
     {
         if (examData != null && examData.Result_Exam != null)
         {
-            // คำนวณคะแนนรวม
             float totalScore = (examData.Result_Exam.speed + 
                               examData.Result_Exam.accuracy + 
                               examData.Result_Exam.memory) / 3f;
             
-            // แสดงคะแนนในวงกลม
-            if (scoreText != null) 
+            // แสดงคะแนนและกำหนดสีวงกลม
+            if (scoreText != null && scoreCircleImage != null)
+            {
                 scoreText.text = Mathf.RoundToInt(totalScore).ToString();
+                
+                // กำหนดสีตามระดับคะแนน
+                if (totalScore >= 60f)
+                {
+                    scoreCircleImage.color = Color.green;
+                    evaluationText.color = Color.green;
+                }
+                else if (totalScore >= 40f)
+                {
+                    scoreCircleImage.color = Color.yellow;
+                    evaluationText.color = Color.yellow;
+                }
+                else
+                {
+                    scoreCircleImage.color = Color.red;
+                    evaluationText.color = Color.red;
+                }
+            }
 
             // อัพเดท Progress Bar
             if (totalScoreSlider != null)
@@ -171,21 +212,25 @@ public class LatestScoreManager : MonoBehaviour
             // แสดงคำแปลและกำหนดสี
             if (evaluationText != null)
             {
+                string colorHex;
+                string resultText;
                 if (totalScore >= 60f)
                 {
-                    evaluationText.text = "ผลการประเมิน:\nไม่พบความเสี่ยง";
-                    evaluationText.color = Color.green;
+                    colorHex = "#00FF00";  // สีเขียว
+                    resultText = "ไม่พบความเสี่ยง";
                 }
                 else if (totalScore >= 40f)
                 {
-                    evaluationText.text = "ผลการประเมิน:\nพบความเสี่ยงต่ำ";
-                    evaluationText.color = Color.yellow;
+                    colorHex = "#FFFF00";  // สีเหลือง
+                    resultText = "พบความเสี่ยงต่ำ";
                 }
                 else
                 {
-                    evaluationText.text = "ผลการประเมิน:\nพบความเสี่ยงสูง";
-                    evaluationText.color = Color.red;
+                    colorHex = "#FF0000";  // สีแดง
+                    resultText = "พบความเสี่ยงสูง";
                 }
+                
+                evaluationText.text = $"\n<color={colorHex}>{resultText}</color>";
             }
 
             // แสดงคำแนะนำ (ไม่มีการกำหนดสี)
