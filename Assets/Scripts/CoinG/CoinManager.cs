@@ -105,7 +105,7 @@ namespace CoinGame
             // สร้างเหรียญใหม่
             foreach (var coinType in coinTypes)
             {
-                coinType.count = Random.Range(3, 10);
+                coinType.count = Random.Range(2, 5);
                 totalCoinsInGame += coinType.count;
                 SpawnCoins(coinType);
             }
@@ -186,6 +186,13 @@ namespace CoinGame
                 dragComponent.manager = this;
                 
                 Debug.Log($"Spawned coin at position: {randomPos}"); // เพิ่ม Debug log
+
+                // กำหนด sorting order ให้เหรียญอยู่ด้านบนพื้นหลัง
+                SpriteRenderer spriteRenderer = newCoin.GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.sortingOrder = 100;  // ค่าบวกจะอยู่ด้านบน -2
+                }
             }
         }
 
