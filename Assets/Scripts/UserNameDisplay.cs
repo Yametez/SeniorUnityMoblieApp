@@ -19,7 +19,7 @@ public class UserNameDisplay : MonoBehaviour
         UserData currentUser = CurrentUser.GetCurrentUser();
         if (currentUser != null)
         {
-            userNameText.text = $"สวัสดี, คุณ{currentUser.name}";
+            userNameText.text = $"คุณ{currentUser.name}";
             Debug.Log($"Current User ID: {currentUser.userId}");
             Debug.Log($"Current User Email: {currentUser.email}");
         }

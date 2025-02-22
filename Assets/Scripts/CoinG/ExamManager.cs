@@ -50,8 +50,9 @@ public class ExamManager : MonoBehaviour
             return;
         }
 
-        // แปลงเวลาเป็นวินาที และปัดเศษทศนิยม
-        int timeInSeconds = Mathf.RoundToInt(actualPlayTime);
+        // แปลงเวลาให้อยู่ในรูปแบบที่ถูกต้อง
+        TimeSpan timeSpan = TimeSpan.FromSeconds(actualPlayTime);
+        string formattedTime = $"{timeSpan.Hours:D2}:{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
 
         // กำหนดค่า id ตามชื่อเกม
         int gameId = examName == "Coin Game" ? 301 : 302;
@@ -62,7 +63,7 @@ public class ExamManager : MonoBehaviour
             ""Exame_name"": ""{examName}"",
             ""Start_Time"": ""{startTime:yyyy-MM-dd HH:mm:ss}"",
             ""End_Time"": ""{endTime:yyyy-MM-dd HH:mm:ss}"",
-            ""Time_limit"": {timeInSeconds},
+            ""Time_limit"": ""{formattedTime}"",
             ""Result_Exam"": {{
                 ""speed"": {(int)speed},
                 ""accuracy"": {(int)accuracy},

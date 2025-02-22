@@ -220,3 +220,53 @@ def get_exam_detail(exam_id):
     except Exception as e:
         print("Error:", str(e))
         return jsonify({'error': str(e)}), 500
+
+# Get latest exam by User_ID
+@exam_bp.route('/latest/<string:user_id>', methods=['GET'])
+def get_latest_exam(user_id):
+    try:
+        print(f"Fetching latest exam for user: {user_id}")
+        
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        
+        query = '''
+            SELECT * FROM Exam 
+            WHERE User_ID = %s 
+            ORDER BY Start_Time DESC, Exam_ID DESC
+            LIMIT 1
+        '''
+        print(f"Executing query: {query}")
+        
+        cursor.execute(query, (user_id,))
+        exam = cursor.fetchone()
+        
+        print(f"Query result: {exam}")
+        
+        cursor.close()
+        connection.close()
+        
+        if exam:
+            serializable_exam = {
+                'Exam_ID': str(exam['Exam_ID']),
+                'User_ID': str(exam['User_ID']),
+                'id': str(exam['id']),
+                'Exame_name': exam['Exame_name'],
+                'Start_Time': exam['Start_Time'].strftime('%Y-%m-%d %H:%M:%S'),
+                'End_Time': exam['End_Time'].strftime('%Y-%m-%d %H:%M:%S'),
+                'Time_limit': str(exam['Time_limit'].total_seconds()) if isinstance(exam['Time_limit'], timedelta) else str(exam['Time_limit']),
+                'Result_Exam': json.loads(exam['Result_Exam']) if exam['Result_Exam'] else None,
+                'has_history': True
+            }
+        else:
+            serializable_exam = {
+                'has_history': False,
+                'message': 'No exam history found for this user'
+            }
+        
+        print(f"Returning data: {serializable_exam}")
+        return jsonify(serializable_exam), 200  # ส่ง 200 ทั้งสองกรณี
+        
+    except Exception as e:
+        print(f"Error in get_latest_exam: {str(e)}")
+        return jsonify({'error': str(e)}), 500
