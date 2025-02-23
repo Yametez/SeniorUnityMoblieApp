@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 namespace CoinGame
 {
@@ -15,6 +16,29 @@ namespace CoinGame
             public int count;
             public Transform sortingArea;
         }
+
+        [System.Serializable]
+        public class LevelConfig
+        {
+            public int maxCoins;              // จำนวนเหรียญสูงสุดในแต่ละเลเวล
+            public float countdownTime;        // เวลานับถอยหลัง (0 = ไม่มีการนับถอยหลัง)
+            public bool isShuffledSortingArea; // true = สลับตำแหน่งพื้นที่แยกเหรียญ
+        }
+
+        [Header("Level Settings")]
+        public LevelConfig[] levels = new LevelConfig[3] {
+            new LevelConfig { maxCoins = 10, countdownTime = 0, isShuffledSortingArea = false },    // Level 1
+            new LevelConfig { maxCoins = 15, countdownTime = 15, isShuffledSortingArea = false },   // Level 2
+            new LevelConfig { maxCoins = 15, countdownTime = 15, isShuffledSortingArea = true }     // Level 3
+        };
+
+        public int currentLevel { get; private set; } = 0;
+        private float countdownTimer;
+        private bool isCountingDown;
+
+        [Header("UI Elements")]
+        public Text countdownText;        // Text สำหรับแสดงเวลานับถอยหลัง
+        public Transform[] sortingAreas;  // พื้นที่แยกเหรียญทั้ง 3 จุด
 
         public CoinType[] coinTypes; // เก็บข้อมูลเหรียญแต่ละประเภท (1, 5, 10 บาท)
         public Transform coinPileArea; // พื้นที่กองเหรียญ
@@ -35,6 +59,11 @@ namespace CoinGame
 
         public ResultPanel resultPanel; // เพิ่มตัวแปรนี้ที่ด้านบนของคลาส
 
+        private int totalAccumulatedScore = 0;  // คะแนนสะสมรวมทุกเลเวล
+        private float totalGameTime = 0;  // เวลารวมทุกเลเวล
+
+        public GameObject countdownObject; // เพิ่มตัวแปรอ้างอิงถึง Countdown object
+
         void Start()
         {
             // เพิ่มการ reset time scale
@@ -54,6 +83,9 @@ namespace CoinGame
             }
 
             ResetGame(); // เปลี่ยนจาก StartNewGame เป็น ResetGame
+
+            // เริ่มที่เลเวล 1
+            StartLevel(0);
         }
 
         void Update()
@@ -62,22 +94,117 @@ namespace CoinGame
             {
                 gameTimer += Time.deltaTime;
                 UpdateTimerDisplay();
-                
-                // Debug logs
-                Debug.Log($"Active coins: {activeCoinPile.Count}");
-                int totalSorted = coin10Count + coin5Count + coin1Count;
-                Debug.Log($"Sorted coins - 10B: {coin10Count}, 5B: {coin5Count}, 1B: {coin1Count}");
-                Debug.Log($"Total sorted: {totalSorted}, Total in game: {totalCoinsInGame}");
-                
-                // เพิ่มการหน่วงเวลาเล็กน้อยก่อนเช็คเงื่อนไขจบเกม
-                if (totalSorted == totalCoinsInGame && totalCoinsInGame > 0)
+
+                if (isCountingDown)
                 {
-                    StartCoroutine(DelayedShowResults());
+                    countdownTimer -= Time.deltaTime;
+                    if (countdownTimer <= 0)
+                    {
+                        // เมื่อหมดเวลา ให้ไปเลเวลถัดไปหรือจบเกม
+                        if (currentLevel < 2)
+                        {
+                            StartLevel(currentLevel + 1);
+                        }
+                        else
+                        {
+                            ShowFinalResults();
+                        }
+                    }
+                    UpdateCountdownDisplay();
                 }
+
+                // เช็คว่าจบเลเวลหรือยัง
+                CheckLevelCompletion();
             }
         }
 
-        // เพิ่มฟังก์ชันใหม่
+        public void StartLevel(int level)
+        {
+            currentLevel = level;
+            LevelConfig config = levels[currentLevel];
+
+            // รีเซ็ตเฉพาะส่วนที่จำเป็นสำหรับเลเวลใหม่
+            ResetForNewLevel();
+
+            // จัดการการแสดง/ซ่อน countdown
+            if (countdownObject != null)
+            {
+                // แสดง countdown เฉพาะเลเวล 2 และ 3
+                countdownObject.SetActive(level > 0);
+            }
+
+            // ตั้งค่าการนับถอยหลัง
+            if (config.countdownTime > 0)
+            {
+                countdownTimer = config.countdownTime;
+                isCountingDown = true;
+            }
+            else
+            {
+                isCountingDown = false;
+            }
+
+            // สลับตำแหน่งพื้นที่แยกเหรียญถ้าจำเป็น
+            if (config.isShuffledSortingArea)
+            {
+                ShuffleSortingAreas();
+            }
+
+            // แก้ไขจาก SpawnCoinsForCurrentLevel() เป็น ResetGame()
+            ResetGame(); // สร้างเหรียญใหม่ตามการตั้งค่าของเลเวล
+        }
+
+        private void ResetForNewLevel()
+        {
+            // รีเซ็ตเฉพาะตัวแปรที่จำเป็นสำหรับเลเวลใหม่
+            gameTimer = 0;
+            isGameActive = true;
+            coin10Count = 0;
+            coin5Count = 0;
+            coin1Count = 0;
+            totalScore = 0;
+            totalCoinsInGame = 0;
+
+            // เคลียร์เหรียญเก่า
+            foreach (var coin in activeCoinPile)
+            {
+                if (coin != null)
+                {
+                    Destroy(coin);
+                }
+            }
+            activeCoinPile.Clear();
+
+            UpdateUI();
+        }
+
+        private void ShuffleSortingAreas()
+        {
+            // สลับตำแหน่งพื้นที่แยกเหรียญ
+            Vector3[] positions = sortingAreas.Select(area => area.position).ToArray();
+            for (int i = positions.Length - 1; i > 0; i--)
+            {
+                int randomIndex = Random.Range(0, i + 1);
+                Vector3 temp = positions[i];
+                positions[i] = positions[randomIndex];
+                positions[randomIndex] = temp;
+            }
+
+            // อัพเดทตำแหน่งใหม่
+            for (int i = 0; i < sortingAreas.Length; i++)
+            {
+                sortingAreas[i].position = positions[i];
+            }
+        }
+
+        private void UpdateCountdownDisplay()
+        {
+            if (countdownText != null)
+            {
+                countdownText.text = $"เวลา: {Mathf.CeilToInt(countdownTimer)}";
+            }
+        }
+
         public void ResetGame()
         {
             // รีเซ็ตค่าทั้งหมด
@@ -102,10 +229,20 @@ namespace CoinGame
             // อัพเดท UI
             UpdateUI();
             
-            // สร้างเหรียญใหม่
+            // สร้างเหรียญตามจำนวนที่กำหนดในแต่ละเลเวล
+            int totalCoinsForThisLevel = 0;
             foreach (var coinType in coinTypes)
             {
-                coinType.count = Random.Range(2, 5);
+                coinType.count = Random.Range(2, 4);  // สุ่มจำนวนเหรียญแต่ละประเภท
+                totalCoinsForThisLevel += coinType.count;
+
+                // ตรวจสอบว่าไม่เกินจำนวนสูงสุดที่กำหนด
+                if (totalCoinsForThisLevel > levels[currentLevel].maxCoins)
+                {
+                    coinType.count -= (totalCoinsForThisLevel - levels[currentLevel].maxCoins);
+                    totalCoinsForThisLevel = levels[currentLevel].maxCoins;
+                }
+
                 totalCoinsInGame += coinType.count;
                 SpawnCoins(coinType);
             }
@@ -368,6 +505,51 @@ namespace CoinGame
         public bool IsGameActive()
         {
             return isGameActive;
+        }
+
+        private void GameOver()
+        {
+            Debug.Log("Game Over!");
+            isGameActive = false;
+            ShowResults();
+        }
+
+        private void CheckLevelCompletion()
+        {
+            int totalSorted = coin10Count + coin5Count + coin1Count;
+            
+            if (totalSorted == totalCoinsInGame && totalCoinsInGame > 0)
+            {
+                // เก็บคะแนนและเวลาของเลเวลปัจจุบัน
+                totalAccumulatedScore += totalScore;
+                totalGameTime += gameTimer;
+
+                if (currentLevel < 2)  // ถ้ายังไม่ถึงเลเวล 3
+                {
+                    // ไปเลเวลถัดไปทันที
+                    StartLevel(currentLevel + 1);
+                }
+                else  // จบเลเวล 3 แล้ว
+                {
+                    // แสดงผลรวมทั้งหมด
+                    ShowFinalResults();
+                }
+            }
+        }
+
+        private void ShowFinalResults()
+        {
+            // ซ่อน countdown ก่อนแสดงผลลัพธ์
+            if (countdownObject != null)
+            {
+                countdownObject.SetActive(false);
+            }
+
+            if (resultPanel != null)
+            {
+                resultPanel.gameObject.SetActive(true);
+                resultPanel.ShowResults(totalGameTime, coin10Count, coin5Count, coin1Count, totalAccumulatedScore);
+            }
         }
     }
 } 

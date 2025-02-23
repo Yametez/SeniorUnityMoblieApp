@@ -1,11 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using CoinGame; // เพิ่ม namespace นี้
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
     public bool isPaused = false;
     public GameObject pauseMenuPanel; // อ้างอิงถึง Panel ของ Pause Menu
+    public CoinManager coinManager;
 
     void Awake()
     {
@@ -30,6 +35,10 @@ public class GameManager : MonoBehaviour
         if (pauseMenuPanel != null)
         {
             pauseMenuPanel.SetActive(false);
+        }
+        if (coinManager != null)
+        {
+            coinManager.ResetGame();
         }
     }
 
@@ -66,5 +75,10 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ResetGameState();
+    }
+
+    public void StartNextLevel()
+    {
+        coinManager.StartLevel(coinManager.currentLevel + 1);
     }
 } 
