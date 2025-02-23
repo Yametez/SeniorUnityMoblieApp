@@ -27,9 +27,9 @@ namespace CoinGame
 
         [Header("Level Settings")]
         public LevelConfig[] levels = new LevelConfig[3] {
-            new LevelConfig { maxCoins = 10, countdownTime = 0, isShuffledSortingArea = false },    // Level 1
-            new LevelConfig { maxCoins = 15, countdownTime = 15, isShuffledSortingArea = false },   // Level 2
-            new LevelConfig { maxCoins = 15, countdownTime = 15, isShuffledSortingArea = true }     // Level 3
+            new LevelConfig { maxCoins = 8, countdownTime = 0, isShuffledSortingArea = false },    // Level 1
+            new LevelConfig { maxCoins = 13, countdownTime = 15, isShuffledSortingArea = false },   // Level 2
+            new LevelConfig { maxCoins = 17, countdownTime = 25, isShuffledSortingArea = true }     // Level 3
         };
 
         public int currentLevel { get; private set; } = 0;
@@ -48,7 +48,7 @@ namespace CoinGame
         public Text coin5ScoreText;
         public Text coin1ScoreText;
         
-        private float gameTimer;
+        private float gameTimer;  // เวลารวมทั้งหมด
         private bool isGameActive;
         private List<GameObject> activeCoinPile = new List<GameObject>();
         private int coin10Count = 0;
@@ -59,7 +59,7 @@ namespace CoinGame
 
         public ResultPanel resultPanel; // เพิ่มตัวแปรนี้ที่ด้านบนของคลาส
 
-        private int totalAccumulatedScore = 0;  // คะแนนสะสมรวมทุกเลเวล
+        private int totalAccumulatedScore = 0;  // คะแนนสะสม
         private float totalGameTime = 0;  // เวลารวมทุกเลเวล
 
         public GameObject countdownObject; // เพิ่มตัวแปรอ้างอิงถึง Countdown object
@@ -82,9 +82,8 @@ namespace CoinGame
                 Destroy(coin);
             }
 
-            ResetGame(); // เปลี่ยนจาก StartNewGame เป็น ResetGame
-
-            // เริ่มที่เลเวล 1
+            // เริ่มเกมที่เลเวล 1
+            gameTimer = 0;  // รีเซ็ตเวลาเฉพาะตอนเริ่มเกมครั้งแรกเท่านั้น
             StartLevel(0);
         }
 
@@ -156,13 +155,11 @@ namespace CoinGame
 
         private void ResetForNewLevel()
         {
-            // รีเซ็ตเฉพาะตัวแปรที่จำเป็นสำหรับเลเวลใหม่
-            gameTimer = 0;
+            // ไม่ต้องรีเซ็ต gameTimer
             isGameActive = true;
             coin10Count = 0;
             coin5Count = 0;
             coin1Count = 0;
-            totalScore = 0;
             totalCoinsInGame = 0;
 
             // เคลียร์เหรียญเก่า
@@ -201,14 +198,13 @@ namespace CoinGame
         {
             if (countdownText != null)
             {
-                countdownText.text = $"เวลา: {Mathf.CeilToInt(countdownTimer)}";
+                countdownText.text = $"{Mathf.CeilToInt(countdownTimer)}";
             }
         }
 
         public void ResetGame()
         {
-            // รีเซ็ตค่าทั้งหมด
-            gameTimer = 0;
+            // รีเซ็ตค่าทั้งหมด ยกเว้น gameTimer
             isGameActive = true;
             coin10Count = 0;
             coin5Count = 0;
@@ -226,17 +222,61 @@ namespace CoinGame
             }
             activeCoinPile.Clear();
 
-            // อัพเดท UI
             UpdateUI();
             
+            // สร้างเหรียญใหม่
+            SpawnCoinsForLevel();
+        }
+
+        public void StartNewGame()
+        {
+            // รีเซ็ตค่าทั้งหมด
+            gameTimer = 0;
+            totalAccumulatedScore = 0;
+            currentLevel = 0;
+            isGameActive = true;
+            
+            // รีเซ็ตค่าการนับเหรียญ
+            coin10Count = 0;
+            coin5Count = 0;
+            coin1Count = 0;
+            
+            // รีเซ็ต UI แสดงจำนวนเหรียญ
+            if (coin10ScoreText) coin10ScoreText.text = "0";
+            if (coin5ScoreText) coin5ScoreText.text = "0";
+            if (coin1ScoreText) coin1ScoreText.text = "0";
+            
+            // รีเซ็ตคะแนนรวม UI
+            if (scoreText) scoreText.text = "ยอดรวม: 0 บาท";
+            
+            // รีเซ็ตเวลา UI
+            if (timerText) timerText.text = "เวลา: 00:00";
+
+            // ซ่อน result panel
+            if (resultPanel != null)
+            {
+                resultPanel.gameObject.SetActive(false);
+            }
+
+            // รีเซ็ตสถานะเกม
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.ResetGameState();
+            }
+
+            // เริ่มเลเวล 1
+            StartLevel(0);
+        }
+
+        private void SpawnCoinsForLevel()
+        {
             // สร้างเหรียญตามจำนวนที่กำหนดในแต่ละเลเวล
             int totalCoinsForThisLevel = 0;
             foreach (var coinType in coinTypes)
             {
-                coinType.count = Random.Range(2, 4);  // สุ่มจำนวนเหรียญแต่ละประเภท
+                coinType.count = Random.Range(2, 4);
                 totalCoinsForThisLevel += coinType.count;
 
-                // ตรวจสอบว่าไม่เกินจำนวนสูงสุดที่กำหนด
                 if (totalCoinsForThisLevel > levels[currentLevel].maxCoins)
                 {
                     coinType.count -= (totalCoinsForThisLevel - levels[currentLevel].maxCoins);
@@ -246,15 +286,6 @@ namespace CoinGame
                 totalCoinsInGame += coinType.count;
                 SpawnCoins(coinType);
             }
-        }
-
-        public void StartNewGame()
-        {
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.ResetGameState();
-            }
-            ResetGame();
         }
 
         void SpawnCoins(CoinType coinType)
@@ -335,9 +366,12 @@ namespace CoinGame
 
         void UpdateTimerDisplay()
         {
-            int minutes = (int)(gameTimer / 60);
-            int seconds = (int)(gameTimer % 60);
-            timerText.text = $"เวลา: {minutes:00}:{seconds:00}";
+            if (timerText != null)
+            {
+                int minutes = (int)(gameTimer / 60);
+                int seconds = (int)(gameTimer % 60);
+                timerText.text = $"เวลา: {minutes:00}:{seconds:00}";
+            }
         }
 
         public void CheckGameCompletion()
@@ -422,17 +456,17 @@ namespace CoinGame
             {
                 case 10:
                     coin10Count++;
-                    totalScore += 10;
+                    totalAccumulatedScore += 10;  // เพิ่มคะแนนสะสม
                     if (coin10ScoreText) coin10ScoreText.text = coin10Count.ToString();
                     break;
                 case 5:
                     coin5Count++;
-                    totalScore += 5;
+                    totalAccumulatedScore += 5;   // เพิ่มคะแนนสะสม
                     if (coin5ScoreText) coin5ScoreText.text = coin5Count.ToString();
                     break;
                 case 1:
                     coin1Count++;
-                    totalScore += 1;
+                    totalAccumulatedScore += 1;   // เพิ่มคะแนนสะสม
                     if (coin1ScoreText) coin1ScoreText.text = coin1Count.ToString();
                     break;
             }
@@ -452,7 +486,7 @@ namespace CoinGame
                     if (coin10Count > 0)
                     {
                         coin10Count--;
-                        totalScore -= 10;
+                        totalAccumulatedScore -= 10;
                     }
                     if (coin10ScoreText) coin10ScoreText.text = coin10Count.ToString();
                     break;
@@ -460,7 +494,7 @@ namespace CoinGame
                     if (coin5Count > 0)
                     {
                         coin5Count--;
-                        totalScore -= 5;
+                        totalAccumulatedScore -= 5;
                     }
                     if (coin5ScoreText) coin5ScoreText.text = coin5Count.ToString();
                     break;
@@ -468,7 +502,7 @@ namespace CoinGame
                     if (coin1Count > 0)
                     {
                         coin1Count--;
-                        totalScore -= 1;
+                        totalAccumulatedScore -= 1;
                     }
                     if (coin1ScoreText) coin1ScoreText.text = coin1Count.ToString();
                     break;
@@ -480,9 +514,8 @@ namespace CoinGame
         {
             if (scoreText) 
             {
-                totalScore = (coin10Count * 10) + (coin5Count * 5) + (coin1Count * 1);
-                scoreText.text = $"ยอดรวม: {totalScore} บาท";
-                Debug.Log($"Score updated: {totalScore}");
+                // แสดงคะแนนสะสมแทนคะแนนในเลเวลปัจจุบัน
+                scoreText.text = $"ยอดรวม: {totalAccumulatedScore} บาท";
             }
         }
 
@@ -539,7 +572,10 @@ namespace CoinGame
 
         private void ShowFinalResults()
         {
-            // ซ่อน countdown ก่อนแสดงผลลัพธ์
+            // หยุดการนับเวลา
+            isGameActive = false;
+
+            // ซ่อน countdown
             if (countdownObject != null)
             {
                 countdownObject.SetActive(false);
@@ -548,7 +584,7 @@ namespace CoinGame
             if (resultPanel != null)
             {
                 resultPanel.gameObject.SetActive(true);
-                resultPanel.ShowResults(totalGameTime, coin10Count, coin5Count, coin1Count, totalAccumulatedScore);
+                resultPanel.ShowResults(gameTimer, coin10Count, coin5Count, coin1Count, totalAccumulatedScore);
             }
         }
     }

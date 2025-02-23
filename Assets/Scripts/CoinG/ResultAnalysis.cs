@@ -49,7 +49,7 @@ public class ResultAnalysis : MonoBehaviour
         else
         {
             resultText.text = "ผลการประเมิน:พบความเสี่ยงสูง";
-            adviceText.text = "แนะนำให้พบแพทย์โดยเร็ว\nควรได้รับการตรวจประเมินอย่างละเอียด";
+            adviceText.text = "แนะนำให้พบแพทย์โดยเร็ว\nควรได้รับการตรวจประเมิน\nอย่างละเอียด";
             resultText.color = Color.red;
         }
     }

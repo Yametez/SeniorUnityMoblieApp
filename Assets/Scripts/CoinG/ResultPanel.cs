@@ -67,7 +67,7 @@ public class ResultPanel : MonoBehaviour
             else
             {
                 evaluationResult = "พบความเสี่ยงสูง";
-                adviceText = "แนะนำให้พบแพทย์โดยเร็ว\nควรได้รับการตรวจประเมินอย่างละเอียด";
+                adviceText = "แนะนำให้พบแพทย์โดยเร็ว\nควรได้รับการตรวจประเมิน\nอย่างละเอียด";
             }
 
             // บันทึกผลการเล่นพร้อมผลการประเมิน
@@ -133,7 +133,7 @@ public class ResultPanel : MonoBehaviour
         var coinManager = FindObjectOfType<CoinManager>();
         if (coinManager != null)
         {
-            coinManager.ResetGame();
+            coinManager.StartNewGame();
         }
         
         if (GameManager.Instance != null)
