@@ -79,6 +79,12 @@ public class CoinDrag : MonoBehaviour
                 float distance = Vector2.Distance(transform.position, coinType.sortingArea.position);
                 if (distance < 50f)
                 {
+                    if (AudioManager.Instance != null)
+                    {
+                        AudioManager.Instance.PlayCoinDrop();
+                        Debug.Log("Playing coin drop sound from CheckCoinPlacement");
+                    }
+                    
                     manager.AddCoinToScore(gameObject, coinValue);
                     Destroy(gameObject);
                     return;
@@ -154,24 +160,6 @@ public class CoinDrag : MonoBehaviour
             {
                 isScored = false;
                 manager.SubtractScore(coinValue);
-            }
-        }
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Debug.Log("Checking coin drop sound...");
-        
-        if (isScored)
-        {
-            Debug.Log("Playing coin drop sound");
-            if (AudioManager.Instance != null)
-            {
-                AudioManager.Instance.PlayCoinDrop();
-            }
-            else
-            {
-                Debug.LogWarning("AudioManager.Instance is null!");
             }
         }
     }

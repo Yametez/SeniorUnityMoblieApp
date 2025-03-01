@@ -8,6 +8,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip coinDropSound;      // เสียงลากเหรียญ
     public AudioClip levelCompleteSound; // เสียงจบเลเวล
     public AudioClip gameOverSound;      // เสียงจบเกม
+
+    [Header("Volume Settings")]
+    [Range(0f, 1f)]
+    public float coinDropVolume = 0.5f;    // ค่าเริ่มต้น 50%
+    [Range(0f, 1f)]
+    public float levelCompleteVolume = 0.7f;  // ค่าเริ่มต้น 70%
+    [Range(0f, 1f)]
+    public float gameOverVolume = 0.7f;     // ค่าเริ่มต้น 70%
     
     private AudioSource audioSource;
 
@@ -26,24 +34,24 @@ public class AudioManager : MonoBehaviour
 
     public void PlayCoinDrop()
     {
-        PlaySound(coinDropSound);
+        PlaySound(coinDropSound, coinDropVolume);
     }
 
     public void PlayLevelComplete()
     {
-        PlaySound(levelCompleteSound);
+        PlaySound(levelCompleteSound, levelCompleteVolume);
     }
 
     public void PlayGameOver()
     {
-        PlaySound(gameOverSound);
+        PlaySound(gameOverSound, gameOverVolume);
     }
 
-    private void PlaySound(AudioClip clip)
+    private void PlaySound(AudioClip clip, float volume)
     {
         if (clip != null && audioSource != null)
         {
-            audioSource.PlayOneShot(clip);
+            audioSource.PlayOneShot(clip, volume);
         }
     }
 } 
