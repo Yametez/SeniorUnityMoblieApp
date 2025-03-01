@@ -95,6 +95,10 @@ public class CoinDrag : MonoBehaviour
                 float wrongDistance = Vector2.Distance(transform.position, coinType.sortingArea.position);
                 if (wrongDistance < 29f)
                 {
+                    if (AudioManager.Instance != null)
+                    {
+                        AudioManager.Instance.PlayWrongPlace();
+                    }
                     AlertManager.ShowAlert($"เหรียญ {coinValue} บาท วางผิดที่!");
                     transform.position = GetStartPosition();
                     return;

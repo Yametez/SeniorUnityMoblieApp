@@ -567,6 +567,7 @@ namespace CoinGame
                 {
                     // เล่นเสียงจบเกม
                     AudioManager.Instance?.PlayGameOver();
+                    AudioManager.Instance.FadeOutBackgroundMusic();  // fade out เพลงพื้นหลัง
                     ShowFinalResults();
                 }
             }
