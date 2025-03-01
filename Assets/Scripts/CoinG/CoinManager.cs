@@ -559,12 +559,14 @@ namespace CoinGame
 
                 if (currentLevel < 2)  // ถ้ายังไม่ถึงเลเวล 3
                 {
-                    // ไปเลเวลถัดไปทันที
+                    // เล่นเสียงจบเลเวล
+                    AudioManager.Instance?.PlayLevelComplete();
                     StartLevel(currentLevel + 1);
                 }
-                else  // จบเลเวล 3 แล้ว
+                else
                 {
-                    // แสดงผลรวมทั้งหมด
+                    // เล่นเสียงจบเกม
+                    AudioManager.Instance?.PlayGameOver();
                     ShowFinalResults();
                 }
             }

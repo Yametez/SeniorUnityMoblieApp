@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using CoinGame;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CoinDrag : MonoBehaviour
 {
@@ -153,6 +154,24 @@ public class CoinDrag : MonoBehaviour
             {
                 isScored = false;
                 manager.SubtractScore(coinValue);
+            }
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Debug.Log("Checking coin drop sound...");
+        
+        if (isScored)
+        {
+            Debug.Log("Playing coin drop sound");
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayCoinDrop();
+            }
+            else
+            {
+                Debug.LogWarning("AudioManager.Instance is null!");
             }
         }
     }
