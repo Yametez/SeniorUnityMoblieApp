@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 93903071}
   - component: {fileID: 93903070}
   m_Layer: 5
-  m_Name: ReportTest
+  m_Name: ReportQuiz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,7 +300,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2242477570a622049aa42fc8d0fb327b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ef389a1b1cb715c49a4d6730131991fb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -512,7 +512,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d07d0798e7390c8488d3b60d7c14ce7e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2daea4a01edf0714e994e2ecdc15b141, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 159318689}
   - component: {fileID: 159318692}
   m_Layer: 5
-  m_Name: ReportQuiz
+  m_Name: ReportTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -657,7 +657,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6ed10ed2db73f264db1ee5307f9c82c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c2ffdf8eb9bf5d74da576c519fb7fcba, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -868,7 +868,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 30780b5c990e32b438426580c6433128, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9320b1f7c74f0564ba4887cc6be170dc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3147,7 +3147,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.7803922, g: 0.8705883, b: 0.5882353, a: 0}
+  m_BackGroundColor: {r: 0.7137255, g: 0.9019608, b: 0.7411765, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
