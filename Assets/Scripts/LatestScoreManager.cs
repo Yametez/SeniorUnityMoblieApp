@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;  // เพิ่ม namespace สำหรับ UnityWebRequest
 using System;
 using System.Threading.Tasks;
+using System.Collections;
 
 public class LatestScoreManager : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class LatestScoreManager : MonoBehaviour
     [SerializeField] private string defaultScore = "00";  // ค่าเริ่มต้นคะแนน
     [SerializeField] private string defaultEvaluation = "ไม่มีประวัติ";  // ค่าเริ่มต้นผลการประเมิน
     [SerializeField] private string defaultAdvice = "ลองทำแบบประเมินเพื่อดูคะแนนที่ได้สิ";  // ค่าเริ่มต้นคำแนะนำ
+
+    [Header("Slider Animation")]
+    [SerializeField] private float animationDuration = 1f;  // ระยะเวลาในการ animate (วินาที)
 
     // เพิ่ม class สำหรับเก็บข้อมูล
     [System.Serializable]
@@ -186,11 +190,12 @@ public class LatestScoreManager : MonoBehaviour
                 }
             }
 
-            // อัพเดท Progress Bar
+            // แทนที่โค้ดเดิมของ Progress Bar ด้วยการเรียกใช้ animation
             if (totalScoreSlider != null)
             {
                 totalScoreSlider.maxValue = 100f;
-                totalScoreSlider.value = totalScore;
+                totalScoreSlider.value = 0f;  // เริ่มที่ 0
+                StartCoroutine(AnimateSlider(totalScore));
             }
 
             // แสดงชื่อผู้ใช้และวันที่
@@ -237,5 +242,23 @@ public class LatestScoreManager : MonoBehaviour
             if (adviceText != null)
                 adviceText.text = examData.Result_Exam.advice;
         }
+    }
+
+    // เพิ่ม method ใหม่สำหรับ animate slider
+    private IEnumerator AnimateSlider(float targetValue)
+    {
+        float elapsedTime = 0f;
+        float startValue = totalScoreSlider.value;
+
+        while (elapsedTime < animationDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float currentValue = Mathf.Lerp(startValue, targetValue, elapsedTime / animationDuration);
+            totalScoreSlider.value = currentValue;
+            yield return null;
+        }
+
+        // ให้แน่ใจว่าค่าสุดท้ายตรงกับเป้าหมาย
+        totalScoreSlider.value = targetValue;
     }
 } 
