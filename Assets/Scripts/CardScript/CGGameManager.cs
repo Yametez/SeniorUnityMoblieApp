@@ -6,21 +6,23 @@ public class CGGameManager : MonoBehaviour
 {
     public CGCard cardPrefab;
     public Sprite[] cardSprites;
-    public float spacingX = 220f; // ระยะห่างแนวนอน
-    public float spacingY = 320f; // ระยะห่างแนวตั้ง
+    public float spacingX = 180f;  // ลดระยะห่างแนวนอนลง
+    public float spacingY = 250f;  // ลดระยะห่างแนวตั้งลง
     public int rows = 4;
     public int cols = 4;
-    public float startX = -330f; // ตำแหน่งเริ่มต้นแกน X
-    public float startY = 480f;  // ตำแหน่งเริ่มต้นแกน Y
+    public float startX = -270f;   // ปรับตำแหน่งเริ่มต้นแกน X
+    public float startY = 400f;    // ปรับตำแหน่งเริ่มต้นแกน Y
 
     private CGCard firstCard;
     private CGCard secondCard;
     private bool canFlip = true;
     private int matchesFound = 0;
     private int totalMatches;
+    private CGTimer timer;
 
     void Start()
     {
+        timer = GetComponent<CGTimer>();
         totalMatches = (rows * cols) / 2;
         CreateCards();
     }
@@ -93,6 +95,7 @@ public class CGGameManager : MonoBehaviour
             if (matchesFound == totalMatches)
             {
                 Debug.Log("Game Complete!");
+                timer.StopTimer();
             }
         }
         else
@@ -104,5 +107,24 @@ public class CGGameManager : MonoBehaviour
         firstCard = null;
         secondCard = null;
         canFlip = true;
+    }
+
+    public void RestartGame()
+    {
+        matchesFound = 0;
+        firstCard = null;
+        secondCard = null;
+        canFlip = true;
+
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<CGCard>() != null)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        timer.ResetTimer();
+        CreateCards();
     }
 } 

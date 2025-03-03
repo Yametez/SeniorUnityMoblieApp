@@ -150,4 +150,4 @@ MonoBehaviour:
   isMatched: 0
   isFlipped: 0
   cardFront: {fileID: 0}
-  cardBack: {fileID: 0}
+  cardBack: {fileID: 21300000, guid: 75652a84e369d7e4294e4ca1b37c5796, type: 3}
