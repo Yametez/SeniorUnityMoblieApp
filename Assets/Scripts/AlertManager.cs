@@ -12,7 +12,14 @@ public class AlertManager : MonoBehaviour
     {
         instance = this;
         if (alertPanel != null)
+        {
             alertPanel.SetActive(false);
+            Canvas alertCanvas = alertPanel.GetComponentInParent<Canvas>();
+            if (alertCanvas != null)
+            {
+                alertCanvas.sortingOrder = 5;
+            }
+        }
     }
 
     public static void ShowAlert(string message)

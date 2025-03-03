@@ -85,6 +85,16 @@ namespace CoinGame
             // เริ่มเกมที่เลเวล 1
             gameTimer = 0;  // รีเซ็ตเวลาเฉพาะตอนเริ่มเกมครั้งแรกเท่านั้น
             StartLevel(0);
+
+            // เพิ่มการตั้งค่า Canvas สำหรับ countdown
+            if (countdownObject != null)
+            {
+                Canvas countdownCanvas = countdownObject.GetComponentInParent<Canvas>();
+                if (countdownCanvas != null)
+                {
+                    countdownCanvas.sortingOrder = 5; // ตั้งค่าให้สูงกว่าเหรียญ
+                }
+            }
         }
 
         void Update()
