@@ -359,7 +359,7 @@ namespace CoinGame
                 SpriteRenderer spriteRenderer = newCoin.GetComponent<SpriteRenderer>();
                 if (spriteRenderer != null)
                 {
-                    spriteRenderer.sortingOrder = 100;  // ค่าบวกจะอยู่ด้านบน -2
+                    spriteRenderer.sortingOrder = 3;  // ค่าบวกจะอยู่ด้านบน -2
                 }
             }
         }

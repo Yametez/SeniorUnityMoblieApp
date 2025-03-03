@@ -46,7 +46,18 @@ public class GameManager : MonoBehaviour
     {
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
-        pauseMenuPanel.SetActive(isPaused);
+        
+        if (pauseMenuPanel != null)
+        {
+            pauseMenuPanel.SetActive(isPaused);
+            
+            // ตรวจสอบและปรับ sorting order ของ Canvas
+            Canvas pauseCanvas = pauseMenuPanel.GetComponentInParent<Canvas>();
+            if (pauseCanvas != null)
+            {
+                pauseCanvas.sortingOrder = 10;  // ค่าสูงกว่า game objects อื่นๆ
+            }
+        }
     }
 
     public void ResumeGame()
