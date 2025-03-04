@@ -19,10 +19,12 @@ public class CGGameManager : MonoBehaviour
     private int matchesFound = 0;
     private int totalMatches;
     private CGTimer timer;
+    private CGResultScreen resultScreen;
 
     void Start()
     {
         timer = GetComponent<CGTimer>();
+        resultScreen = GetComponent<CGResultScreen>();
         totalMatches = (rows * cols) / 2;
         CreateCards();
     }
@@ -96,6 +98,7 @@ public class CGGameManager : MonoBehaviour
             {
                 Debug.Log("Game Complete!");
                 timer.StopTimer();
+                resultScreen.ShowResult();
             }
         }
         else
@@ -126,5 +129,10 @@ public class CGGameManager : MonoBehaviour
 
         timer.ResetTimer();
         CreateCards();
+    }
+
+    public int GetTotalMatches()
+    {
+        return matchesFound;
     }
 } 
