@@ -47,4 +47,14 @@ public class CGTimer : MonoBehaviour
     {
         return currentTime;
     }
+
+    public void PauseTimer()
+    {
+        isTimerRunning = false;
+    }
+
+    public void ResumeTimer()
+    {
+        isTimerRunning = true;
+    }
 } 

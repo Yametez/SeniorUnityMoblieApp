@@ -778,6 +778,7 @@ GameObject:
   - component: {fileID: 325312970}
   - component: {fileID: 325312969}
   - component: {fileID: 325312968}
+  - component: {fileID: 325312971}
   m_Layer: 5
   m_Name: Quiz
   m_TagString: Untagged
@@ -847,7 +848,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 325312969}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 325312971}
+        m_TargetAssemblyTypeName: ButtonFirstHomePage, Assembly-CSharp
+        m_MethodName: GoToCardGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &325312969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,6 +899,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325312966}
   m_CullTransparentMesh: 1
+--- !u!114 &325312971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325312966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3a6bcf1ecd34444a9e936f8451bf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &410708574
 GameObject:
   m_ObjectHideFlags: 0
