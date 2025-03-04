@@ -26,5 +26,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Card.unity
     guid: d21facdefd33b6248afe5f49e395feeb
+  - enabled: 1
+    path: Assets/Scenes/HistoryCG.unity
+    guid: f2e5efb154c6ebc4f9a46510f292504b
+  - enabled: 1
+    path: Assets/Scenes/CGDetailHistory.unity
+    guid: 27fc87d84dcdaa046aa6eda182509b65
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 4b916ad8cac70e941933cadd561a6c01, type: 2}

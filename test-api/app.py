@@ -3,7 +3,7 @@ from flask_cors import CORS
 from routes.users import users_bp
 from routes.admin import admin_bp
 from routes.exam import exam_bp
-from routes.Training import training_bp
+from routes.training import training_bp
 from routes.report import report_bp
 import os
 

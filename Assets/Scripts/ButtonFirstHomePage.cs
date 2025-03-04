@@ -21,4 +21,8 @@ public class ButtonFirstHomePage : MonoBehaviour
     {
         SceneManager.LoadScene("Card"); // เปลี่ยนชื่อ Scene เป็น "CardGame"
     }
+    public void GoToHistoryCG()
+    {
+        SceneManager.LoadScene("HistoryCG"); // เปลี่ยนชื่อ Scene เป็น "HistoryCG"
+    }
 }
