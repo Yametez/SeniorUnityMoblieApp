@@ -43,13 +43,6 @@ public class CGHistoryManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // ตั้งค่า Content ก่อนสร้าง items
-        RectTransform contentRect = contentParent.GetComponent<RectTransform>();
-        contentRect.anchoredPosition = Vector2.zero; // ตั้งตำแหน่งเริ่มต้นที่ 0,0
-        contentRect.anchorMin = new Vector2(0, 1); // ยึดด้านบน
-        contentRect.anchorMax = new Vector2(1, 1);
-        contentRect.pivot = new Vector2(0.5f, 1); // pivot อยู่ด้านบนกลาง
-
         // แสดงประวัติทั้งหมด
         foreach (var history in histories)
         {
@@ -60,10 +53,10 @@ public class CGHistoryManager : MonoBehaviour
                 
                 // ตั้งค่า RectTransform ของ item
                 RectTransform rectTransform = item.GetComponent<RectTransform>();
-                rectTransform.anchorMin = new Vector2(0, 1); // ยึดด้านบน
-                rectTransform.anchorMax = new Vector2(1, 1);
-                rectTransform.pivot = new Vector2(0.5f, 1);
-                rectTransform.sizeDelta = new Vector2(0, 80); // ลดความสูงลงเหลือ 80
+                rectTransform.anchorMin = new Vector2(0, 0);
+                rectTransform.anchorMax = new Vector2(1, 0);
+                rectTransform.pivot = new Vector2(0.5f, 0);
+                rectTransform.sizeDelta = new Vector2(0, 100); // ความสูงของแต่ละ item
                 
                 if (historyItem != null)
                 {
@@ -81,7 +74,14 @@ public class CGHistoryManager : MonoBehaviour
             }
         }
 
-        // อัพเดท layout ทันที
+        // รอ 1 เฟรมแล้วค่อยอัพเดท layout
+        StartCoroutine(UpdateLayoutNextFrame());
+    }
+
+    private IEnumerator UpdateLayoutNextFrame()
+    {
+        yield return null;
+        // บังคับให้ layout อัพเดท
         LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent as RectTransform);
     }
 
