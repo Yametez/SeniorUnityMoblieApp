@@ -3,20 +3,24 @@ using UnityEngine.Networking;
 using System;
 using System.Collections;
 using System.Text;
+using System.Linq;
 
 public class CGHistoryApiManager : MonoBehaviour
 {
-    private string apiUrl = "http://localhost:3000/api/training/latest/";
+    // เปลี่ยน URL เป็นดึงข้อมูลทั้งหมด
+    private string apiUrl = "http://localhost:3000/api/training/";
 
     [System.Serializable]
     public class CardGameHistory
     {
-        public int Training_ID;
+        public string Training_ID;
         public string Start_Time;
+        public string End_Time;
         public string Training_name;
         public string Time_limit;
         public string Result_Training;
-        public bool has_history;
+        public string User_ID;
+        public string id;
     }
 
     // เพิ่ม wrapper class สำหรับ JSON array
@@ -41,7 +45,7 @@ public class CGHistoryApiManager : MonoBehaviour
 
     public IEnumerator GetUserHistory(string userId, System.Action<CardGameHistory[]> callback)
     {
-        string url = apiUrl + userId;
+        string url = apiUrl;
         Debug.Log($"Fetching history from: {url}");
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
@@ -60,13 +64,18 @@ public class CGHistoryApiManager : MonoBehaviour
                     string jsonResponse = request.downloadHandler.text;
                     Debug.Log($"Received JSON: {jsonResponse}");
                     
-                    // แปลง JSON เป็น single object
-                    CardGameHistory history = JsonUtility.FromJson<CardGameHistory>(jsonResponse);
+                    // แปลง JSON array
+                    CardGameHistory[] allHistories = JsonUtility.FromJson<CardGameHistoryWrapper>("{\"items\":" + jsonResponse + "}").items;
                     
-                    if (history != null && history.has_history)
+                    // กรองเฉพาะประวัติของ user นี้และเกม Card Matching
+                    var userHistories = allHistories
+                        .Where(h => h.User_ID == userId && h.id == "302")
+                        .OrderByDescending(h => DateTime.Parse(h.Start_Time))
+                        .ToArray();
+
+                    if (userHistories != null && userHistories.Length > 0)
                     {
-                        // สร้าง array ที่มีข้อมูลเดียว
-                        callback(new CardGameHistory[] { history });
+                        callback(userHistories);
                     }
                     else
                     {

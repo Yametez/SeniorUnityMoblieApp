@@ -21,11 +21,7 @@ public class CGHistoryManager : MonoBehaviour
         UserData currentUser = CurrentUser.GetCurrentUser();
         if (currentUser != null)
         {
-            // โหลดข้อมูลหลายครั้งเพื่อแสดงประวัติหลายรายการ
-            for (int i = 0; i < 5; i++)  // สมมติว่าต้องการแสดง 5 รายการล่าสุด
-            {
-                StartCoroutine(apiManager.GetUserHistory(currentUser.userId.ToString(), OnHistoryLoaded));
-            }
+            StartCoroutine(apiManager.GetUserHistory(currentUser.userId.ToString(), OnHistoryLoaded));
         }
         else
         {
@@ -41,7 +37,20 @@ public class CGHistoryManager : MonoBehaviour
             return;
         }
 
-        // สร้าง history item ใหม่
+        // ลบประวัติเก่าออกก่อน
+        foreach (Transform child in contentParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // ตั้งค่า Content ก่อนสร้าง items
+        RectTransform contentRect = contentParent.GetComponent<RectTransform>();
+        contentRect.anchoredPosition = Vector2.zero; // ตั้งตำแหน่งเริ่มต้นที่ 0,0
+        contentRect.anchorMin = new Vector2(0, 1); // ยึดด้านบน
+        contentRect.anchorMax = new Vector2(1, 1);
+        contentRect.pivot = new Vector2(0.5f, 1); // pivot อยู่ด้านบนกลาง
+
+        // แสดงประวัติทั้งหมด
         foreach (var history in histories)
         {
             try
@@ -49,13 +58,20 @@ public class CGHistoryManager : MonoBehaviour
                 GameObject item = Instantiate(historyItemPrefab, contentParent);
                 CGHistoryItem historyItem = item.GetComponent<CGHistoryItem>();
                 
+                // ตั้งค่า RectTransform ของ item
+                RectTransform rectTransform = item.GetComponent<RectTransform>();
+                rectTransform.anchorMin = new Vector2(0, 1); // ยึดด้านบน
+                rectTransform.anchorMax = new Vector2(1, 1);
+                rectTransform.pivot = new Vector2(0.5f, 1);
+                rectTransform.sizeDelta = new Vector2(0, 80); // ลดความสูงลงเหลือ 80
+                
                 if (historyItem != null)
                 {
                     DateTime startTime = DateTime.Parse(history.Start_Time);
                     historyItem.SetData(
-                        startTime.ToString("dd/MM/yyyy HH:mm:ss"),  // เพิ่มเวลาในการแสดงผล
+                        startTime.ToString("dd/MM/yyyy HH:mm:ss"),
                         history.Training_name,
-                        history.Training_ID
+                        int.Parse(history.Training_ID)
                     );
                 }
             }
@@ -64,6 +80,9 @@ public class CGHistoryManager : MonoBehaviour
                 Debug.LogError($"Error creating history item: {e.Message}");
             }
         }
+
+        // อัพเดท layout ทันที
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent as RectTransform);
     }
 
     public void BackToHome()

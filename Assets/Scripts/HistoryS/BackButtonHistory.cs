@@ -13,4 +13,9 @@ public class BackButtonHistory : MonoBehaviour
         // โหลด Scene HistoryExam
         SceneManager.LoadScene("HistoryExam");
     }
+    public void BackToHistoryCG()
+    {
+        // โหลด Scene HistoryCG
+        SceneManager.LoadScene("HistoryCG");
+    }
 } 

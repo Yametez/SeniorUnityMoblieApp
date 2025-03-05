@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7025688821144793930}
   - component: {fileID: 5833126749939312982}
+  - component: {fileID: 3165266008559287073}
   m_Layer: 5
   m_Name: historyItemCG
   m_TagString: Untagged
@@ -37,8 +38,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 79}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 80, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5833126749939312982
 MonoBehaviour:
@@ -54,6 +55,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dateAndGameText: {fileID: 3299842814618657829}
   arrowButton: {fileID: 4174593375968577578}
+--- !u!114 &3165266008559287073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147700745328191320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: 0
+  m_MinHeight: 30
+  m_PreferredWidth: 0
+  m_PreferredHeight: 50
+  m_FlexibleWidth: 0
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &3742586359320963716
 GameObject:
   m_ObjectHideFlags: 0

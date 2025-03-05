@@ -21,8 +21,9 @@ public class CGHistoryItem : MonoBehaviour
 
     public void OnArrowButtonClick()
     {
-        // เก็บ Training ID ไว้ใน PlayerPrefs เพื่อใช้ในหน้ารายละเอียด
-        PlayerPrefs.SetInt("SelectedTrainingId", trainingId);
+        // แปลง trainingId เป็น string ก่อนเก็บใน PlayerPrefs
+        PlayerPrefs.SetString("SelectedTrainingId", trainingId.ToString());
+        
         // เปลี่ยน Scene ไปที่ CGDetailHistory
         SceneManager.LoadScene("CGDetailHistory");
     }
