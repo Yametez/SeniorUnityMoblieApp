@@ -15,8 +15,14 @@ public class ResultPanel : MonoBehaviour
     [SerializeField] private ResultAnalysis resultAnalysis;
     [SerializeField] private ExamManager examManager;
 
+    private string finalEvaluationResult;
+    private string finalAdviceText;
+    private bool isResultFinalized = false;
+
     public void ShowResults(float time, int coin10Count, int coin5Count, int coin1Count, int totalScore)
     {
+        if (isResultFinalized) return; // ถ้าผลถูกสรุปแล้ว ไม่ต้องคำนวณใหม่
+
         Debug.Log("ShowResults called");
         
         if (timeResultText == null || coin10ResultText == null || 
@@ -48,29 +54,28 @@ public class ResultPanel : MonoBehaviour
             
             resultAnalysis.UpdateResults(speedPercentage, accuracyPercentage, memoryPercentage);
 
-            // สร้าง object สำหรับเก็บผลการประเมิน
-            string evaluationResult = "";
-            string adviceText = "";
-            
-            // ดึงผลการประเมินจาก ResultAnalysis
             float averageScore = (speedPercentage + accuracyPercentage + memoryPercentage) / 3f;
+            
+            // เก็บผลลัพธ์สุดท้าย
             if (averageScore >= 60f)
             {
-                evaluationResult = "ไม่พบความเสี่ยง";
-                adviceText = "สมองของคุณทำงานได้ดี\nควรรักษาสุขภาพสมองด้วย\nการออกกำลังกายสม่ำเสมอ";
+                finalEvaluationResult = "ไม่พบความเสี่ยง";
+                finalAdviceText = "สมองของคุณทำงานได้ดี\nควรรักษาสุขภาพสมองด้วย\nการออกกำลังกายสม่ำเสมอ";
             }
             else if (averageScore >= 40f)
             {
-                evaluationResult = "พบความเสี่ยงต่ำ";
-                adviceText = "ควรเพิ่มการฝึกฝนความจำและการคิด\nแนะนำให้ปรึกษาแพทย์";
+                finalEvaluationResult = "พบความเสี่ยงต่ำ";
+                finalAdviceText = "ควรเพิ่มการฝึกฝน\nความจำและการคิด\nแนะนำให้ปรึกษาแพทย์";
             }
             else
             {
-                evaluationResult = "พบความเสี่ยงสูง";
-                adviceText = "แนะนำให้พบแพทย์โดยเร็ว\nควรได้รับการตรวจประเมิน\nอย่างละเอียด";
+                finalEvaluationResult = "พบความเสี่ยงสูง";
+                finalAdviceText = "แนะนำให้พบแพทย์โดยเร็ว\nควรได้รับการตรวจประเมิน\nอย่างละเอียด";
             }
 
-            // บันทึกผลการเล่นพร้อมผลการประเมิน
+            isResultFinalized = true; // ล็อคผลลัพธ์
+
+            // บันทึกผลทันที
             if (examManager != null)
             {
                 DateTime endTime = DateTime.Now;
@@ -84,8 +89,8 @@ public class ResultPanel : MonoBehaviour
                     speedPercentage,
                     accuracyPercentage,
                     memoryPercentage,
-                    evaluationResult,  // เพิ่มผลการประเมิน
-                    adviceText        // เพิ่มคำแนะนำ
+                    finalEvaluationResult,
+                    finalAdviceText
                 );
             }
         }
@@ -114,16 +119,7 @@ public class ResultPanel : MonoBehaviour
 
     public void OnBackHomeButtonClick()
     {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.ResetGameState();
-        }
-
-        if (examManager != null)
-        {
-            examManager.ResetSaveStatus();
-        }
-
+        // ไม่ต้อง reset ค่าใดๆ เพราะบันทึกไปแล้ว
         SceneManager.LoadScene(2);
     }
 

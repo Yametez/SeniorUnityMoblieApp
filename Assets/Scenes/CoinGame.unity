@@ -592,14 +592,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - maxCoins: 10
+  - maxCoins: 5
     countdownTime: 0
     isShuffledSortingArea: 0
-  - maxCoins: 15
+  - maxCoins: 10
     countdownTime: 15
     isShuffledSortingArea: 0
   - maxCoins: 15
-    countdownTime: 15
+    countdownTime: 30
     isShuffledSortingArea: 1
   countdownText: {fileID: 1982555259}
   sortingAreas:

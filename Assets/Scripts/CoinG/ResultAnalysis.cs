@@ -43,7 +43,7 @@ public class ResultAnalysis : MonoBehaviour
         else if (score >= 40f)
         {
             resultText.text = "ผลการประเมิน:พบความเสี่ยงต่ำ";
-            adviceText.text = "ควรเพิ่มการฝึกฝนความจำและการคิด\nแนะนำให้ปรึกษาแพทย์";
+            adviceText.text = "ควรเพิ่มการฝึกฝน\nความจำและการคิด\nแนะนำให้ปรึกษาแพทย์";
             resultText.color = Color.yellow;
         }
         else
