@@ -8,12 +8,18 @@ public class CGHistoryManager : MonoBehaviour
 {
     public GameObject historyItemPrefab;
     public Transform contentParent;
+    public Text noHistoryText;
     private CGHistoryApiManager apiManager;
 
     void Start()
     {
         apiManager = GetComponent<CGHistoryApiManager>();
         LoadHistory();
+        
+        if (noHistoryText != null)
+        {
+            noHistoryText.gameObject.SetActive(false);
+        }
     }
 
     void LoadHistory()
@@ -26,24 +32,29 @@ public class CGHistoryManager : MonoBehaviour
         else
         {
             Debug.LogWarning("No user data found!");
+            ShowNoHistoryMessage("กรุณาเข้าสู่ระบบ");
         }
     }
 
     void OnHistoryLoaded(CGHistoryApiManager.CardGameHistory[] histories)
     {
-        if (histories == null || histories.Length == 0)
-        {
-            Debug.LogError("Failed to load history or no history found");
-            return;
-        }
-
-        // ลบประวัติเก่าออกก่อน
         foreach (Transform child in contentParent)
         {
             Destroy(child.gameObject);
         }
 
-        // แสดงประวัติทั้งหมด
+        if (histories == null || histories.Length == 0)
+        {
+            Debug.Log("No history found");
+            ShowNoHistoryMessage("");
+            return;
+        }
+
+        if (noHistoryText != null)
+        {
+            noHistoryText.gameObject.SetActive(false);
+        }
+
         foreach (var history in histories)
         {
             try
@@ -51,12 +62,11 @@ public class CGHistoryManager : MonoBehaviour
                 GameObject item = Instantiate(historyItemPrefab, contentParent);
                 CGHistoryItem historyItem = item.GetComponent<CGHistoryItem>();
                 
-                // ตั้งค่า RectTransform ของ item
                 RectTransform rectTransform = item.GetComponent<RectTransform>();
                 rectTransform.anchorMin = new Vector2(0, 0);
                 rectTransform.anchorMax = new Vector2(1, 0);
                 rectTransform.pivot = new Vector2(0.5f, 0);
-                rectTransform.sizeDelta = new Vector2(0, 100); // ความสูงของแต่ละ item
+                rectTransform.sizeDelta = new Vector2(0, 100);
                 
                 if (historyItem != null)
                 {
@@ -74,15 +84,22 @@ public class CGHistoryManager : MonoBehaviour
             }
         }
 
-        // รอ 1 เฟรมแล้วค่อยอัพเดท layout
         StartCoroutine(UpdateLayoutNextFrame());
     }
 
     private IEnumerator UpdateLayoutNextFrame()
     {
         yield return null;
-        // บังคับให้ layout อัพเดท
         LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent as RectTransform);
+    }
+
+    private void ShowNoHistoryMessage(string message)
+    {
+        if (noHistoryText != null)
+        {
+            noHistoryText.gameObject.SetActive(true);
+            noHistoryText.text = message;
+        }
     }
 
     public void BackToHome()
