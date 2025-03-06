@@ -82,7 +82,7 @@ def update_user(user_id):
     connection = get_db_connection()
     cursor = connection.cursor()
     cursor.execute(
-        'UPDATE users SET name = %s, surname = %s, password = %s, age = %s, gender = %s WHERE userid = %s',
+        'UPDATE users SET name = %s, surname = %s, password = %s, age = %s, gender = %s WHERE User_ID = %s',
         (data['name'], data['surname'], data['password'], data['age'], data['gender'], user_id)
     )
     connection.commit()
@@ -94,7 +94,7 @@ def update_user(user_id):
 def delete_user(user_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute('DELETE FROM users WHERE userid = %s', (user_id,))
+    cursor.execute('DELETE FROM users WHERE User_ID = %s', (user_id,))
     connection.commit()
     cursor.close()
     connection.close()

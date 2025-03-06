@@ -69,9 +69,18 @@ def get_training(training_id):
 def create_training():
     try:
         data = request.get_json()
+        print(f"Received data: {data}")  # Debug log
         
         if not data or 'User_ID' not in data:
             return jsonify({'error': 'No data or User_ID not provided'}), 400
+
+        # แปลง Result_Training เป็น dict
+        result_training = json.loads(data['Result_Training'])
+        print(f"Result training data: {result_training}")  # Debug log
+
+        # ตรวจสอบว่ามีข้อมูลครบ
+        if 'time' not in result_training or 'matches' not in result_training:
+            return jsonify({'error': 'Missing time or matches in Result_Training'}), 400
 
         connection = get_db_connection()
         cursor = connection.cursor()
@@ -108,7 +117,7 @@ def create_training():
             data['Start_Time'],
             data['End_Time'],
             data['Time_limit'],
-            json.dumps(data['Result_Training']),
+            json.dumps(result_training),
             data['User_ID']
         ))
         
@@ -120,24 +129,17 @@ def create_training():
         # บันทึกข้อมูลใหม่
         cursor.execute('''
             INSERT INTO Training (
-                Training_ID,
-                id, 
-                Training_name, 
-                Start_Time, 
-                End_Time, 
-                Time_limit, 
-                Result_Training, 
-                User_ID, 
-                GameSession_ID
+                Training_ID, id, Training_name, Start_Time, End_Time, 
+                Time_limit, Result_Training, User_ID, GameSession_ID
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         ''', (
             new_training_id,
-            game_id,  # ใช้ค่า id ที่ส่งมา
+            game_id,
             data['Training_name'],
             data['Start_Time'],
             data['End_Time'],
             data['Time_limit'],
-            json.dumps(data['Result_Training']),
+            json.dumps(result_training),  # บันทึกข้อมูลทั้งเวลาและจำนวนคู่
             data['User_ID'],
             new_session_id
         ))
@@ -153,8 +155,11 @@ def create_training():
             'data': data
         }), 201
         
+    except json.JSONDecodeError as je:
+        print(f"JSON decode error: {je}")
+        return jsonify({'error': f'Invalid JSON format: {je}'}), 400
     except Exception as e:
-        print("Error:", str(e))  # เพิ่ม debug log
+        print(f"Error: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 # Update training
@@ -195,24 +200,47 @@ def get_training_detail(training_id):
         connection.close()
         
         if training:
-            # แปลงข้อมูลให้เป็น JSON serializable
-            serializable_training = {
-                'Training_ID': str(training['Training_ID']),
-                'User_ID': str(training['User_ID']),
-                'id': str(training['id']),  # รหัสเกม (301 = Coin Game)
-                'Training_name': training['Training_name'],
-                'Start_Time': training['Start_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(training['Start_Time'], datetime) else str(training['Start_Time']),
-                'End_Time': training['End_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(training['End_Time'], datetime) else str(training['End_Time']),
-                'Time_limit': str(training['Time_limit'].total_seconds()) if isinstance(training['Time_limit'], timedelta) else str(training['Time_limit']),
-                'GameSession_ID': str(training['GameSession_ID']),
-                'Result_Training': json.loads(training['Result_Training']) if training['Result_Training'] else None
-            }
-            return jsonify(serializable_training)
+            try:
+                # แยก try-except สำหรับการแปลง JSON
+                result_training = None
+                if training['Result_Training']:
+                    if isinstance(training['Result_Training'], str):
+                        result_training = json.loads(training['Result_Training'])
+                    else:
+                        result_training = training['Result_Training']
+                
+                # ตรวจสอบว่า result_training เป็น dict หรือไม่
+                if result_training and isinstance(result_training, dict):
+                    result_data = {
+                        'time': result_training.get('time'),
+                        'matches': result_training.get('matches')
+                    }
+                else:
+                    result_data = None
+                
+                serializable_training = {
+                    'Training_ID': str(training['Training_ID']),
+                    'User_ID': str(training['User_ID']),
+                    'id': str(training['id']),
+                    'Training_name': training['Training_name'],
+                    'Start_Time': training['Start_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(training['Start_Time'], datetime) else str(training['Start_Time']),
+                    'End_Time': training['End_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(training['End_Time'], datetime) else str(training['End_Time']),
+                    'Time_limit': str(training['Time_limit'].total_seconds()) if isinstance(training['Time_limit'], timedelta) else str(training['Time_limit']),
+                    'GameSession_ID': str(training['GameSession_ID']),
+                    'Result_Training': result_data
+                }
+                
+                print(f"Debug - Returning training detail: {serializable_training}")
+                return jsonify(serializable_training)
+                
+            except json.JSONDecodeError as je:
+                print(f"JSON Decode Error for Training_ID {training_id}: {je}")
+                return jsonify({'error': f'Invalid Result_Training format: {je}'}), 400
             
         return jsonify({'message': 'Training not found'}), 404
         
     except Exception as e:
-        print("Error:", str(e))
+        print(f"Error in get_training_detail: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 # Get latest training by User_ID

@@ -2199,7 +2199,7 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: c148755706c5f054b82f6905aa6e733f, type: 3}
   cardFlipSound: {fileID: 8300000, guid: b26b27ca070185a4a87516254608ee12, type: 3}
   matchSound: {fileID: 8300000, guid: 4935ed1b17e820549833071b9ca190d6, type: 3}
-  defaultMusicVolume: 0.3
+  defaultMusicVolume: 0.2
   defaultSFXVolume: 0.5
 --- !u!1 &1537174737
 GameObject:

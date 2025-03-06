@@ -23,8 +23,8 @@ public class CGApiManager : MonoBehaviour
     [System.Serializable]
     private class ResultData
     {
-        public float time;
-        public int matches;
+        public float time;    // เวลาที่ใช้ (วินาที)
+        public int matches;   // จำนวนคู่ที่จับได้
     }
 
     public IEnumerator SendGameResult(string userId, float timeSpent, int matchesFound)
@@ -35,6 +35,14 @@ public class CGApiManager : MonoBehaviour
             matches = matchesFound
         };
 
+        // แปลงเวลาเป็นรูปแบบ HH:mm:ss
+        int minutes = Mathf.FloorToInt(timeSpent / 60f);
+        int seconds = Mathf.FloorToInt(timeSpent % 60f);
+        string timeLimit = $"00:{minutes:00}:{seconds:00}";
+
+        // เพิ่ม debug log
+        Debug.Log($"Sending game result - Time: {timeSpent}, Matches: {matchesFound}, TimeLimit: {timeLimit}");
+
         GameResult requestData = new GameResult
         {
             User_ID = userId,
@@ -42,8 +50,8 @@ public class CGApiManager : MonoBehaviour
             Training_name = "Card Matching Game",
             Start_Time = DateTime.Now.AddSeconds(-timeSpent).ToString("yyyy-MM-dd HH:mm:ss"),
             End_Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-            Time_limit = timeSpent.ToString(),
-            Result_Training = JsonUtility.ToJson(resultData)
+            Time_limit = timeLimit,
+            Result_Training = JsonUtility.ToJson(resultData)  // เก็บข้อมูลทั้งเวลาและจำนวนคู่
         };
 
         string jsonData = JsonUtility.ToJson(requestData);
