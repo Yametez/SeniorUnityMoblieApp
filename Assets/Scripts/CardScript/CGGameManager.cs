@@ -20,6 +20,7 @@ public class CGGameManager : MonoBehaviour
     private int totalMatches;
     private CGTimer timer;
     private CGResultScreen resultScreen;
+    private CGAudioManager audioManager;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class CGGameManager : MonoBehaviour
         resultScreen = GetComponent<CGResultScreen>();
         totalMatches = (rows * cols) / 2;
         CreateCards();
+        audioManager = FindObjectOfType<CGAudioManager>();
     }
 
     void CreateCards()
@@ -99,6 +101,12 @@ public class CGGameManager : MonoBehaviour
                 Debug.Log("Game Complete!");
                 timer.StopTimer();
                 resultScreen.ShowResult();
+            }
+
+            // เล่นเสียงเมื่อจับคู่สำเร็จ
+            if (audioManager != null)
+            {
+                audioManager.PlayMatchSound();
             }
         }
         else

@@ -11,6 +11,7 @@ public class CGCard : MonoBehaviour
     public Sprite cardFront;
     public Sprite cardBack;
     private Button button;
+    private CGAudioManager audioManager;
 
     void Awake()
     {
@@ -20,10 +21,21 @@ public class CGCard : MonoBehaviour
         imageRenderer.sprite = cardBack;
     }
 
+    void Start()
+    {
+        audioManager = FindObjectOfType<CGAudioManager>();
+    }
+
     public void FlipCard()
     {
         isFlipped = !isFlipped;
         imageRenderer.sprite = isFlipped ? cardFront : cardBack;
+        
+        // เล่นเสียงเปิดไพ่
+        if (audioManager != null)
+        {
+            audioManager.PlayCardFlip();
+        }
     }
 
     public void SetInteractable(bool interactable)
