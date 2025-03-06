@@ -4,7 +4,6 @@ from routes.users import users_bp
 from routes.admin import admin_bp
 from routes.exam import exam_bp
 from routes.training import training_bp
-from routes.report import report_bp
 import os
 
 app = Flask(__name__)
@@ -15,7 +14,6 @@ app.register_blueprint(users_bp, url_prefix='/api/users')
 app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(exam_bp, url_prefix='/api/exam')
 app.register_blueprint(training_bp, url_prefix='/api/training')
-app.register_blueprint(report_bp, url_prefix='/api/report')
 
 # เพิ่มการจัดการข้อผิดพลาด
 @app.errorhandler(404)
