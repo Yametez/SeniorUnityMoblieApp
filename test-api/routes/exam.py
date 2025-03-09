@@ -16,33 +16,31 @@ def get_all_exams():
         
         serializable_exams = []
         for exam in exams:
-            result_exam = json.loads(exam['Result_Exam']) if exam['Result_Exam'] else None
+            # ตรวจสอบและแปลง Result_Exam เป็น dict ก่อน
+            try:
+                result_exam = json.loads(exam['Result_Exam']) if exam['Result_Exam'] else {}
+            except:
+                result_exam = {}
+                
             serializable_exam = {
                 'Exam_ID': str(exam['Exam_ID']),
                 'User_ID': str(exam['User_ID']),
                 'id': str(exam['id']),
                 'Exame_name': exam['Exame_name'],
-                'Start_Time': exam['Start_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(exam['Start_Time'], datetime) else str(exam['Start_Time']),
-                'End_Time': exam['End_Time'].strftime('%Y-%m-%d %H:%M:%S') if isinstance(exam['End_Time'], datetime) else str(exam['End_Time']),
-                'Time_limit': str(exam['Time_limit'].total_seconds()) if isinstance(exam['Time_limit'], timedelta) else str(exam['Time_limit']),
-                'GameSession_ID': str(exam['GameSession_ID']),
-                'Result_Exam': {
-                    'speed': result_exam.get('speed'),
-                    'accuracy': result_exam.get('accuracy'),
-                    'memory': result_exam.get('memory'),
-                    'evaluation': result_exam.get('evaluation'),
-                    'advice': result_exam.get('advice')
-                } if result_exam else None
+                'Start_Time': exam['Start_Time'].strftime('%Y-%m-%d %H:%M:%S'),
+                'End_Time': exam['End_Time'].strftime('%Y-%m-%d %H:%M:%S'),
+                'Time_limit': str(exam['Time_limit']),
+                'Result_Exam': result_exam
             }
-            print("Debug - exam data:", serializable_exam)  # เพิ่ม debug log
             serializable_exams.append(serializable_exam)
                 
         cursor.close()
         connection.close()
+        
+        # ส่งคืนเป็น array ตรงๆ เหมือน training.py
         return jsonify(serializable_exams)
         
     except Exception as e:
-        print("Error:", str(e))
         return jsonify({'error': str(e)}), 500
 
 # Get exam by ID

@@ -70,10 +70,10 @@ public class HistoryManager : MonoBehaviour
         }
     }
 
-    [Serializable]
-    private class ExamList
+    [System.Serializable]
+    private class ExamHistoryWrapper
     {
-        public List<ExamHistory> exams;
+        public ExamHistory[] items;
     }
 
     IEnumerator LoadHistoryData()
@@ -91,16 +91,14 @@ public class HistoryManager : MonoBehaviour
 
                 try
                 {
-                    List<ExamHistory> histories = JsonUtility.FromJson<ExamList>("{\"exams\":" + jsonResponse + "}").exams;
-                    Debug.Log($"Total histories before filter: {histories.Count}");
-
-                    // กรองข้อมูลเฉพาะของ user ที่ login โดยเทียบ User_ID
+                    // แปลง JSON array โดยใช้ wrapper
+                    var histories = JsonUtility.FromJson<ExamHistoryWrapper>("{\"items\":" + jsonResponse + "}").items;
+                    
+                    // กรองข้อมูลเฉพาะของ user ที่ login และเกม Coin Game (id: 301)
                     var filteredHistories = histories
-                        .Where(h => h.User_ID == userId)  // เทียบเฉพาะ User_ID
+                        .Where(h => h.User_ID == userId && h.id == "301")
                         .OrderByDescending(h => DateTime.Parse(h.Start_Time))
                         .ToList();
-
-                    Debug.Log($"Filtered histories for user {userId}: {filteredHistories.Count}");
 
                     // ลบ history items เก่า
                     foreach (Transform child in contentParent)
@@ -108,18 +106,17 @@ public class HistoryManager : MonoBehaviour
                         Destroy(child.gameObject);
                     }
 
-                    // สร้าง items
+                    // สร้าง items ใหม่
                     foreach (var history in filteredHistories)
                     {
                         CreateHistoryItem(history);
                     }
 
-                    // อัพเดทขนาด Content หลังสร้าง items ทั้งหมด
                     UpdateContentSize();
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"Error: {e.Message}");
+                    Debug.LogError($"Error parsing JSON: {e.Message}");
                 }
             }
             else

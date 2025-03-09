@@ -42,11 +42,11 @@ public class ExamManager : MonoBehaviour
             return;
         }
 
-        // ดึงข้อมูล User จาก UserManager แทน
-        UserData currentUser = UserManager.Instance.GetCurrentUser();
-        if (currentUser == null)
+        // แก้ไขตรงนี้ - ใช้ CurrentUser แทน UserManager
+        UserData currentUser = CurrentUser.GetCurrentUser();
+        if (currentUser == null || currentUser.userId <= 0)
         {
-            Debug.LogError("No user data available in UserManager. Cannot save exam result.");
+            Debug.LogError("No user data available. Cannot save exam result.");
             return;
         }
 

@@ -99,3 +99,39 @@ def delete_user(user_id):
     cursor.close()
     connection.close()
     return jsonify({'message': 'User deleted successfully'})
+
+# เพิ่ม endpoint สำหรับ login
+@users_bp.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.json
+        if not data or 'Email' not in data or 'Password' not in data:
+            return jsonify({'error': 'Email and Password are required'}), 400
+
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        
+        # ค้นหา user จาก email และ password
+        cursor.execute('''
+            SELECT User_ID, Name, Email 
+            FROM users 
+            WHERE Email = %s AND Password = %s
+        ''', (data['Email'], data['Password']))
+        
+        user = cursor.fetchone()
+        cursor.close()
+        connection.close()
+
+        if user:
+            # ส่งข้อมูลกลับในรูปแบบที่ตรงกับ UserData class ใน Unity
+            return jsonify({
+                'userId': user['User_ID'],
+                'name': user['Name'],
+                'email': user['Email']
+            })
+        else:
+            return jsonify({'error': 'Invalid email or password'}), 401
+
+    except Exception as e:
+        print(f"Login error: {str(e)}")
+        return jsonify({'error': str(e)}), 500

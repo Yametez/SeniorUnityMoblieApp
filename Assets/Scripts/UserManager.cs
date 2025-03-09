@@ -2,14 +2,21 @@ using UnityEngine;
 
 public class UserManager : MonoBehaviour
 {
-    public static UserManager Instance { get; private set; }
+    private static UserManager instance;
     private UserData currentUser;
+
+    // เพิ่ม public property สำหรับเข้าถึง instance
+    public static UserManager Instance
+    {
+        get { return instance; }
+    }
 
     void Awake()
     {
-        if (Instance == null)
+        // Singleton pattern with DontDestroyOnLoad
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
