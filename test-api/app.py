@@ -7,7 +7,7 @@ from routes.training import training_bp
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
 
 # Register blueprints
 app.register_blueprint(users_bp, url_prefix='/api/users')
@@ -15,22 +15,22 @@ app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(exam_bp, url_prefix='/api/exam')
 app.register_blueprint(training_bp, url_prefix='/api/training')
 
-# เพิ่มการจัดการข้อผิดพลาด
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({'error': 'Not found'}), 404
-
-@app.errorhandler(405)
-def method_not_allowed(error):
-    return jsonify({'error': 'Method not allowed'}), 405
-
 @app.route('/')
 def index():
-    return jsonify({'message': 'Welcome to API'})
+    return jsonify({'status': 'ok', 'message': 'API is running'})
 
-@app.route('/test', methods=['GET'])
-def test():
-    return jsonify({'message': 'API is working!'})
+@app.route('/api')
+def api_index():
+    return jsonify({'status': 'ok', 'message': 'API endpoints are available'})
+
+# Error handlers
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({'error': 'Not found', 'status': 404}), 404
+
+@app.errorhandler(500)
+def server_error(error):
+    return jsonify({'error': 'Internal server error', 'status': 500}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
