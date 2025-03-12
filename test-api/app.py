@@ -7,7 +7,7 @@ from routes.training import training_bp
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Register blueprints
 app.register_blueprint(users_bp, url_prefix='/api/users')
@@ -33,6 +33,5 @@ def test():
     return jsonify({'message': 'API is working!'})
 
 if __name__ == '__main__':
-    # เปลี่ยนจาก port=3000 เป็น port=10000
     port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=3000)
+    app.run(host='0.0.0.0', port=port)
