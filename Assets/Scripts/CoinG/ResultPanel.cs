@@ -46,10 +46,14 @@ public class ResultPanel : MonoBehaviour
         Debug.Log($"Result Panel - Coins: 10B={coin10Count}, 5B={coin5Count}, 1B={coin1Count}");
         Debug.Log($"Result Panel - Calculated Score: {totalScore}");
 
-        if (resultAnalysis != null)
+        var coinManager = FindObjectOfType<CoinManager>();
+        if (coinManager != null)
         {
+            int totalSpawnedCoins = coinManager.GetTotalSpawnedCoins();
+            int totalCollectedCoins = coin10Count + coin5Count + coin1Count;
+            
             float speedPercentage = CalculateSpeedScore(time);
-            float accuracyPercentage = CalculateAccuracyScore(coin10Count + coin5Count + coin1Count);
+            float accuracyPercentage = CalculateAccuracyScore(totalCollectedCoins, totalSpawnedCoins);
             float memoryPercentage = CalculateMemoryScore(coin10Count, coin5Count, coin1Count);
             
             resultAnalysis.UpdateResults(speedPercentage, accuracyPercentage, memoryPercentage);
@@ -102,10 +106,21 @@ public class ResultPanel : MonoBehaviour
         return Mathf.Max(0, (1 - (time / maxTime)) * 100f);
     }
 
-    private float CalculateAccuracyScore(int totalCoinsCollected)
+    private float CalculateAccuracyScore(int totalCollectedCoins, int totalSpawnedCoins)
     {
-        int expectedCoins = 21;
-        return (totalCoinsCollected / (float)expectedCoins) * 100f;
+        if (totalSpawnedCoins == 0) return 0;
+        
+        // คำนวณเป็นเปอร์เซ็นต์จากจำนวนเหรียญที่มีจริง
+        float baseAccuracy = (totalCollectedCoins / (float)totalSpawnedCoins) * 100f;
+        
+        // ปรับให้ยากขึ้น: ต้องเก็บได้ 100% ถึงจะได้คะแนนเต็ม
+        if (baseAccuracy >= 100f) {
+            return 100f;
+        } else if (baseAccuracy >= 80f) {
+            return 80f + ((baseAccuracy - 80f) * 0.8f); // ช่วง 80-100% จะได้คะแนน 80-96
+        } else {
+            return baseAccuracy * 0.8f; // ต่ำกว่า 80% จะได้คะแนนน้อยลง 20%
+        }
     }
 
     private float CalculateMemoryScore(int coin10, int coin5, int coin1)

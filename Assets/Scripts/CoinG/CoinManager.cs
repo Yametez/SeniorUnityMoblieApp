@@ -600,5 +600,10 @@ namespace CoinGame
                 resultPanel.ShowResults(gameTimer, coin10Count, coin5Count, coin1Count, totalAccumulatedScore);
             }
         }
+
+        public int GetTotalSpawnedCoins()
+        {
+            return totalCoinsInGame;
+        }
     }
 } 
