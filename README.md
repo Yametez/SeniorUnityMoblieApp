@@ -3,8 +3,6 @@ senior project
 
 # Run Api Project
 * Cd test-api
-* npm install
-* npm run dev
 
 # แก้ปัญหาติดตั้ง pyhton ไม่ได้
 *    pip install Flask Flask-Cors mysql-connector-python
@@ -50,18 +48,16 @@ PORT=3306
 ## รัน Node.js Server
 bash
 cd test-api
-npm run dev
 
 ## รัน Python Server
 bash
 python app.py
 
 # API Endpoints ที่มีให้บริการ
-* Users API: /api/users
-* Admin API: /api/admin
-* Exam API: /api/exam
-* Quiz API: /api/training
-* Report API: /api/report
+* users API: /api/users
+* admin API: /api/admin
+* exam API: /api/exam
+* training API: /api/training
 
 # หมายเหตุสำคัญ
 * ต้องแน่ใจว่า MySQL Server กำลังทำงานอยู่
