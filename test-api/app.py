@@ -23,22 +23,12 @@ app.register_blueprint(training_bp, url_prefix='/api/training')
 
 # เพิ่มการจัดการข้อผิดพลาด
 @app.errorhandler(404)
-def not_found_error(error):
-    return jsonify({
-        'error': 'Not Found',
-        'message': 'The requested URL was not found on the server.'
-    }), 404
+def not_found(error):
+    return jsonify({'error': 'Not found'}), 404
 
 @app.errorhandler(405)
 def method_not_allowed(error):
     return jsonify({'error': 'Method not allowed'}), 405
-
-@app.errorhandler(500)
-def internal_error(error):
-    return jsonify({
-        'error': 'Internal Server Error',
-        'message': str(error)
-    }), 500
 
 @app.route('/')
 def index():
@@ -50,6 +40,6 @@ def test():
 
 if __name__ == '__main__':
     # เปลี่ยนจาก port=3000 เป็น port=10000
-    # port = int(os.environ.get('PORT', 10000))
-    # app.run(host='0.0.0.0', port=3000)
-    app.run()
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=3000)
+    

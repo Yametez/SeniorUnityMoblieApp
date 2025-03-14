@@ -2,22 +2,21 @@
     "version": 2,
     "builds": [
         {
-            "src": "test-api/app.py",
+            "src": "app.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
+            "src": "/api/(.*)",
+            "dest": "app.py"
+        },
+        {
             "src": "/(.*)",
-            "dest": "test-api/app.py"
+            "dest": "app.py"
         }
     ],
     "env": {
-        "PYTHONPATH": "./test-api",
-        "TIDB_HOST": "gateway01ap-southeast-1.prod.aws.tidbcloud.com",
-        "TIDB_PORT": "4000",
-        "TIDB_USER": "2wNrFv9m7EYhao1root",
-        "TIDB_PASSWORD": "74vQ4iGLF2gr9RZZ",
-        "TIDB_DATABASE": "game_db"
+        "PYTHONPATH": "."
     }
 }
