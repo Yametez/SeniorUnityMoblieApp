@@ -2,18 +2,18 @@
     "version": 2,
     "builds": [
         {
-            "src": "app.py",
+            "src": "test-api/app.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "app.py"
+            "dest": "test-api/app.py"
         }
     ],
     "env": {
-        "PYTHONPATH": ".",
+        "PYTHONPATH": "./test-api",
         "TIDB_HOST": "gateway01ap-southeast-1.prod.aws.tidbcloud.com",
         "TIDB_PORT": "4000",
         "TIDB_USER": "2wNrFv9m7EYhao1root",
