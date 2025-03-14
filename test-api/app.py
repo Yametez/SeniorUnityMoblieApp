@@ -1,10 +1,16 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
+import os
+import sys
+
+# เพิ่มบรรทัดนี้เพื่อให้หา routes ได้
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# import blueprints
 from routes.users import users_bp
 from routes.admin import admin_bp
 from routes.exam import exam_bp
 from routes.training import training_bp
-import os
 
 app = Flask(__name__)
 CORS(app)
