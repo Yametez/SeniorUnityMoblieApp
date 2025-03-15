@@ -3,8 +3,9 @@ from flask_cors import CORS
 import os
 import sys
 
-# เพิ่มบรรทัดนี้เพื่อให้หา routes ได้
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# แก้ไขการเพิ่ม path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
 
 # import blueprints
 from routes.users import users_bp
