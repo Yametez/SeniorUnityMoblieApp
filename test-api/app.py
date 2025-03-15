@@ -44,3 +44,7 @@ def test():
     
 # สำหรับ Vercel
 app.debug = True
+
+# ต้องมี handler นี้สำหรับ Vercel
+def handler(event, context):
+    return app
