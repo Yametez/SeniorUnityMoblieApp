@@ -3,6 +3,7 @@ senior project
 
 # Run Api Project
 * Cd test-api
+python app.py
 
 # แก้ปัญหาติดตั้ง pyhton ไม่ได้
 *    pip install Flask Flask-Cors mysql-connector-python
@@ -11,25 +12,18 @@ senior project
 python app.py
 
 # Prerequisites (สิ่งที่ต้องติดตั้งก่อน)
-* Node.js
 * Python 3.x
 * MySQL Server
 * pip install python-dotenv gunicorn
 
 # Initial Database Setup
 1. ติดตั้ง MySQL Server
-2. สร้างฐานข้อมูลชื่อ 'user'
+2. สร้างฐานข้อมูลชื่อ 'game_db'
 3. ตั้งค่าการเชื่อมต่อฐานข้อมูลในไฟล์:
    * test-api/config.py
    * test-api/config/database.js
    * test-api/.env
 
-# ขั้นตอนการติดตั้งครั้งแรก
-
-## 1. ติดตั้ง Node.js Dependencies
-bash
-cd test-api
-npm install cors express mysql2 dotenv nodemon
 
 ## 2. ติดตั้ง Python Dependencies
 bash
@@ -50,7 +44,6 @@ bash
 cd test-api
 
 ## รัน Python Server
-bash
 python app.py
 
 # API Endpoints ที่มีให้บริการ
