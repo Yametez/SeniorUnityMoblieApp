@@ -3,9 +3,8 @@ from flask_cors import CORS
 import os
 import sys
 
-# แก้ไขการเพิ่ม path
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_dir)
+# เพิ่มบรรทัดนี้เพื่อให้หา routes ได้
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # import blueprints
 from routes.users import users_bp
@@ -40,5 +39,7 @@ def test():
     return jsonify({'message': 'API is working!'})
 
 if __name__ == '__main__':
-    app.run()
+    # เปลี่ยนจาก port=3000 เป็น port=10000
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=3000)
     

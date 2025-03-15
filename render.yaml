@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: flask-app
-    env: python
-    buildCommand: pip install -r test-api/requirements.txt
-    startCommand: cd test-api && PYTHONPATH=$PYTHONPATH:. gunicorn app:app 
