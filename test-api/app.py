@@ -38,13 +38,8 @@ def index():
 def test():
     return jsonify({'message': 'API is working!'})
 
-# if __name__ == '__main__':
-#     port = int(os.environ.get('PORT', 3000))
-#     app.run(host='0.0.0.0', port=port)
+if __name__ == '__main__':
+    # เปลี่ยนจาก port=3000 เป็น port=10000
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=3000)
     
-# สำหรับ Vercel
-app.debug = True
-
-# ต้องมี handler นี้สำหรับ Vercel
-def handler(event, context):
-    return app
