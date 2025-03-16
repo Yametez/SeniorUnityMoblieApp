@@ -39,7 +39,7 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-
+__pycache__
 # Crashlytics generated file
 Assets/StreamingAssets/crashlytics-build.properties
 
