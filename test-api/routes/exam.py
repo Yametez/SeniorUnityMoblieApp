@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify
 from config import get_db_connection
 import json
 from datetime import timedelta, datetime
-import mysql.connector
 
 exam_bp = Blueprint('exam', __name__)
 
@@ -41,14 +40,7 @@ def get_all_exams():
         # ส่งคืนเป็น array ตรงๆ เหมือน training.py
         return jsonify(serializable_exams)
         
-    except mysql.connector.Error as err:
-        print(f"Database error: {err}")
-        return jsonify({
-            'error': 'Database connection failed',
-            'details': str(err)
-        }), 500
     except Exception as e:
-        print(f"General error: {e}")
         return jsonify({'error': str(e)}), 500
 
 # Get exam by ID
