@@ -17,7 +17,7 @@ public class RegisterButtonController : MonoBehaviour
     [SerializeField] private TermsPopupController termsPopupController;
     private Button registerButton;
 
-    private string apiUrl = "http://localhost:3000/api/users/";
+    private string apiUrl = "https://seniorunitymoblieapp.onrender.com/api/users/";
 
     // ย้าย UserData class มาไว้นอก method
     [System.Serializable]
