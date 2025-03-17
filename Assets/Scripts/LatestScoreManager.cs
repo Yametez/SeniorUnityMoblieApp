@@ -67,7 +67,7 @@ public class LatestScoreManager : MonoBehaviour
 
             string userIdStr = currentUser.userId.ToString();
             Debug.Log($"Fetching data for user ID: {userIdStr}");
-            string url = $"http://localhost:3000/api/exam/latest/{userIdStr}";
+            string url = $"https://seniorunitymoblieapp.onrender.com/api/exam/latest/{userIdStr}";
             
             using (UnityWebRequest request = UnityWebRequest.Get(url))
             {
