@@ -11,7 +11,7 @@ def get_all_exams():
     try:
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM Exam')
+        cursor.execute('SELECT * FROM exam')
         exams = cursor.fetchall()
         
         serializable_exams = []
@@ -49,7 +49,7 @@ def get_exam(exam_id):
     try:
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM Exam WHERE Exam_ID = %s', (exam_id,))
+        cursor.execute('SELECT * FROM exam WHERE Exam_ID = %s', (exam_id,))
         exam = cursor.fetchone()
         cursor.close()
         connection.close()
@@ -81,7 +81,7 @@ def create_exam():
         cursor = connection.cursor()
 
         # หา Exam_ID ล่าสุด
-        cursor.execute('SELECT MAX(Exam_ID) FROM Exam')
+        cursor.execute('SELECT MAX(Exam_ID) FROM exam')
         last_exam_id = cursor.fetchone()[0]
         new_exam_id = 1 if last_exam_id is None else last_exam_id + 1
 
@@ -100,7 +100,7 @@ def create_exam():
 
         # เช็คข้อมูลซ้ำ
         cursor.execute('''
-            SELECT COUNT(*) FROM Exam 
+            SELECT COUNT(*) FROM exam 
             WHERE Exame_name = %s 
             AND Start_Time = %s 
             AND End_Time = %s 
@@ -123,7 +123,7 @@ def create_exam():
 
         # บันทึกข้อมูลใหม่
         cursor.execute('''
-            INSERT INTO Exam (
+            INSERT INTO exam (
                 Exam_ID,
                 id, 
                 Exame_name, 
@@ -181,7 +181,7 @@ def update_exam(exam_id):
 def delete_exam(exam_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute('DELETE FROM Exam WHERE Exam_ID = %s', (exam_id,))
+    cursor.execute('DELETE FROM exam WHERE Exam_ID = %s', (exam_id,))
     connection.commit()
     cursor.close()
     connection.close()
@@ -193,7 +193,7 @@ def get_exam_detail(exam_id):
     try:
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM Exam WHERE Exam_ID = %s', (exam_id,))
+        cursor.execute('SELECT * FROM exam WHERE Exam_ID = %s', (exam_id,))
         exam = cursor.fetchone()
         cursor.close()
         connection.close()
@@ -229,7 +229,7 @@ def get_latest_exam(user_id):
         cursor = connection.cursor(dictionary=True)
         
         query = '''
-            SELECT * FROM Exam 
+            SELECT * FROM exam 
             WHERE User_ID = %s 
             ORDER BY Start_Time DESC, Exam_ID DESC
             LIMIT 1
