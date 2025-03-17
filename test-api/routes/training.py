@@ -69,6 +69,17 @@ def get_training(training_id):
 def create_training():
     try:
         data = request.get_json()
+        
+        # กำหนดค่าวันที่/เวลาอัตโนมัติถ้าไม่มีการส่งมา
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        # ถ้าไม่มีค่าหรือค่าเป็น null/empty ให้ใช้เวลาปัจจุบัน
+        if 'Start_Time' not in data or not data['Start_Time']:
+            data['Start_Time'] = current_time
+            
+        if 'End_Time' not in data or not data['End_Time']:
+            data['End_Time'] = current_time
+            
         print(f"Received data: {data}")  # Debug log
         
         if not data or 'User_ID' not in data:
