@@ -8,7 +8,7 @@ using System.Linq;
 public class CGHistoryApiManager : MonoBehaviour
 {
     // เปลี่ยน URL เป็นดึงข้อมูลทั้งหมด
-    private string apiUrl = "http://localhost:3000/api/training/";
+    private string apiUrl = "https://seniorunitymoblieapp.onrender.com/api/training/";
 
     [System.Serializable]
     public class CardGameHistory

@@ -12,7 +12,7 @@ public class CGDetailHistoryManager : MonoBehaviour
     [SerializeField] private Text timeText;
     [SerializeField] private Text matchesText;
 
-    private string apiUrl = "http://localhost:3000/api/training/detail/";
+    private string apiUrl = "https://seniorunitymoblieapp.onrender.com/api/training/detail/";
 
     [System.Serializable]
     private class CardGameResult

@@ -6,7 +6,7 @@ using System.Text;
 
 public class CGApiManager : MonoBehaviour
 {
-    private string apiUrl = "http://localhost:3000/api/training/";
+    private string apiUrl = "https://seniorunitymoblieapp.onrender.com/api/training/";
 
     [System.Serializable]
     private class GameResult
