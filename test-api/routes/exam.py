@@ -1,9 +1,12 @@
 from flask import Blueprint, request, jsonify
 from config import get_db_connection
 import json
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 
 exam_bp = Blueprint('exam', __name__)
+
+# กำหนด timezone เป็น Asia/Bangkok (UTC+7)
+bangkok_tz = timezone(timedelta(hours=7))
 
 # Get all exams
 @exam_bp.route('/', methods=['GET'])
@@ -75,10 +78,10 @@ def create_exam():
         data = request.get_json()
         print("Received data:", data)  # Debug log
         
-        # กำหนดค่า TIMESTAMP ในรูปแบบที่ MySQL ยอมรับ
-        current_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        # กำหนดเวลาปัจจุบันในโซน Asia/Bangkok
+        current_timestamp = datetime.now(bangkok_tz).strftime('%Y-%m-%d %H:%M:%S')
         
-        # บังคับใช้เวลาปัจจุบันเสมอ
+        # บังคับใช้เวลาปัจจุบัน
         data['Start_Time'] = current_timestamp
         data['End_Time'] = current_timestamp
         
