@@ -11,7 +11,7 @@ def get_all_trainings():
     try:
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM Training')
+        cursor.execute('SELECT * FROM training')
         trainings = cursor.fetchall()
         
         serializable_trainings = []
@@ -45,7 +45,7 @@ def get_training(training_id):
     try:
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM Training WHERE Training_ID = %s', (training_id,))
+        cursor.execute('SELECT * FROM training WHERE Training_ID = %s', (training_id,))
         training = cursor.fetchone()
         cursor.close()
         connection.close()
@@ -86,7 +86,7 @@ def create_training():
         cursor = connection.cursor()
 
         # หา Training_ID ล่าสุด
-        cursor.execute('SELECT MAX(Training_ID) FROM Training')
+        cursor.execute('SELECT MAX(Training_ID) FROM training')
         last_training_id = cursor.fetchone()[0]
         new_training_id = 1 if last_training_id is None else last_training_id + 1
 
@@ -96,7 +96,7 @@ def create_training():
         # หา GameSession_ID ล่าสุดของ User นี้
         cursor.execute('''
             SELECT MAX(GameSession_ID) 
-            FROM Training 
+            FROM training 
             WHERE User_ID = %s
         ''', (data['User_ID'],))
         
@@ -105,7 +105,7 @@ def create_training():
 
         # เช็คข้อมูลซ้ำ
         cursor.execute('''
-            SELECT COUNT(*) FROM Training 
+            SELECT COUNT(*) FROM training 
             WHERE Training_name = %s 
             AND Start_Time = %s 
             AND End_Time = %s 
@@ -128,7 +128,7 @@ def create_training():
 
         # บันทึกข้อมูลใหม่
         cursor.execute('''
-            INSERT INTO Training (
+            INSERT INTO training (
                 Training_ID, id, Training_name, Start_Time, End_Time, 
                 Time_limit, Result_Training, User_ID, GameSession_ID
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -182,7 +182,7 @@ def update_training(training_id):
 def delete_training(training_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute('DELETE FROM Training WHERE Training_ID = %s', (training_id,))
+    cursor.execute('DELETE FROM training WHERE Training_ID = %s', (training_id,))
     connection.commit()
     cursor.close()
     connection.close()
@@ -194,7 +194,7 @@ def get_training_detail(training_id):
     try:
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM Training WHERE Training_ID = %s', (training_id,))
+        cursor.execute('SELECT * FROM training WHERE Training_ID = %s', (training_id,))
         training = cursor.fetchone()
         cursor.close()
         connection.close()
@@ -253,7 +253,7 @@ def get_latest_training(user_id):
         cursor = connection.cursor(dictionary=True)
         
         query = '''
-            SELECT * FROM Training 
+            SELECT * FROM training 
             WHERE User_ID = %s 
             ORDER BY Start_Time DESC, Training_ID DESC
             LIMIT 1
