@@ -11,7 +11,7 @@ public class HistoryManager : MonoBehaviour
     [SerializeField] private ScrollRect scrollView;
     [SerializeField] private RectTransform contentParent;
     [SerializeField] private GameObject historyItemPrefab;
-    [SerializeField] private string apiUrl = "http://localhost:3000/api/exam"; // ตรวจสอบ URL ให้ถูกต้อง
+    [SerializeField] private string apiUrl = "https://seniorunitymoblieapp.onrender.com/api/exam"; // ตรวจสอบ URL ให้ถูกต้อง
     
     private string userId;
 

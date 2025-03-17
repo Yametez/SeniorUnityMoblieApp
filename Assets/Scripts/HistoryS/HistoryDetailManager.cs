@@ -22,7 +22,7 @@ public class HistoryDetailManager : MonoBehaviour
     [SerializeField] private Slider accuracySlider;
     [SerializeField] private Slider memorySlider;
 
-    private string apiUrl = "http://localhost:3000/api/exam/detail/";
+    private string apiUrl = "https://seniorunitymoblieapp.onrender.com/api/exam/detail/";
 
     [System.Serializable]
     private class ExamResult

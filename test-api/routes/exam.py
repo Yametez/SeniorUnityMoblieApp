@@ -91,7 +91,7 @@ def create_exam():
         # หา GameSession_ID ล่าสุดของ User นี้
         cursor.execute('''
             SELECT MAX(GameSession_ID) 
-            FROM Exam 
+            FROM exam 
             WHERE User_ID = %s
         ''', (data['User_ID'],))
         

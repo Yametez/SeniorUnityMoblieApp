@@ -23,7 +23,7 @@ public class ExamData
 
 public class ExamManager : MonoBehaviour
 {
-    private const string API_URL = "http://localhost:3000/api/exam/";
+    private const string API_URL = "https://seniorunitymoblieapp.onrender.com/api/exam/";
     private bool isSaving = false;
     private string lastSavedData = "";
     private bool hasBeenSaved = false;
