@@ -72,16 +72,55 @@ def get_training(training_id):
 def create_training():
     try:
         data = request.get_json()
-        print("Received data:", data)  # Debug log
+        print("Received data:", data)
         
-        # กำหนดเวลาปัจจุบันในโซน Asia/Bangkok
-        current_timestamp = datetime.now(bangkok_tz).strftime('%Y-%m-%d %H:%M:%S')
+        # กำหนดเวลาปัจจุบันในโซน Asia/Bangkok เป็น Start_Time
+        current_timestamp = datetime.now(bangkok_tz)
+        data['Start_Time'] = current_timestamp.strftime('%Y-%m-%d %H:%M:%S')
         
-        # บังคับใช้เวลาปัจจุบัน
-        data['Start_Time'] = current_timestamp
-        data['End_Time'] = current_timestamp
+        # คำนวณ End_Time จาก Start_Time + Time_limit
+        # หรือจากข้อมูล time ใน Result_Training
+        try:
+            result_training = json.loads(data['Result_Training'])
+            # หากมี time ใน result_training ใช้ค่านั้นในการคำนวณ
+            if 'time' in result_training:
+                # เวลาอาจจะเป็นวินาที หรือ string "00:00:00"
+                time_value = result_training['time']
+                if isinstance(time_value, (int, float)):
+                    time_delta = timedelta(seconds=time_value)
+                else:
+                    # แปลงจาก string เช่น "61.5" เป็น float
+                    try:
+                        time_delta = timedelta(seconds=float(time_value))
+                    except:
+                        time_delta = timedelta(seconds=0)
+                        
+                # คำนวณ End_Time
+                end_time = current_timestamp + time_delta
+                data['End_Time'] = end_time.strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                # ถ้าไม่มี time ใน result_training ใช้ Time_limit
+                time_limit_str = data.get('Time_limit', '00:00:00')
+                # แยกเวลาออกเป็นชั่วโมง นาที วินาที
+                if ':' in time_limit_str:
+                    time_parts = time_limit_str.split(':')
+                    hours, minutes, seconds = int(time_parts[0]), int(time_parts[1]), int(time_parts[2])
+                    time_delta = timedelta(hours=hours, minutes=minutes, seconds=seconds)
+                else:
+                    try:
+                        seconds = int(time_limit_str)
+                        time_delta = timedelta(seconds=seconds)
+                    except:
+                        time_delta = timedelta(seconds=0)
+                
+                # คำนวณ End_Time
+                end_time = current_timestamp + time_delta
+                data['End_Time'] = end_time.strftime('%Y-%m-%d %H:%M:%S')
+        except:
+            # ถ้าไม่สามารถคำนวณได้ ให้ใช้เวลาเดียวกับ Start_Time
+            data['End_Time'] = data['Start_Time']
         
-        print("After setting timestamp:", data)  # Debug log
+        print("After setting timestamps:", data)
         
         if not data or 'User_ID' not in data:
             return jsonify({'error': 'No data or User_ID not provided'}), 400

@@ -76,16 +76,34 @@ def get_exam(exam_id):
 def create_exam():
     try:
         data = request.get_json()
-        print("Received data:", data)  # Debug log
+        print("Received data:", data)
         
-        # กำหนดเวลาปัจจุบันในโซน Asia/Bangkok
-        current_timestamp = datetime.now(bangkok_tz).strftime('%Y-%m-%d %H:%M:%S')
+        # กำหนดเวลาปัจจุบันในโซน Asia/Bangkok เป็น Start_Time
+        current_timestamp = datetime.now(bangkok_tz)
+        data['Start_Time'] = current_timestamp.strftime('%Y-%m-%d %H:%M:%S')
         
-        # บังคับใช้เวลาปัจจุบัน
-        data['Start_Time'] = current_timestamp
-        data['End_Time'] = current_timestamp
+        # คำนวณ End_Time จาก Start_Time + Time_limit
+        time_limit_str = data.get('Time_limit', '00:00:00')
+        # แยกเวลาออกเป็นชั่วโมง นาที วินาที
+        time_parts = time_limit_str.split(':')
         
-        print("After setting timestamp:", data)  # Debug log
+        # ถ้า format เป็น 00:00:20 (ชั่วโมง:นาที:วินาที)
+        if len(time_parts) == 3:
+            hours, minutes, seconds = int(time_parts[0]), int(time_parts[1]), int(time_parts[2])
+            time_delta = timedelta(hours=hours, minutes=minutes, seconds=seconds)
+        # ถ้า format เป็น 20 (เป็นวินาทีล้วนๆ)
+        else:
+            try:
+                seconds = int(time_limit_str)
+                time_delta = timedelta(seconds=seconds)
+            except:
+                time_delta = timedelta(seconds=0)
+        
+        # คำนวณ End_Time
+        end_time = current_timestamp + time_delta
+        data['End_Time'] = end_time.strftime('%Y-%m-%d %H:%M:%S')
+        
+        print("After setting timestamps:", data)
         
         if not data or 'User_ID' not in data:
             return jsonify({'error': 'No data or User_ID not provided'}), 400
