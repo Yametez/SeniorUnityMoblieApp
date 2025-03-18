@@ -3,7 +3,7 @@ senior project
 
 # Run Api Project
 * Cd test-api
-python app.py
+* python app.py
 
 # แก้ปัญหาติดตั้ง pyhton ไม่ได้
 *    pip install Flask Flask-Cors mysql-connector-python
