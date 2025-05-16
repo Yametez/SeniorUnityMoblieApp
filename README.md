@@ -1,7 +1,8 @@
 # MoblieApp
-senior project
-
-![My Project Screenshot](https://media.discordapp.net/attachments/1343058406994608158/1372794207525146654/Screenshot_1162.png?ex=682811bc&is=6826c03c&hm=d7cc494f4ec582207690e3378028d561eb4652170a2d8e6780ef5ec1f9ca8255&=&format=webp&quality=lossless)
+senior project (โปรเจคจบ)
+#แอปพลิเคชันวิเคราะห์ความเสี่ยงแนวโน้มการเป็นอัลไซเมอร์เบื้องต้น
+#หน้าตาของแอป
+![My Project Screenshot](https://media.discordapp.net/attachments/1343058406994608158/1372795782586957854/61b1a0dd9bb2bc1d.png?ex=68281333&is=6826c1b3&hm=39afd789f57c3c14dc4c12067c511f3add0084ece1be2da08ca4490363105e39&=&format=webp&quality=lossless&width=1369&height=770)
 
 
 # Run Api Project
@@ -40,11 +41,6 @@ DB_PASSWORD=your_password
 DB_DATABASE=user
 PORT=3306
 
-# การรัน Project
-
-## รัน Node.js Server
-bash
-cd test-api
 
 ## รัน Python Server
 python app.py
@@ -59,4 +55,4 @@ python app.py
 * ต้องแน่ใจว่า MySQL Server กำลังทำงานอยู่
 * API Server จะทำงานที่ port 3000
 * ตรวจสอบให้แน่ใจว่าได้ตั้งค่า Database credentials ถูกต้อง
-* หากมีปัญหาการเชื่อมต่อ Database ให้ตรวจสอบการตั้งค่าใน config.py และ database.js
+* หากมีปัญหาการเชื่อมต่อ Database ให้ตรวจสอบการตั้งค่าใน config.py 
