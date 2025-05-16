@@ -1,7 +1,7 @@
 # MoblieApp
-senior project 
+senior project (โปรเจคจบ)
 
-#แอปพลิเคชันวิเคราะห์ความเสี่ยงแนวโน้มการเป็นอัลไซเมอร์เบื้องต้น
+# แอปพลิเคชันวิเคราะห์ความเสี่ยงแนวโน้มการเป็นอัลไซเมอร์เบื้องต้น
 
 ![My Project Screenshot](https://media.discordapp.net/attachments/1343058406994608158/1372795782586957854/61b1a0dd9bb2bc1d.png?ex=68281333&is=6826c1b3&hm=39afd789f57c3c14dc4c12067c511f3add0084ece1be2da08ca4490363105e39&=&format=webp&quality=lossless&width=1369&height=770)
 
